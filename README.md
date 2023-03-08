@@ -18,6 +18,8 @@ npm run dev
 ```
 
 For production build run
+```
 npm run build
 cd api
 npm run start
+```
