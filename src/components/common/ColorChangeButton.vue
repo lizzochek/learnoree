@@ -75,7 +75,7 @@ input:checked~.slider {
 .light-mode .slider::before {
     content: "";
     position: absolute;
-    top: 3px;
+    top: 2.5px;
     left: 32px;
     width: 16px;
     height: 16px;
