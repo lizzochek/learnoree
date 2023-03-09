@@ -1,17 +1,13 @@
 <template>
-    <button id="style-change" @click="changeStyle">Change style</button>
+    <ColorChangeButton></ColorChangeButton>
 </template>'
 
 <script>
+import ColorChangeButton from './ColorChangeButton.vue';
+
 export default {
     name: 'Header',
-    methods: {
-        changeStyle() {
-            const mode = localStorage.getItem('mode');
-            localStorage.setItem("mode", mode === 'light' ? 'dark' : 'light');
-            window.location.reload();
-        }
-    }
+    components: { ColorChangeButton },
 }
 </script>
 
