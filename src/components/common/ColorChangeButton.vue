@@ -46,7 +46,7 @@ input {
     height: 100%;
     border-radius: 13px;
     transition: 0.3s;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    box-shadow: 0 3px 5px 0 var(--primary-color), 3px 3px 5px 0 var(--primary-color);
 }
 
 input:checked~.slider {

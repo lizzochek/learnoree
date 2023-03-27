@@ -25,6 +25,11 @@ export default {
 </script>
 
 <style lang="scss">
+html,
+body {
+  margin: 0;
+}
+
 @import "assets/css/variables/dark-mode";
 @import "assets/css/variables/light-mode";
 </style>
