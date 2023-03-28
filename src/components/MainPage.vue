@@ -1,6 +1,5 @@
 <template>
     <div id="main-page">
-
         <Header />
         <div id="container">
             <div id="left-side">
@@ -233,5 +232,89 @@ p {
     position: relative;
     top: 100%;
     left: 55%;
+}
+</style>
+
+<style lang="scss">
+@import "../assets/css/variables/global.scss";
+
+@media (min-width: $breakpoint-tablet) {
+    .slogan {
+        top: 45%;
+        left: -45%;
+        font-size: 32px;
+        margin-bottom: 20px;
+    }
+
+    #login-btn {
+        left: 10%;
+        top: 140%;
+    }
+
+    #register-btn {
+        left: 55%;
+        top: 121%;
+    }
+
+    #welcome-text {
+        font-size: 12px;
+        top: 115%;
+        left: 3%;
+    }
+
+
+}
+
+@media (min-width: 1380px) {
+    #welcome-text {
+        font-size: 14px;
+        top: 105%;
+        left: 4%;
+    }
+
+    #login-btn {
+        left: 10%;
+        top: 120%;
+    }
+
+    #register-btn {
+        left: 53%;
+        top: 111%;
+    }
+
+
+}
+
+@media (min-width: 1540px) {
+    #login-btn {
+        left: 8%;
+        top: 125%;
+    }
+
+    #register-btn {
+        left: 55%;
+        top: 105%;
+    }
+
+    #welcome-text {
+        font-size: 15px;
+        top: 95%;
+    }
+}
+
+@media (min-width: 1650px) {
+    #login-btn {
+        left: 12%;
+    }
+
+    #register-btn {
+        left: 60%;
+        top: 115%;
+    }
+
+    #welcome-text {
+        font-size: 16px;
+        top: 95%;
+    }
 }
 </style>

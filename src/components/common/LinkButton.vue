@@ -91,3 +91,39 @@ export default {
     stroke-dashoffset: 424;
 }
 </style>
+
+<style lang="scss">
+@import "../../assets/css/variables/global.scss";
+
+@media (max-width: 1380px) {
+
+    .btn {
+        width: 100px;
+        height: 42px;
+        line-height: 20px;
+        font-weight: 100;
+        font-size: 12px;
+    }
+
+    .btn svg rect {
+        width: 90px;
+        height: 30px;
+    }
+
+    .btn svg {
+        width: 111px;
+        height: 51px;
+    }
+
+    .btn span {
+        position: relative;
+        top: -110%;
+        left: 0%;
+    }
+
+    .btn:hover svg rect {
+        stroke-dasharray: 75, 445;
+        stroke-dashoffset: 434;
+    }
+}
+</style>
