@@ -30,6 +30,7 @@ label {
     position: absolute;
     width: 100%;
     height: 20px;
+    margin-left: 30px;
     background-color: var(--forth-color);
     border-radius: 20px;
     cursor: pointer;

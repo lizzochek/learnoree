@@ -63,7 +63,7 @@
 .main-menu-menu {
     --main-menu-menu-radius: 2.5em;
     background-color: var(--tertiary-color);
-    z-index: 100;
+    z-index: 1001;
     position: relative;
     top: 10px;
     right: 20px;
@@ -73,6 +73,7 @@
     cursor: pointer;
 
     .line {
+        z-index: 1001;
         margin-bottom: 7px;
         height: 2px;
         width: 20px;
@@ -120,6 +121,7 @@
 }
 
 .menu {
+    z-index: 1000;
     position: fixed;
     top: 0;
     left: 0;
