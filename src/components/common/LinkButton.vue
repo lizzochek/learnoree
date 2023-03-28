@@ -126,4 +126,15 @@ export default {
         stroke-dashoffset: 434;
     }
 }
+
+// @media (max-width: 900px) {
+//     .btn span.light {
+//         background-color: #eeeee1;
+//     }
+
+//     .btn svg rect {
+//         filter: drop-shadow(2px 2px 2px var(--welcome-span-color));
+//     }
+
+// }
 </style>

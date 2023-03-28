@@ -1,7 +1,10 @@
 <template>
   <div :class="selectedMode">
+
     <router-view v-slot="{ Component }">
+      <Header />
       <transition name="fade">
+
         <component :is="Component" />
       </transition>
     </router-view>
@@ -9,8 +12,11 @@
 </template>
 
 <script>
+import Header from './components/common/Header.vue';
+
 export default {
   name: 'App',
+  components: { Header },
   computed: {
     selectedMode() {
       const mode = localStorage.getItem("mode");
@@ -19,7 +25,7 @@ export default {
       className = mode === 'light' ? 'light-mode' : 'dark-mode';
 
       return className;
-    }
+    },
   }
 };
 </script>

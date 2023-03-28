@@ -39,6 +39,7 @@ export default {
 }
 
 #header {
+    padding-top: 5px;
     margin: 0;
     background-color: var(--tertiary-color);
     width: 100%;
@@ -60,6 +61,8 @@ export default {
     flex-direction: row;
     gap: 15px;
     justify-content: flex-end;
+    margin-right: 1rem;
+    ;
 }
 
 #main-icon {
@@ -81,11 +84,28 @@ h1 {
 
 #color-change {
     margin-top: 10px;
+    margin-right: 50px;
 }
 
 #user-icon {
     margin-top: 10px;
     margin-right: 40px;
     height: 20px;
+}
+</style>
+
+<style lang="scss">
+@import '../../assets/css/variables/global.scss';
+
+@media (max-width: $breakpoint-tablet) {
+    #header {
+        z-index: 1;
+        position: fixed;
+        bottom: 0.5rem;
+
+        /* And if you want the div to be full-width: */
+        left: 0;
+        right: 0;
+    }
 }
 </style>

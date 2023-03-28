@@ -1,6 +1,5 @@
 <template>
     <div id="main-page">
-        <Header />
         <div id="container">
             <div id="left-side">
                 <div class="slogan">
@@ -75,12 +74,11 @@
 </template>
 
 <script>
-import Header from './common/Header.vue';
 import LinkButton from './common/LinkButton.vue'
 
 export default {
     name: "MainPage",
-    components: { Header, LinkButton },
+    components: { LinkButton },
     data() {
         return {
             mode: localStorage.getItem('mode'),
@@ -122,8 +120,8 @@ export default {
 
 #img-1 {
     position: absolute;
-    width: 600px;
-    height: 600px;
+    width: 37rem;
+    height: 37rem;
     left: -5%;
     z-index: 100;
 }
@@ -138,8 +136,8 @@ export default {
 
 #spot {
     position: absolute;
-    width: 280px;
-    height: 280px;
+    width: 18rem;
+    height: 18rem;
     left: 25%;
     top: 15%;
     border-radius: 50%;
@@ -154,8 +152,8 @@ export default {
     background: var(--main-page-spots);
     opacity: 0.9;
     border-radius: 10px;
-    width: 200px;
-    height: 96px;
+    width: 13rem;
+    height: 5.3rem;
     filter: drop-shadow(3px 3px 3px #677375);
 }
 
@@ -165,7 +163,7 @@ export default {
     position: relative;
     top: 10%;
     left: 30%;
-    width: 30px;
+    width: 2rem;
     margin-left: auto;
 }
 
@@ -180,12 +178,13 @@ p {
     position: relative;
     left: 8%;
     top: -5%;
-    font-size: 14px;
+    width: 12rem;
+    font-size: 0.85rem;
 }
 
 #educate {
     position: relative;
-    top: 30%;
+    top: 35%;
     left: 54%;
 
     .text {
@@ -205,7 +204,7 @@ p {
     top: 40%;
     left: -45%;
     color: var(--forth-color);
-    font-size: 40px;
+    font-size: 3rem;
     font-style: italic;
 }
 
@@ -238,48 +237,243 @@ p {
 <style lang="scss">
 @import "../assets/css/variables/global.scss";
 
+@media (max-width: $breakpoint-tablet) {
+    #spot-1 {
+        width: 70%;
+        top: 53%;
+    }
+
+    #welcome-text {
+        top: 265%;
+        font-size: 16px;
+    }
+
+    #img-1 {
+        width: 40rem;
+        height: 40rem;
+        left: -50%;
+        top: 10%;
+    }
+
+    #img-3 {
+        width: 30rem;
+        height: 30rem;
+        left: -18%;
+        top: 13%;
+    }
+
+    #spot {
+        width: 22rem;
+        height: 22rem;
+        left: 5%;
+        top: 20%;
+    }
+
+    .box {
+        top: 20%;
+        left: -65%;
+    }
+
+    #educate {
+        top: 40%;
+        left: 40%;
+    }
+
+    #manage {
+        top: 35%;
+        left: -80%;
+    }
+
+    .slogan {
+        top: 20%;
+        left: -42%;
+    }
+
+
+    #login-btn {
+        top: 300%;
+        left: 12%;
+    }
+
+    #register-btn {
+        top: 290%;
+        left: 50%;
+    }
+}
+
+
+@media (max-width: 800px) {
+    #spot-1 {
+        left: 5%;
+        width: 65%;
+        top: 50%;
+    }
+
+    #welcome-text {
+        left: 10%;
+        top: 240%;
+        font-size: 14px;
+    }
+
+    #login-btn {
+        top: 260%;
+        left: 12%;
+    }
+
+    #register-btn {
+        top: 260%;
+        left: 40%;
+    }
+}
+
+@media (max-width: 710px) {
+
+    .slogan,
+    #slogan-2,
+    #welcome-text,
+    #spot-1 {
+        display: none;
+    }
+
+    #img-1 {
+        width: 20rem;
+        height: 20rem;
+        left: -50%;
+        top: 15%;
+    }
+
+    #spot {
+        width: 15rem;
+        height: 15rem;
+    }
+
+    #img-3 {
+        width: 15rem;
+        height: 15rem;
+        left: -25%;
+        top: 20%
+    }
+
+    .box {
+        top: 30%;
+        left: -90%;
+        width: 8.5rem;
+    }
+
+    #mind-icon,
+    #educate-icon,
+    #manage-icon {
+        top: 10%;
+        left: 28%;
+        width: 1rem;
+    }
+
+    p {
+        font-size: 1rem;
+        top: -12%;
+        left: 45%;
+    }
+
+    .text {
+        left: 5%;
+        top: -5%;
+        width: 8rem;
+        font-size: 0.75rem;
+    }
+
+    #educate {
+        top: 35%;
+        left: -25%;
+    }
+
+    #manage {
+        top: -10%;
+        left: -25%;
+    }
+
+    #login-btn {
+        top: 600%;
+        left: 140%;
+    }
+
+    #register-btn {
+        top: 620%;
+        left: 140%;
+    }
+}
+
+@media (max-width: 415px) {
+
+    #manage {
+        top: -5%;
+        left: -25%;
+    }
+
+    #login-btn {
+        top: 800%;
+        left: 160%;
+    }
+
+    #register-btn {
+        top: 820%;
+        left: 160%;
+    }
+}
+
+@media (max-height: 750px) {
+
+    #login-btn {
+        top: 650%;
+        left: 140%;
+    }
+
+    #register-btn {
+        top: 670%;
+        left: 140%;
+    }
+}
+
+
 @media (min-width: $breakpoint-tablet) {
     .slogan {
         top: 45%;
         left: -45%;
-        font-size: 32px;
-        margin-bottom: 20px;
+        font-size: 2em;
+        margin-bottom: 0.75em;
     }
 
     #login-btn {
         left: 10%;
-        top: 140%;
+        top: 150%;
     }
 
     #register-btn {
         left: 55%;
-        top: 121%;
+        top: 140%;
     }
 
     #welcome-text {
-        font-size: 12px;
-        top: 115%;
+        font-size: 0.75em;
+        top: 125%;
         left: 3%;
     }
-
-
 }
 
 @media (min-width: 1380px) {
     #welcome-text {
         font-size: 14px;
-        top: 105%;
+        top: 110%;
         left: 4%;
     }
 
     #login-btn {
         left: 10%;
-        top: 120%;
+        top: 125%;
     }
 
     #register-btn {
         left: 53%;
-        top: 111%;
+        top: 125%;
     }
 
 
@@ -293,28 +487,28 @@ p {
 
     #register-btn {
         left: 55%;
-        top: 105%;
+        top: 120%;
     }
 
     #welcome-text {
         font-size: 15px;
-        top: 95%;
+        top: 105%;
     }
 }
 
 @media (min-width: 1650px) {
     #login-btn {
-        left: 12%;
+        left: 10%;
     }
 
     #register-btn {
         left: 60%;
-        top: 115%;
+        top: 125%;
     }
 
     #welcome-text {
         font-size: 16px;
-        top: 95%;
+        top: 105%;
     }
 }
 </style>
