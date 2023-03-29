@@ -1,11 +1,8 @@
 <template>
     <div id="login" :class="mode">
-        <div id="img-container" v-if="mode == 'dark'">
-            <img id="img-1" src="../../assets/img/7.png" />
-            <!-- <img id="img-2" src="../../assets/img/6.png" /> -->
-        </div>
-        <div id="container">
-        </div>
+        <img id="img-2" src="../../assets/img/6.png" />
+        <div id="container"> </div>
+        <img id="img-1" src="../../assets/img/7.png" />
     </div>
 </template>
 

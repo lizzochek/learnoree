@@ -30,7 +30,7 @@
   height: 90%;
 }
 
-#img-1 {
+#main-page #img-1 {
   position: absolute;
   width: 37rem;
   height: 37rem;
@@ -39,7 +39,7 @@
   z-index: 1;
 }
 
-#img-3 {
+#main-page #img-3 {
   position: absolute;
   width: 25rem;
   height: 25rem;
@@ -171,14 +171,14 @@ p {
     left: 3%;
   }
 
-  #img-1 {
+  #main-page #img-1 {
     width: 40rem;
     height: 40rem;
     left: -50%;
     top: 10%;
   }
 
-  #img-3 {
+  #main-page #img-3 {
     width: 30rem;
     height: 30rem;
     left: -18%;
@@ -218,27 +218,47 @@ p {
   }
 }
 
+@media (min-width: 900px) and (max-width: 930px) {
+  #welcome-text {
+    top: 300%;
+  }
+
+  #buttons {
+    top: 350%;
+    gap: 18%;
+  }
+
+  #login-btn {
+    margin-left: 12%;
+  }
+}
+
 @media (max-width: 800px) {
   #spot-1 {
-    left: 5%;
     width: 65%;
     top: 50%;
   }
 
   #welcome-text {
-    left: 10%;
     top: 240%;
     font-size: 14px;
   }
 
-  #login-btn {
-    top: 260%;
-    left: 12%;
+  #main-page #img-1 {
+    width: 38rem;
+    height: 38rem;
   }
 
-  #register-btn {
-    top: 260%;
-    left: 40%;
+  #buttons {
+    top: 270%;
+  }
+
+  #login-btn {
+    margin-left: 7%;
+  }
+
+  #educate {
+    top: 43%;
   }
 }
 
@@ -250,9 +270,9 @@ p {
     display: none;
   }
 
-  #img-1 {
-    width: 20rem;
-    height: 20rem;
+  #main-page #img-1 {
+    width: 22rem;
+    height: 22rem;
     left: -50%;
     top: 15%;
   }
@@ -262,7 +282,7 @@ p {
     height: 15rem;
   }
 
-  #img-3 {
+  #main-page #img-3 {
     width: 15rem;
     height: 15rem;
     left: -25%;
@@ -352,6 +372,23 @@ p {
   }
 }
 
+@media (max-width: 300px) {
+  #manage {
+    top: -10%;
+    left: -25%;
+  }
+
+  .box {
+    left: -100%;
+  }
+
+  #buttons {
+    left: 48%;
+    top: 450%;
+    gap: 15%;
+  }
+}
+
 @media (min-width: $breakpoint-tablet) {
   .slogan {
     top: 45%;
@@ -378,6 +415,16 @@ p {
 }
 
 @media (min-width: $breakpoint-tablet) and (max-width: 1380px) {
+  #manage {
+    left: -25%;
+    top: 45%;
+  }
+
+  #educate {
+    top: 60%;
+    left: 10%;
+  }
+
   #login-btn {
     margin-left: 10%;
   }
@@ -410,6 +457,14 @@ p {
 }
 
 @media (min-width: 1380px) and (max-width: 1550px) {
+  #manage {
+    left: 0%;
+  }
+
+  #manage {
+    left: 55%;
+  }
+
   #login-btn {
     margin-left: 7%;
   }
@@ -439,5 +494,183 @@ p {
     font-size: 17px;
     top: 110%;
     padding-left: 5%;
+  }
+}
+
+@media (min-width: 1000px) and (max-width: $breakpoint-tablet) and (max-height: 1140px) {
+  #buttons {
+    top: 280%;
+  }
+}
+
+@media (min-width: 1000px) and (max-width: $breakpoint-tablet) and (max-height: 1086px) {
+  #welcome-text {
+    top: 230%;
+  }
+
+  #spot-1 {
+    left: -10%;
+    top: 54%;
+    height: 40%;
+  }
+
+  #buttons {
+    top: 265%;
+  }
+}
+
+@media (min-width: 1000px) and (max-width: $breakpoint-tablet) and (max-height: 1000px) {
+  #welcome-text {
+    top: 235%;
+  }
+}
+
+@media (min-width: 1000px) and (max-width: $breakpoint-tablet) and (max-height: 970px) {
+  #welcome-text {
+    top: 215%;
+  }
+
+  #buttons {
+    top: 245%;
+  }
+}
+
+@media (min-width: 1000px) and (max-width: $breakpoint-tablet) and (max-height: 910px) {
+  #main-page #img-1,
+  #main-page #img-3 {
+    left: -10%;
+  }
+
+  #main-page #img-3 {
+    left: 10%;
+  }
+
+  #spot {
+    left: 30%;
+    top: 25%;
+  }
+
+  .box {
+    margin: 0;
+    left: -20%;
+    top: 22%;
+  }
+
+  #manage {
+    left: -20%;
+    top: 60%;
+  }
+
+  #educate {
+    top: 60%;
+  }
+
+  #spot-1 {
+    top: 30%;
+    left: -13%;
+    width: 900px;
+  }
+
+  #welcome-text {
+    top: 100%;
+    font-size: 15px;
+    left: 5%;
+  }
+
+  #buttons {
+    top: 130%;
+    left: 3%;
+  }
+}
+
+@media (min-width: 1000px) and (max-width: $breakpoint-tablet) and (max-height: 810px) {
+  #welcome-text {
+    top: 95%;
+    left: 10%;
+    font-size: 13px;
+  }
+
+  #buttons {
+    top: 120%;
+  }
+}
+
+@media (min-width: 1000px) and (max-width: $breakpoint-tablet) and (max-height: 755px) {
+  #welcome-text {
+    top: 90%;
+  }
+
+  #buttons {
+    top: 110%;
+  }
+}
+
+@media (min-width: 1000px) and (max-width: $breakpoint-tablet) and (max-height: 725px) {
+  #spot-1 {
+    width: 58%;
+    height: 55%;
+    left: -5%;
+  }
+
+  #main-page #img-3 {
+    width: 350px;
+    height: 350px;
+    top: 20%;
+    left: 20%;
+  }
+
+  #welcome-text {
+    font-size: 14px;
+  }
+
+  #buttons {
+    top: 130%;
+  }
+
+  #manage {
+    left: -15%;
+    top: 68%;
+  }
+}
+
+@media (min-width: 1000px) and (max-width: $breakpoint-tablet) and (max-height: 660px) {
+  #buttons {
+    top: 120%;
+  }
+}
+
+@media (min-width: 1000px) and (max-width: $breakpoint-tablet) and (max-height: 628px) {
+  #buttons {
+    top: 105%;
+  }
+
+  #educate {
+    top: -25%;
+  }
+
+  .box {
+    top: 30%;
+    left: -10%;
+  }
+}
+
+@media (min-width: 1000px) and (max-width: $breakpoint-tablet) and (max-height: 600px) {
+  .box {
+    visibility: hidden;
+  }
+
+  .box {
+    top: 30%;
+    left: -10%;
+  }
+
+  #welcome-text {
+    top: 70%;
+    left: 5%;
+  }
+
+  #buttons {
+    top: 90%;
+    left: 0%;
   }
 }

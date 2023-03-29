@@ -116,4 +116,23 @@ export default {
         width: 100%;
     }
 }
+
+
+@media (max-width: 300px) {
+    #main-icon {
+        height: 20px;
+        width: 20px;
+    }
+
+    #header #header-text {
+        margin-top: 10px;
+        margin-left: 0;
+        font-size: 13px;
+    }
+
+    #color-change {
+        position: absolute;
+        top: -1300%;
+    }
+}
 </style>
