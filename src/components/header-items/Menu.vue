@@ -9,14 +9,35 @@
         <div class="menu">
             <div class="menu-inner">
                 <ul class="menu-nav">
-                    <li class="menu-nav-item"><a class="menu-nav-link" href="#"><span>
-                                <div>Home</div>
-                            </span></a></li>
+                    <li v-for="(link, index) in menuLinks" key="index" class="menu-nav-item" @click="onLinkClick">
+                        <router-link class="menu-nav-link" :to="link.address">
+                            <span>
+                                <div>{{ link.text }}</div>
+                            </span></router-link>
+                    </li>
                 </ul>
             </div>
         </div>
     </div>
 </template>
+
+<script>
+export default {
+    name: 'Menu',
+    props: {
+        menuLinks: {
+            type: Array,
+            default: '',
+            required: true,
+        }
+    },
+    methods: {
+        onLinkClick() {
+            window.location.reload();
+        }
+    },
+}
+</script>
 
 <style lang="scss">
 #main-menu-toggle {
@@ -56,6 +77,13 @@
                     transform: translateY(calc(var(--main-menu-menu-radius) / -4.5)) rotate(-45deg);
                 }
             }
+        }
+    }
+
+    &:not(:checked) {
+        &~.menu {
+            opacity: 0;
+            visibility: hidden;
         }
     }
 }
