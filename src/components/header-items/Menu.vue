@@ -79,19 +79,12 @@ export default {
             }
         }
     }
-
-    &:not(:checked) {
-        &~.menu {
-            opacity: 0;
-            visibility: hidden;
-        }
-    }
 }
 
 .main-menu-menu {
     --main-menu-menu-radius: 2.5em;
     background-color: var(--tertiary-color);
-    z-index: 1001;
+    z-index: 10001;
     position: relative;
     top: 10px;
     right: 20px;
@@ -101,7 +94,7 @@ export default {
     cursor: pointer;
 
     .line {
-        z-index: 1001;
+        z-index: 10001;
         margin-bottom: 7px;
         height: 2px;
         width: 20px;
@@ -149,8 +142,8 @@ export default {
 }
 
 .menu {
-    z-index: 1000;
     position: fixed;
+    z-index: 1001;
     top: 0;
     left: 0;
     width: 100%;
@@ -158,7 +151,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: var(--tertiary-color);
+    background-color: var(--tertiary-color);
     opacity: 0;
     overflow-x: hidden;
     visibility: hidden;

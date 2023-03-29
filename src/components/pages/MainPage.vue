@@ -22,15 +22,17 @@
                         d="M-30.4572 173.596C-8.9891 79.8885 12.3384 27.1469 105.544 3.59519C164.125 -11.2075 315.954 39.8667 375.229 51.5865C446.144 65.6079 531.06 4.52097 581.297 56.5C641.656 118.953 676.016 238.003 616.856 301.593C557.798 365.075 454.269 261.697 370.298 283.301C269.933 309.122 211.692 466.281 114.289 430.891C13.0493 394.108 -54.5113 278.59 -30.4572 173.596Z"
                         fill="#345B63" />
                 </svg>
-                <LinkButton id="login-btn" text="Log in" url="/login" backgroundTheme="light" />
-                <LinkButton id="register-btn" text="register" url="/register" backgroundTheme="dark" />
+                <div id="buttons">
+                    <LinkButton id="login-btn" text="Log in" url="/login" backgroundTheme="light" />
+                    <LinkButton id="register-btn" text="register" url="/register" backgroundTheme="dark" />
+                </div>
             </div>
             <div id="right-side">
                 <div v-if="mode === 'dark'">
-                    <img loading="lazy" id="img-1" src="../assets/img/5.png" />
+                    <img loading="lazy" id="img-1" src="../../assets/img/5.png" />
                 </div>
                 <div v-else>
-                    <img loading="lazy" id="img-3" src="../assets/img/10.png" />
+                    <img loading="lazy" id="img-3" src="../../assets/img/10.png" />
                 </div>
                 <div id="spot"></div>
                 <div class="box">
@@ -74,7 +76,7 @@
 </template>
 
 <script>
-import LinkButton from './common/LinkButton.vue'
+import LinkButton from '../common/LinkButton.vue'
 
 export default {
     name: "MainPage",
@@ -88,5 +90,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import '../assets/css/components/main-page.scss'
+@import '../../assets/css/components/main-page.scss'
 </style>

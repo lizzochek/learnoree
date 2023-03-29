@@ -95,7 +95,7 @@ export default {
 <style lang="scss">
 @import "../../assets/css/variables/global.scss";
 
-@media (max-width: 1380px) {
+@media (min-width: 700px) and (max-width: 1380px) {
 
     .btn {
         width: 100px;
@@ -126,15 +126,4 @@ export default {
         stroke-dashoffset: 434;
     }
 }
-
-// @media (max-width: 900px) {
-//     .btn span.light {
-//         background-color: #eeeee1;
-//     }
-
-//     .btn svg rect {
-//         filter: drop-shadow(2px 2px 2px var(--welcome-span-color));
-//     }
-
-// }
 </style>

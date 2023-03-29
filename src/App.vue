@@ -1,12 +1,11 @@
 <template>
   <div :class="selectedMode">
-
     <router-view v-slot="{ Component }">
-      <Header />
-      <transition name="fade">
 
+      <transition name="fade">
         <component :is="Component" />
       </transition>
+      <Header />
     </router-view>
   </div>
 </template>
