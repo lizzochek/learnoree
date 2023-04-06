@@ -674,3 +674,39 @@ p {
     left: 0%;
   }
 }
+
+
+@media (min-width: 1200px) and (max-width: 1400px) and (max-height: 980px) {
+  #welcome-text {
+    top: 160%;
+    left: 5%;
+  }
+
+  #buttons {
+    top: 200%;
+    left: 0%;
+  }
+}
+
+
+@media (min-width: 1390px) and (max-width: 1600px) and (max-height: 980px) {
+  #welcome-text {
+    top: 135%;
+    left: 0;
+  }
+
+  #buttons {
+    top: 170%;
+  }
+}
+
+@media (min-width: 1601px) and (max-width: 1800px) and (max-height: 980px) {
+  #welcome-text {
+    top: 140%;
+    left: 5%;
+  }
+
+  #buttons {
+    top: 170%;
+  }
+}
