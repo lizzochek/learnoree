@@ -95,35 +95,110 @@ export default {
 <style lang="scss">
 @import "../../assets/css/variables/global.scss";
 
+
 @media (min-width: 700px) and (max-width: 1380px) {
+    #main-page {
+        .btn {
+            width: 100px;
+            height: 42px;
+            line-height: 20px;
+            font-weight: 100;
+            font-size: 12px;
+        }
 
-    .btn {
-        width: 100px;
-        height: 42px;
-        line-height: 20px;
-        font-weight: 100;
-        font-size: 12px;
+        .btn svg rect {
+            width: 90px;
+            height: 30px;
+        }
+
+        .btn svg {
+            width: 111px;
+            height: 51px;
+        }
+
+        .btn span {
+            position: relative;
+            top: -110%;
+            left: 0%;
+        }
+
+        .btn:hover svg rect {
+            stroke-dasharray: 75, 445;
+            stroke-dashoffset: 434;
+        }
     }
+}
 
-    .btn svg rect {
-        width: 90px;
-        height: 30px;
+
+@media (min-width: 720px) and (max-width: 1400px) {
+    #app {
+        #register {
+            .btn {
+                width: 300px;
+                height: 62px;
+                line-height: 30px;
+                font-weight: 200;
+                font-size: 14px;
+            }
+
+            .btn svg rect {
+                width: 290px;
+                height: 50px;
+            }
+
+            .btn svg {
+                width: 411px;
+                height: 71px;
+            }
+
+            .btn span {
+                position: relative;
+                top: -110%;
+                left: 0%;
+            }
+
+            .btn:hover svg rect {
+                stroke-dasharray: 210, 555;
+                stroke-dashoffset: 434;
+            }
+        }
     }
+}
 
-    .btn svg {
-        width: 111px;
-        height: 51px;
-    }
 
-    .btn span {
-        position: relative;
-        top: -110%;
-        left: 0%;
-    }
 
-    .btn:hover svg rect {
-        stroke-dasharray: 75, 445;
-        stroke-dashoffset: 434;
+@media (min-width: 1400px) {
+    #app {
+        #register {
+            .btn {
+                width: 400px;
+                height: 72px;
+                line-height: 40px;
+                font-weight: 200;
+                font-size: 18px;
+            }
+
+            .btn svg rect {
+                width: 390px;
+                height: 60px;
+            }
+
+            .btn svg {
+                width: 411px;
+                height: 81px;
+            }
+
+            .btn span {
+                position: relative;
+                top: -110%;
+                left: 0%;
+            }
+
+            .btn:hover svg rect {
+                stroke-dasharray: 260, 645;
+                stroke-dashoffset: 434;
+            }
+        }
     }
 }
 </style>
