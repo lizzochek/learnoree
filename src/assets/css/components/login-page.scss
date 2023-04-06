@@ -125,6 +125,17 @@
     border: 1px solid red;
     animation: shake 0.82s;
   }
+
+  #link {
+    position: inherit;
+    color: var(--forth-color);
+    margin-left: 5%;
+    text-decoration: underline;
+  }
+
+  #link:hover {
+    cursor: pointer;
+  }
 }
 
 @media (min-width: 1450px) {

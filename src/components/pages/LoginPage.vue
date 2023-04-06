@@ -4,20 +4,21 @@
         <img v-if="mode == 'light'" id="img-2" src="../../assets/img/10.png" />
         <div id="container">
             <form class="login-form">
-                <h2>Log in</h2>
+                <h2>{{ headerText }}</h2>
                 <input :class="error ? 'error-input' : ''" autocomplete="off" spellcheck="false" class="control"
-                    type="email" placeholder="Email" />
-                <div v-if="error == 'emailValidation'" class="message-container">
+                    type="email" placeholder="Email" v-model="email" />
+                <div v-if="error == 'emailValidation' || error == 'wrongData'" class="message-container">
                     <img class="error-icon" src="https://img.icons8.com/emoji/48/null/exclamation-mark-emoji.png" />
                     <p class="error-p">Please enter valid email</p>
                 </div>
-                <input :class="error == 'wrongData' ? 'error-input' : ''" spellcheck="false" class="control" id="password"
-                    type="password" placeholder="Password" onkeyup="handleChange()" />
+                <input v-if="isLogin" :class="error == 'wrongData' ? 'error-input' : ''" spellcheck="false" class="control"
+                    v-model="password" id="password" type="password" placeholder="Password" onkeyup="handleChange()" />
                 <div v-if="error == 'wrongData'" class="message-container">
                     <img class="error-icon" src="https://img.icons8.com/emoji/48/null/exclamation-mark-emoji.png" />
                     <p class="error-p">Your email or password is wrong</p>
                 </div>
-                <button class="control" type="button" @click="handleLogin">Log in now</button>
+                <p id="link" @click="isLogin = !isLogin">{{ linkText }}</p>
+                <button class="control" type="button" @click="handleLogin">{{ buttonText }}</button>
             </form>
         </div>
     </div>
@@ -30,11 +31,32 @@ export default {
         return {
             error: '',
             mode: localStorage.getItem('mode'),
+            isLogin: true,
+            email: '',
+            password: '',
+        }
+    },
+    computed: {
+        linkText() {
+            return this.isLogin ? "Don't remember your password?" : "Go back to login"
+        },
+        headerText() {
+            return this.isLogin ? 'Log in' : 'Restore password'
+        },
+        buttonText() {
+            return this.isLogin ? 'Log in now' : 'Restore password';
+        }
+    },
+    watch: {
+        email: {
+            handler(newVal, oldVal) {
+                this.error = newVal.search(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g) === -1 ? 'emailValidation' : '';
+            }
         }
     },
     methods: {
         handleLogin() {
-        }
+        },
     }
 }
 </script>
