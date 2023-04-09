@@ -7,13 +7,13 @@
                 <h2>{{ headerText }}</h2>
                 <input :class="error ? 'error-input' : ''" autocomplete="off" spellcheck="false" class="control"
                     type="email" placeholder="Email" v-model="email" />
-                <div v-if="error == 'emailValidation' || error == 'wrongData'" class="message-container">
+                <div v-if="error == 'emailValidation'" class="message-container">
                     <img class="error-icon" src="https://img.icons8.com/emoji/48/null/exclamation-mark-emoji.png" />
                     <p class="error-p">Please enter valid email</p>
                 </div>
                 <input v-if="isLogin" :class="error == 'wrongData' ? 'error-input' : ''" spellcheck="false" class="control"
-                    v-model="password" id="password" type="password" placeholder="Password" onkeyup="handleChange()" />
-                <div v-if="error == 'wrongData'" class="message-container">
+                    v-model="password" id="password" type="password" placeholder="Password" />
+                <div v-if="error == 'wrongData'" class=" message-container">
                     <img class="error-icon" src="https://img.icons8.com/emoji/48/null/exclamation-mark-emoji.png" />
                     <p class="error-p">Your email or password is wrong</p>
                 </div>
@@ -56,6 +56,12 @@ export default {
     },
     methods: {
         handleLogin() {
+            this.$store.dispatch('logIn', { email: this.email, password: this.password });
+            if (!this.$store.state.isLoggedIn) {
+                this.error = 'wrongData';
+            } else {
+                this.$router.push("/news");
+            }
         },
     }
 }

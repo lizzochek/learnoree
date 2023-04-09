@@ -675,7 +675,6 @@ p {
   }
 }
 
-
 @media (min-width: 1200px) and (max-width: 1400px) and (max-height: 980px) {
   #welcome-text {
     top: 160%;
@@ -687,7 +686,6 @@ p {
     left: 0%;
   }
 }
-
 
 @media (min-width: 1390px) and (max-width: 1600px) and (max-height: 980px) {
   #welcome-text {
@@ -708,5 +706,101 @@ p {
 
   #buttons {
     top: 170%;
+  }
+}
+
+@media (min-width: 1195px) and (max-width: 1300px) and (max-height: 850px) {
+  #welcome-text {
+    top: 135%;
+    left: 2%;
+  }
+
+  #buttons {
+    top: 165%;
+    left: -5%;
+  }
+}
+
+@media (min-width: 1300px) and (max-width: 1450px) and (max-height: 850px) {
+  #welcome-text {
+    top: 140%;
+    left: 2%;
+  }
+
+  #buttons {
+    top: 170%;
+    left: 0%;
+  }
+}
+
+@media (min-width: 1450px) and (max-height: 850px) {
+  #welcome-text {
+    top: 120%;
+    left: 2%;
+  }
+
+  #buttons {
+    top: 150%;
+    left: -7%;
+  }
+}
+
+@media (min-width: 1450px) and (max-height: 750px) {
+  #welcome-text {
+    top: 110%;
+    left: 2%;
+  }
+
+  #buttons {
+    top: 135%;
+    left: -7%;
+  }
+}
+
+@media (min-width: 1450px) and (max-height: 600px) {
+  #welcome-text {
+    top: 90%;
+    left: 2%;
+  }
+
+  #buttons {
+    top: 120%;
+    left: -7%;
+  }
+}
+
+@media (min-width: 1188px) and (max-width: 1300px) and (max-height: 685px) {
+  #welcome-text {
+    top: 110%;
+    left: 2%;
+  }
+
+  #buttons {
+    top: 145%;
+    left: -5%;
+  }
+}
+
+@media (min-width: 1300px) and (max-width: 1400px) and (max-height: 685px) {
+  #welcome-text {
+    top: 120%;
+    left: 5%;
+  }
+
+  #buttons {
+    top: 150%;
+    left: 0%;
+  }
+}
+
+@media (min-width: 1400px) and (max-height: 685px) {
+  #welcome-text {
+    top: 100%;
+    left: 2%;
+  }
+
+  #buttons {
+    top: 130%;
+    left: -7%;
   }
 }

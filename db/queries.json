@@ -1,0 +1,23 @@
+{
+  "create": {
+    "db": "CREATE DATABASE learnoree",
+    "tables": [
+      "CREATE TABLE `Faculties` (`Id` INT(10)  NOT NULL AUTO_INCREMENT,  `Name` VARCHAR(50) NOT NULL,  `ShortName` VARCHAR(10) NOT NULL,  `Contacts` VARCHAR(10) NOT NULL,  PRIMARY KEY (`Id`));",
+      "CREATE TABLE `Cathedras` (`Id` INT(10) NOT NULL AUTO_INCREMENT,  `Name` VARCHAR(50) NOT NULL,  `ShortName` VARCHAR(10) NOT NULL,  `Contacts` VARCHAR(10) NOT NULL,  `FacultyId` INT(10) NOT NULL,  PRIMARY KEY (`Id`), FOREIGN KEY (`FacultyId`) REFERENCES `Faculties`(`Id`));",
+      "CREATE TABLE `Users` (`Id` INT(10) NOT NULL  AUTO_INCREMENT,  `Email` VARCHAR(255) NOT NULL,  `Role` VARCHAR(150) NOT NULL,  `Password` VARCHAR(150) NOT NULL,  `Authorized` TINYINT NOT NULL,  PRIMARY KEY (`Id`));",
+      "CREATE TABLE `Students` (`Id` INT(10) NOT NULL  AUTO_INCREMENT,  `Name` VARCHAR(20) NOT NULL,  `Surname` VARCHAR(20) NOT NULL,  `SecondName` VARCHAR(20) NOT NULL,  `UserId` INT(10) NOT NULL,  `Phone` VARCHAR(10),  `StartDate` DATE NOT NULL,  `EndDate` DATE NOT NULL,  PRIMARY KEY (`Id`), FOREIGN KEY (`UserId`) REFERENCES `Users`(`Id`));",
+      "CREATE TABLE `Admins` (`Id` INT(10) NOT NULL  AUTO_INCREMENT,  `Name` VARCHAR(20) NOT NULL,  `Surname` VARCHAR(20) NOT NULL,  `SecondName` VARCHAR(20) NOT NULL,  `UserId` INT(10) NOT NULL,  `Phone` VARCHAR(10),  PRIMARY KEY (`Id`), FOREIGN KEY (`UserId`) REFERENCES `Users`(`Id`));",
+      "CREATE TABLE `Teachers` (`Id` INT(10) NOT NULL  AUTO_INCREMENT,  `Name` VARCHAR(20) NOT NULL,  `Surname` VARCHAR(20) NOT NULL,  `SecondName` VARCHAR(20) NOT NULL,  `CathedraId` INT(10),  `UserId` INT(10) NOT NULL,  `Phone` VARCHAR(10),  PRIMARY KEY (`Id`), FOREIGN KEY (`UserId`) REFERENCES `Users`(`Id`));",
+      "CREATE TABLE `Groups` (`Id` INT(10) NOT NULL  AUTO_INCREMENT,  `Name` VARCHAR(10) NOT NULL,  `CathedraId` INT(10) NOT NULL,  `GroupLeaderId` INT(10),  `CuratorId` INT(10),  PRIMARY KEY (`Id`), FOREIGN KEY (`CathedraId`) REFERENCES `Cathedras`(`Id`), FOREIGN KEY (`CuratorId`) REFERENCES `Teachers`(`Id`));",
+      "CREATE TABLE `StudentGroupLink` (`Id` INT(10) NOT NULL  AUTO_INCREMENT,  `StudentId` INT(10) NOT NULL,  `GroupId` INT(10) NOT NULL,  PRIMARY KEY (`Id`));",
+      "CREATE TABLE `Subjects` (`Id` INT(10) NOT NULL  AUTO_INCREMENT,  `Name` VARCHAR(20) NOT NULL,  `CathedraId` INT(10),  `TeacherId` INT(10) NOT NULL,  PRIMARY KEY (`Id`), FOREIGN KEY (`TeacherId`) REFERENCES `Teachers`(`Id`), FOREIGN KEY (`CathedraId`) REFERENCES `Cathedras`(`Id`));",
+      "CREATE TABLE `CurrentMarks` (`Id` INT(10) NOT NULL  AUTO_INCREMENT,  `StudentId` INT(10) NOT NULL,  `Mark` INT(3) NOT NULL,  `TaskType` VARCHAR(50) NOT NULL,  `SubjectId` INT(10) NOT NULL,  PRIMARY KEY (`Id`), FOREIGN KEY (`StudentId`) REFERENCES `Students`(`Id`), FOREIGN KEY (`SubjectId`) REFERENCES `Subjects`(`Id`));",
+      "CREATE TABLE `PersonalSubjects` (`Id` INT(10) NOT NULL  AUTO_INCREMENT,  `GroupId` INT(10),  `SubjectId` INT(10) NOT NULL,  `Semester` DATE NOT NULL,  `SubjectGroup` INT(10) NOT NULL UNIQUE,  PRIMARY KEY (`Id`), FOREIGN KEY (`GroupId`) REFERENCES `Groups`(`Id`));",
+      "CREATE TABLE `PersonalSubjectGroups` (`Id` INT(10) NOT NULL  AUTO_INCREMENT,  `StudentId` INT(10) NOT NULL,  `GroupId` INT(10) NOT NULL,  PRIMARY KEY (`Id`), FOREIGN KEY (`StudentId`) REFERENCES `Students`(`Id`), FOREIGN KEY (`GroupId`) REFERENCES `PersonalSubjects`(`SubjectGroup`));",
+      "CREATE TABLE `Schedule` (`Id` INT(10) NOT NULL  AUTO_INCREMENT,  `SubjectId` INT(10) NOT NULL,  `GroupId` INT(10),  `PersonalSubjGroupId` INT(10) NOT NULL,  `Time` DATE NOT NULL,  `Place` VARCHAR(50),  `Semester` DATE NOT NULL,  `WeekDay` VARCHAR(15) NOT NULL,  `Week` INT(1) NOT NULL,  PRIMARY KEY (`Id`), FOREIGN KEY (`PersonalSubjGroupId`) REFERENCES `PersonalSubjectGroups`(`Id`), FOREIGN KEY (`GroupId`) REFERENCES `Groups`(`Id`));"
+    ]
+  },
+  "use": "USE learnoree",
+  "selectUsersByEmail": "SELECT * FROM Users WHERE Email = {{email}}",
+  "selectUser": "SELECT * FROM `{{table}}` WHERE UserId = {{id}}"
+}
