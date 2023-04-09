@@ -56,11 +56,15 @@ export default {
     },
     methods: {
         handleLogin() {
-            this.$store.dispatch('logIn', { email: this.email, password: this.password });
-            if (!this.$store.state.isLoggedIn) {
-                this.error = 'wrongData';
+            if (this.isLogin) {
+                this.$store.dispatch('logIn', { email: this.email, password: this.password });
+                if (!this.$store.state.isLoggedIn) {
+                    this.error = 'wrongData';
+                } else {
+                    this.$router.push("/news");
+                }
             } else {
-                this.$router.push("/news");
+                this.$store.dispatch('restorePassword', { email: this.email })
             }
         },
     }

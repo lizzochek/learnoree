@@ -38,10 +38,20 @@ export default createStore({
         };
       }
     },
+    async restorePassword(state, { email }) {
+      const response = await fetch('/api/forgotPassword', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+    },
   },
   actions: {
     logIn({ commit }, data) {
       commit('logIn', data);
+    },
+    restorePassword({ commit }, data) {
+      commit('restorePassword', data);
     },
   },
 });
