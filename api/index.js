@@ -11,6 +11,7 @@ require('dotenv').config({ path: __dirname + '/.env' });
 
 const { runQuery, connection } = require('../db/index');
 const queries = require('../db/queries.json');
+const { copyFile } = require('fs');
 
 const queryParser = (expression, valueObj) => {
   const templateMatcher = /{{\s?([^{}\s]*)\s?}}/g;
@@ -47,12 +48,49 @@ app.post('/api/getUser', async (req, res) => {
   res.send(queryResult);
 });
 
+app.post('/api/findByToken', async (req, res) => {
+  const queryResult = await runQuery(
+    connection,
+    queryParser(queries.findUserByToken, {
+      token: `'${req.body.token}'`,
+    })
+  );
+  if (queryResult.length) res.send(queryResult);
+  else res.sendStatus(401);
+});
+
+app.post('/api/changePassword', async (req, res) => {
+  const queryResult = await runQuery(
+    connection,
+    queryParser(queries.modifyUserPassword, {
+      password: `'${req.body.password}'`,
+      token: `'${req.body.token}'`,
+    })
+  );
+  res.sendStatus(200);
+});
+
 app.post('/api/forgotPassword', async (req, res) => {
+  const userData = await runQuery(
+    connection,
+    queryParser(queries.selectUsersByEmail, { email: `'${req.body.email}'` })
+  );
+
+  if (!userData.length) res.sendStatus(404);
+
   const token = jwt.sign({ email: req.body.email }, process.env.JWT_TOKEN, {
     expiresIn: '1h',
   });
 
-  const link = `http://localhost:8080?token=${token}`;
+  const link = `http://localhost:8080/restore?token=${token}`;
+
+  await runQuery(
+    connection,
+    queryParser(queries.modifyUserToken, {
+      token: `'${token}'`,
+      email: `'${req.body.email}'`,
+    })
+  );
 
   const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -81,18 +119,8 @@ app.post('/api/forgotPassword', async (req, res) => {
       console.log('Email sent: ' + info.response);
     }
   });
-  // Email.send({
-  //   Host: process.env.SMTP_HOST,
-  //   Username: process.env.SMTP_USERNAME,
-  //   Password: process.env.SMTP_PASSWORD,
-  //   To: 'liza.dolhova@gforces.pl',
-  //   From: process.env.SMTP_SENDER,
-  //   Subject: 'Restore your password',
-  //   Body: `<h2>Hello! </h1>
-  //   <p>To restore your password, click the following link: ${link}</p>
-  //   <p>Best wishes,</p>
-  //   <p>Learnoree team</p>`,
-  // }).then((message) => console.log(message));
+
+  res.sendStatus(200);
 });
 
 app.listen(port, () => {

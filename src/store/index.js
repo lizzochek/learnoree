@@ -4,19 +4,29 @@ export default createStore({
   state: {
     isLoggedIn: false,
     user: {},
+    errors: {},
   },
   modules: {},
-  getters: {},
+  getters: {
+    getLoggedIn(state) {
+      return state.isLoggedIn;
+    },
+    getUser(state) {
+      return state.user;
+    },
+    getErrors(state) {
+      return state.errors;
+    },
+  },
   mutations: {
-    async logIn(state, { email, password }) {
-      const response = await fetch('/api/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      });
+    removeError(state, errName) {
+      state.errors[errName] = false;
+    },
+    async logIn(state, { email, password, response }) {
       const userData = await response.json();
 
       if (password === userData[0]?.Password) {
+        console.log(password, userData);
         state.isLoggedIn = true;
 
         const table =
@@ -38,20 +48,59 @@ export default createStore({
         };
       }
     },
-    async restorePassword(state, { email }) {
-      const response = await fetch('/api/forgotPassword', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
-      });
+    async restorePassword(state, response) {
+      if (response.status == '404') state.errors.noUser = true;
+    },
+    async checkRestorePassToken(state, response) {
+      if (response.status == '401') state.errors.tokenError = true;
+      else state.user = (await response.json())[0];
+    },
+    async changePassword(state, response) {
+      if (response.status != '200') state.errors.restoreError = true;
     },
   },
   actions: {
-    logIn({ commit }, data) {
-      commit('logIn', data);
+    logIn({ commit }, { email, password }) {
+      return fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      }).then((response) => {
+        commit('logIn', { email, password, response });
+      });
     },
-    restorePassword({ commit }, data) {
-      commit('restorePassword', data);
+    restorePassword({ commit }, { email }) {
+      return fetch('/api/forgotPassword', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      }).then((response) => {
+        commit('restorePassword', response);
+      });
+    },
+    checkRestorePassToken({ commit }, { token }) {
+      return fetch('/api/findByToken', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token }),
+      }).then((response) => {
+        commit('checkRestorePassToken', response);
+      });
+    },
+    changePassword(context, { password }) {
+      return fetch('/api/changePassword', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          password,
+          token: context.state.user.ResetToken,
+        }),
+      }).then((response) => {
+        context.commit('changePassword', response);
+      });
+    },
+    removeError({ commit }, data) {
+      commit('removeError', data);
     },
   },
 });

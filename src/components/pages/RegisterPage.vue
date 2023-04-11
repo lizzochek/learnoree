@@ -8,7 +8,7 @@
                     backgroundTheme="dark" />
             </div>
             <form v-else class="register-form">
-                <h2>{{ headerText }}</h2>
+                <BaseHeading :text="headerText" />
                 <div v-if="currentStep == 'credentials'">
                     <input :class="error ? 'error-input' : ''" autocomplete="off" spellcheck="false" class="control"
                         type="email" placeholder="Email" v-model="email" />
@@ -50,11 +50,12 @@
 </template>
 
 <script>
+import BaseHeading from '../common/BaseHeading.vue';
 import LinkButton from '../common/LinkButton.vue';
 
 export default {
     name: 'RegisterPage',
-    components: { LinkButton },
+    components: { LinkButton, BaseHeading },
     data() {
         return {
             error: false,

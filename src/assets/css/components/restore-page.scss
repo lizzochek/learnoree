@@ -1,0 +1,75 @@
+#restore {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  background-color: var(--tertiary-color);
+  gap: 5%;
+
+  .container {
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    border-radius: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+  }
+
+  .control {
+    border: 0;
+    border-radius: 8px;
+    outline: none;
+    width: 25%;
+    height: 40px;
+    padding: 0 16px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    color: #f9f9f9;
+    margin: 15px auto;
+    font-family: inherit;
+    text-align: left;
+    font-size: 16px;
+  }
+
+  button.control {
+    cursor: pointer;
+    width: 27%;
+    background: var(--forth-color);
+    color: var(--tertiary-color);
+    border: 0;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 400;
+    text-align: center;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  &.light {
+    .control::placeholder {
+      color: var(--forth-color);
+      opacity: 1;
+    }
+  }
+}
+
+.message-container {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  vertical-align: middle;
+  margin: 0;
+}
+
+.error-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.error-p {
+  position: inherit;
+  color: red;
+}

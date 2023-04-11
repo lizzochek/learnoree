@@ -19,5 +19,8 @@
   },
   "use": "USE learnoree",
   "selectUsersByEmail": "SELECT * FROM Users WHERE Email = {{email}}",
-  "selectUser": "SELECT * FROM `{{table}}` WHERE UserId = {{id}}"
+  "selectUser": "SELECT * FROM `{{table}}` WHERE UserId = {{id}}",
+  "findUserByToken": "SELECT * FROM Users WHERE ResetToken = {{token}}",
+  "modifyUserToken": "UPDATE Users SET ResetToken = {{token}} WHERE Email = {{email}}",
+  "modifyUserPassword": "UPDATE Users SET Password={{password}} WHERE ResetToken = {{token}}"
 }
