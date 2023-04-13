@@ -1,6 +1,6 @@
 {
   "create": {
-    "db": "CREATE DATABASE learnoree",
+    "db": "CREATE DATABASE learnoree;",
     "tables": [
       "CREATE TABLE `Faculties` (`Id` INT(10)  NOT NULL AUTO_INCREMENT,  `Name` VARCHAR(50) NOT NULL,  `ShortName` VARCHAR(10) NOT NULL,  `Contacts` VARCHAR(10) NOT NULL,  PRIMARY KEY (`Id`));",
       "CREATE TABLE `Cathedras` (`Id` INT(10) NOT NULL AUTO_INCREMENT,  `Name` VARCHAR(50) NOT NULL,  `ShortName` VARCHAR(10) NOT NULL,  `Contacts` VARCHAR(10) NOT NULL,  `FacultyId` INT(10) NOT NULL,  PRIMARY KEY (`Id`), FOREIGN KEY (`FacultyId`) REFERENCES `Faculties`(`Id`));",
@@ -17,10 +17,17 @@
       "CREATE TABLE `Schedule` (`Id` INT(10) NOT NULL  AUTO_INCREMENT,  `SubjectId` INT(10) NOT NULL,  `GroupId` INT(10),  `PersonalSubjGroupId` INT(10) NOT NULL,  `Time` DATE NOT NULL,  `Place` VARCHAR(50),  `Semester` DATE NOT NULL,  `WeekDay` VARCHAR(15) NOT NULL,  `Week` INT(1) NOT NULL,  PRIMARY KEY (`Id`), FOREIGN KEY (`PersonalSubjGroupId`) REFERENCES `PersonalSubjectGroups`(`Id`), FOREIGN KEY (`GroupId`) REFERENCES `Groups`(`Id`));"
     ]
   },
-  "use": "USE learnoree",
-  "selectUsersByEmail": "SELECT * FROM Users WHERE Email = {{email}}",
-  "selectUser": "SELECT * FROM `{{table}}` WHERE UserId = {{id}}",
-  "findUserByToken": "SELECT * FROM Users WHERE ResetToken = {{token}}",
-  "modifyUserToken": "UPDATE Users SET ResetToken = {{token}} WHERE Email = {{email}}",
-  "modifyUserPassword": "UPDATE Users SET Password={{password}} WHERE ResetToken = {{token}}"
+  "use": "USE learnoree;",
+  "selectUsersByEmail": "SELECT * FROM Users WHERE Email = {{email}};",
+  "selectUser": "SELECT * FROM `{{table}}` WHERE UserId = {{id}};",
+  "findUserByToken": "SELECT * FROM Users WHERE ResetToken = {{token}};",
+  "modifyUserToken": "UPDATE Users SET ResetToken = {{token}} WHERE Email = {{email}};",
+  "modifyUserPassword": "UPDATE Users SET Password={{password}} WHERE ResetToken = {{token}};",
+  "addUserCredentials": "INSERT INTO Users (Email, Role, Password, Authorized) VALUES ('{{email}}', '{{role}}', '{{password}}', 0);",
+  "insertAdmin": "INSERT INTO Admins (Name, Surname, SecondName, UserId, Phone) VALUES ('{{name}}', '{{surname}}', '{{secondName}}', {{id}}, '{{phone}}')",
+  "insertTeacher": "INSERT INTO Teachers (Name, Surname, SecondName, CathedraId, UserId, Phone) VALUES ('{{name}}', '{{surname}}', '{{secondName}}', {{cathedraId}}, {{id}}, '{{phone}}')",
+  "insertStudent": "INSERT INTO Students (Name, Surname, SecondName, UserId, Phone, StartDate, EndDate) VALUES ('{{name}}', '{{surname}}', '{{secondName}}', {{id}}, '{{phone}}', STR_TO_DATE('{{startDate}}', '%d/%m/%Y'), STR_TO_DATE('{{endDate}}', '%d/%m/%Y'))",
+  "findCathedra": "SELECT * FROM Cathedras LEFT JOIN Faculties ON Faculties.Id = Cathedras.FacultyId WHERE Faculties.ShortName = '{{faculty}}' and Cathedras.ShortName = '{{cathedra}}",
+  "findGroup": "SELECT * FROM `Groups` WHERE `Groups`.Name = '{{group}}';",
+  "insertStudentGroupLink": "INSERT INTO StudentGroupLink (StudentId, GroupId) VALUES ('{{student}}', '{{group}}');"
 }

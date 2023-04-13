@@ -82,7 +82,7 @@ export default {
                     email: this.email,
                     password: this.password,
                 });
-                console.log(this.$store.getters)
+
                 if (!this.$store.getters.getLoggedIn) {
                     this.error = 'wrongData';
                 } else {

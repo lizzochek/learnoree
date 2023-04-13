@@ -26,7 +26,6 @@ export default createStore({
       const userData = await response.json();
 
       if (password === userData[0]?.Password) {
-        console.log(password, userData);
         state.isLoggedIn = true;
 
         const table =
@@ -34,11 +33,7 @@ export default createStore({
           userData[0].Role.slice(1) +
           's';
 
-        const data = await fetch('/api/getUser', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ table, id: userData[0].Id }),
-        });
+        const data = await fetch(`/api/getUser/${table}/${userData[0].Id}`);
         const parsedData = await data.json();
         state.user = {
           email,
@@ -55,17 +50,19 @@ export default createStore({
       if (response.status == '401') state.errors.tokenError = true;
       else state.user = (await response.json())[0];
     },
-    async changePassword(state, response) {
+    changePassword(state, response) {
       if (response.status != '200') state.errors.restoreError = true;
+    },
+    getUser(state, response) {
+      if (response.status == '200') state.errors.userExists = true;
+    },
+    registerUser(state, response) {
+      if (response.status != '200') state.errors.userExists = true;
     },
   },
   actions: {
     logIn({ commit }, { email, password }) {
-      return fetch('/api/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      }).then((response) => {
+      return fetch(`/api/findByEmail/${email}`).then((response) => {
         commit('logIn', { email, password, response });
       });
     },
@@ -97,6 +94,25 @@ export default createStore({
         }),
       }).then((response) => {
         context.commit('changePassword', response);
+      });
+    },
+    getUser({ commit }, { email }) {
+      return fetch(`/api/findByEmail/${email}`).then((response) => {
+        commit('getUser', response);
+      });
+    },
+    registerUser({ commit }, { email, password, enteredData, role }) {
+      return fetch('/apiRegisterUser', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email,
+          password,
+          enteredData,
+          role,
+        }),
+      }).then((response) => {
+        commit('registerUser', response);
       });
     },
     removeError({ commit }, data) {
