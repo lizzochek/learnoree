@@ -22,12 +22,11 @@ export default createStore({
     removeError(state, errName) {
       state.errors[errName] = false;
     },
-    async logIn(state, { email, password, response }) {
-      const userData = await response.json();
-
-      if (password === userData[0]?.Password) {
+    async logIn(state, { email, response }) {
+      if (response.status == '200') {
         state.isLoggedIn = true;
 
+        const userData = await response.json();
         const table =
           userData[0].Role.charAt(0).toUpperCase() +
           userData[0].Role.slice(1) +
@@ -35,6 +34,7 @@ export default createStore({
 
         const data = await fetch(`/api/getUser/${table}/${userData[0].Id}`);
         const parsedData = await data.json();
+
         state.user = {
           email,
           authorized: userData[0].Authorized,
@@ -62,8 +62,8 @@ export default createStore({
   },
   actions: {
     logIn({ commit }, { email, password }) {
-      return fetch(`/api/findByEmail/${email}`).then((response) => {
-        commit('logIn', { email, password, response });
+      return fetch(`/api/findByEmail/${email}/${password}`).then((response) => {
+        commit('logIn', { email, response });
       });
     },
     restorePassword({ commit }, { email }) {
@@ -76,11 +76,7 @@ export default createStore({
       });
     },
     checkRestorePassToken({ commit }, { token }) {
-      return fetch('/api/findByToken', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ token }),
-      }).then((response) => {
+      return fetch(`/api/findByToken/${token}`).then((response) => {
         commit('checkRestorePassToken', response);
       });
     },

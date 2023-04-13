@@ -28,13 +28,14 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/index.html'));
 });
 
-app.get('/api/findByEmail/:email', async (req, res) => {
+app.get('/api/findByEmail/:email/:password', async (req, res) => {
   const queryResult = await runQuery(
     connection,
     queryParser(queries.selectUsersByEmail, { email: `'${req.params.email}'` })
   );
-  if (queryResult.length) res.send(queryResult);
-  else res.sendStatus(404);
+  if (queryResult.length) {
+    if (queryResult[0].password == req.body.password) res.send(queryResult);
+  } else res.sendStatus(404);
 });
 
 app.get('/api/getUser/:table/:id', async (req, res) => {
@@ -140,11 +141,11 @@ app.post('/api/registerUser', async (req, res) => {
   }
 });
 
-app.post('/api/findByToken', async (req, res) => {
+app.get('/api/findByToken/:token', async (req, res) => {
   const queryResult = await runQuery(
     connection,
     queryParser(queries.findUserByToken, {
-      token: `'${req.body.token}'`,
+      token: `'${req.params.token}'`,
     })
   );
   if (queryResult.length) res.send(queryResult);
