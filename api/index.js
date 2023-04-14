@@ -11,6 +11,7 @@ require('dotenv').config({ path: __dirname + '/.env' });
 
 const { runQuery, connection } = require('../db/index');
 const queries = require('../db/queries.json');
+const { application } = require('express');
 
 const queryParser = (expression, valueObj) => {
   const templateMatcher = /{{\s?([^{}\s]*)\s?}}/g;
@@ -150,6 +151,39 @@ app.get('/api/findByToken/:token', async (req, res) => {
   );
   if (queryResult.length) res.send(queryResult);
   else res.sendStatus(401);
+});
+
+app.get('/api/findStudentGroup/:id', async (req, res) => {
+  const queryResult = await runQuery(
+    connection,
+    queryParser(queries.findStudentGroup, {
+      id: req.params.id,
+    })
+  );
+  if (queryResult.length) res.send(queryResult);
+  else res.sendStatus(404);
+});
+
+app.get('/api/findSpecialty/:id', async (req, res) => {
+  const queryResult = await runQuery(
+    connection,
+    queryParser(queries.findSpecialty, {
+      id: req.params.id,
+    })
+  );
+  if (queryResult.length) res.send(queryResult);
+  else res.sendStatus(404);
+});
+
+app.get('/api/findFaculty/:id', async (req, res) => {
+  const queryResult = await runQuery(
+    connection,
+    queryParser(queries.findFacultyBySpecialty, {
+      id: req.params.id,
+    })
+  );
+  if (queryResult.length) res.send(queryResult);
+  else res.sendStatus(404);
 });
 
 app.post('/api/changePassword', async (req, res) => {

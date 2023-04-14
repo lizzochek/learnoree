@@ -29,5 +29,8 @@
   "insertStudent": "INSERT INTO Students (Name, Surname, SecondName, UserId, Phone, StartDate, EndDate) VALUES ('{{name}}', '{{surname}}', '{{secondName}}', {{id}}, '{{phone}}', STR_TO_DATE('{{startDate}}', '%d/%m/%Y'), STR_TO_DATE('{{endDate}}', '%d/%m/%Y'))",
   "findCathedra": "SELECT * FROM Cathedras LEFT JOIN Faculties ON Faculties.Id = Cathedras.FacultyId WHERE Faculties.ShortName = '{{faculty}}' and Cathedras.ShortName = '{{cathedra}}",
   "findGroup": "SELECT * FROM `Groups` WHERE `Groups`.Name = '{{group}}';",
-  "insertStudentGroupLink": "INSERT INTO StudentGroupLink (StudentId, GroupId) VALUES ('{{student}}', '{{group}}');"
+  "insertStudentGroupLink": "INSERT INTO StudentGroupLink (StudentId, GroupId) VALUES ('{{student}}', '{{group}}');",
+  "findSpecialty": "SELECT `Specialties`.Id, `Specialties`.Name, `Specialties`.Code, `Specialties`.CathedraId FROM `Specialties` JOIN `Groups` ON `Specialties`.Id = `Groups`.SpecialtyId JOIN `StudentGroupLink` ON `StudentGroupLink`.GroupId = `Groups`.Id WHERE `StudentGroupLink`.StudentId = '{{id}}'",
+  "findFacultyBySpecialty": "SELECT `Faculties`.Id, `Faculties`.Name, `Faculties`.ShortName, `Faculties`.Contacts FROM `Faculties` JOIN `Cathedras` ON `Cathedras`.FacultyId = `Faculties`.Id JOIN `Specialties` ON `Specialties`.CathedraId = `Cathedras`.Id WHERE `Specialties`.Id = '{{id}}';",
+  "findStudentGroup": "SELECT * FROM `Groups` JOIN `StudentGroupLink` ON `StudentGroupLink`.GroupId = `Groups`.Id WHERE `StudentGroupLink`.StudentId = '{{id}}'"
 }

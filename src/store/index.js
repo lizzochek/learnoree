@@ -1,6 +1,18 @@
 import { createStore } from 'vuex';
+import createPersistedState from 'vuex-persistedstate';
+
+const formatData = (obj) =>
+  Object.keys(obj).reduce((accumulator, key) => {
+    accumulator[key.charAt(0).toLowerCase() + key.slice(1)] = obj[key];
+    return accumulator;
+  }, {});
 
 export default createStore({
+  plugins: [
+    createPersistedState({
+      storage: window.sessionStorage,
+    }),
+  ],
   state: {
     isLoggedIn: false,
     user: {},
@@ -28,7 +40,6 @@ export default createStore({
         sessionStorage.setItem('isLoggedIn', true);
 
         const userData = await response.json();
-        console.log(userData);
         const table =
           userData[0].Role.charAt(0).toUpperCase() +
           userData[0].Role.slice(1) +
@@ -39,6 +50,7 @@ export default createStore({
 
         sessionStorage.setItem('isAuthorized', userData[0].Authorized);
 
+        parsedData[0] = formatData(parsedData[0]);
         state.user = {
           email,
           authorized: userData[0].Authorized,
@@ -52,7 +64,7 @@ export default createStore({
     },
     async checkRestorePassToken(state, response) {
       if (response.status == '401') state.errors.tokenError = true;
-      else state.user = (await response.json())[0];
+      else state.user = formatData((await response.json())[0]);
     },
     changePassword(state, response) {
       if (response.status != '200') state.errors.restoreError = true;
@@ -60,13 +72,33 @@ export default createStore({
     getUser(state, response) {
       if (response.status == '200') state.errors.userExists = true;
     },
+    async getSpecialty(state, response) {
+      if (response.status == '200') {
+        const data = await response.json();
+        data[0] = formatData(data[0]);
+        state.user.specialty = { ...data[0] };
+      }
+    },
+    async getFaculty(state, response) {
+      if (response.status == '200') {
+        const data = await response.json();
+        data[0] = formatData(data[0]);
+        state.user.faculty = { ...data[0] };
+      }
+    },
+    async getStudentGroup(state, response) {
+      if (response.status == '200') {
+        const data = await response.json();
+        data[0] = formatData(data[0]);
+        state.user.group = { ...data[0] };
+      }
+    },
     registerUser(state, { email, enteredData, role, response }) {
       if (response.status != '200') {
         state.errors.userExists = true;
       } else {
         state.isLoggedIn = true;
-        sessionStorage.setItem('isLoggedIn', true);
-        sessionStorage.setItem('isAuthorized', false);
+        state.isAuthorized = false;
 
         state.user = {
           email,
@@ -112,6 +144,21 @@ export default createStore({
     getUser({ commit }, { email }) {
       return fetch(`/api/findByEmail/${email}`).then((response) => {
         commit('getUser', response);
+      });
+    },
+    getSpecialty({ commit }, { id }) {
+      return fetch(`/api/findSpecialty/${id}`).then((response) => {
+        commit('getSpecialty', response);
+      });
+    },
+    getStudentGroup({ commit }, { id }) {
+      return fetch(`/api/findStudentGroup/${id}`).then((response) => {
+        commit('getStudentGroup', response);
+      });
+    },
+    getFaculty({ commit }, { id }) {
+      return fetch(`/api/findFaculty/${id}`).then((response) => {
+        commit('getFaculty', response);
       });
     },
     registerUser({ commit }, { email, password, enteredData, role }) {
