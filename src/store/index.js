@@ -25,8 +25,10 @@ export default createStore({
     async logIn(state, { email, response }) {
       if (response.status == '200') {
         state.isLoggedIn = true;
+        sessionStorage.setItem('isLoggedIn', true);
 
         const userData = await response.json();
+        console.log(userData);
         const table =
           userData[0].Role.charAt(0).toUpperCase() +
           userData[0].Role.slice(1) +
@@ -34,6 +36,8 @@ export default createStore({
 
         const data = await fetch(`/api/getUser/${table}/${userData[0].Id}`);
         const parsedData = await data.json();
+
+        sessionStorage.setItem('isAuthorized', userData[0].Authorized);
 
         state.user = {
           email,
@@ -56,8 +60,21 @@ export default createStore({
     getUser(state, response) {
       if (response.status == '200') state.errors.userExists = true;
     },
-    registerUser(state, response) {
-      if (response.status != '200') state.errors.userExists = true;
+    registerUser(state, { email, enteredData, role, response }) {
+      if (response.status != '200') {
+        state.errors.userExists = true;
+      } else {
+        state.isLoggedIn = true;
+        sessionStorage.setItem('isLoggedIn', true);
+        sessionStorage.setItem('isAuthorized', false);
+
+        state.user = {
+          email,
+          authorized: false,
+          ...enteredData,
+          role,
+        };
+      }
     },
   },
   actions: {
@@ -98,7 +115,7 @@ export default createStore({
       });
     },
     registerUser({ commit }, { email, password, enteredData, role }) {
-      return fetch('/apiRegisterUser', {
+      return fetch('/api/registerUser', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -108,7 +125,12 @@ export default createStore({
           role,
         }),
       }).then((response) => {
-        commit('registerUser', response);
+        commit('registerUser', {
+          email,
+          enteredData,
+          role,
+          response,
+        });
       });
     },
     removeError({ commit }, data) {

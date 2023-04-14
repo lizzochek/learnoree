@@ -6,7 +6,7 @@
             <BaseHeading text="Sorry, something is wrong with your token. Please try again" />
         </div>
         <div v-else class="container">
-            <BaseHeading text="Restore your password" />
+            <BaseHeading text="Change your password" />
             <input spellcheck="false" class="control" v-model="password" type="password" placeholder="New password" />
             <input spellcheck="false" class="control" v-model="repeatPassword" type="password"
                 placeholder="Repeat password" />
