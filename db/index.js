@@ -18,7 +18,7 @@ const runQuery = async (con, sql) => {
     con.query(sql, (err, rows) => {
       if (err) {
         console.log(err);
-        reject(new Error('Error performing query'));
+        reject(new Error(`Error performing query ${sql}`));
       } else {
         resolve(rows);
       }

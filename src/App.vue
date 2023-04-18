@@ -24,6 +24,9 @@ export default {
 
       return className;
     },
+  },
+  async beforeCreate() {
+    await this.$store.commit('initialiseStore');
   }
 };
 </script>

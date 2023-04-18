@@ -35,7 +35,7 @@ export default {
         url: {
             type: String,
             default: '',
-            required: true,
+            required: false,
         },
         backgroundTheme: {
             type: String,
@@ -89,6 +89,37 @@ export default {
     stroke-width: 1;
     stroke-dasharray: 100, 480;
     stroke-dashoffset: 424;
+}
+
+#my-account {
+    .btn {
+        width: 400px;
+        height: 72px;
+        line-height: 40px;
+        font-weight: 200;
+        font-size: 18px;
+    }
+
+    .btn svg rect {
+        width: 390px;
+        height: 60px;
+    }
+
+    .btn svg {
+        width: 411px;
+        height: 81px;
+    }
+
+    .btn span {
+        position: relative;
+        top: -110%;
+        left: 0%;
+    }
+
+    .btn:hover svg rect {
+        stroke-dasharray: 260, 645;
+        stroke-dashoffset: 434;
+    }
 }
 </style>
 

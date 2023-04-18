@@ -78,18 +78,18 @@ export default {
         async handleLogin() {
             this.$store.dispatch('removeError', 'noUser');
             if (this.isLogin) {
-                await this.$store.dispatch('logIn', {
+                await this.$store.dispatch('login/logIn', {
                     email: this.email,
                     password: this.password,
                 });
 
-                if (!this.$store.getters.getLoggedIn) {
+                if (!this.$store.getters['login/getLoggedIn']) {
                     this.error = 'wrongData';
                 } else {
                     this.$router.push('/news');
                 }
             } else {
-                await this.$store.dispatch('restorePassword', { email: this.email });
+                await this.$store.dispatch('login/restorePassword', { email: this.email });
                 if (this.$store.getters.getErrors?.noUser) {
                     this.error = 'noUser';
                 } else {

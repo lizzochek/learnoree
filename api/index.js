@@ -29,6 +29,7 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/index.html'));
 });
 
+// User login/register
 app.get('/api/findByEmail/:email/:password', async (req, res) => {
   const queryResult = await runQuery(
     connection,
@@ -153,39 +154,6 @@ app.get('/api/findByToken/:token', async (req, res) => {
   else res.sendStatus(401);
 });
 
-app.get('/api/findStudentGroup/:id', async (req, res) => {
-  const queryResult = await runQuery(
-    connection,
-    queryParser(queries.findStudentGroup, {
-      id: req.params.id,
-    })
-  );
-  if (queryResult.length) res.send(queryResult);
-  else res.sendStatus(404);
-});
-
-app.get('/api/findSpecialty/:id', async (req, res) => {
-  const queryResult = await runQuery(
-    connection,
-    queryParser(queries.findSpecialty, {
-      id: req.params.id,
-    })
-  );
-  if (queryResult.length) res.send(queryResult);
-  else res.sendStatus(404);
-});
-
-app.get('/api/findFaculty/:id', async (req, res) => {
-  const queryResult = await runQuery(
-    connection,
-    queryParser(queries.findFacultyBySpecialty, {
-      id: req.params.id,
-    })
-  );
-  if (queryResult.length) res.send(queryResult);
-  else res.sendStatus(404);
-});
-
 app.post('/api/changePassword', async (req, res) => {
   const queryResult = await runQuery(
     connection,
@@ -255,6 +223,51 @@ app.post('/api/forgotPassword', async (req, res) => {
     connection.rollback();
     res.sendStatus(401);
   }
+});
+
+// User data
+app.get('/api/findStudentGroup/:id', async (req, res) => {
+  const queryResult = await runQuery(
+    connection,
+    queryParser(queries.findStudentGroup, {
+      id: req.params.id,
+    })
+  );
+  if (queryResult.length) res.send(queryResult);
+  else res.sendStatus(404);
+});
+
+app.get('/api/findSpecialty/:id', async (req, res) => {
+  const queryResult = await runQuery(
+    connection,
+    queryParser(queries.findSpecialty, {
+      id: req.params.id,
+    })
+  );
+  if (queryResult.length) res.send(queryResult);
+  else res.sendStatus(404);
+});
+
+app.get('/api/findFaculty/:id', async (req, res) => {
+  const queryResult = await runQuery(
+    connection,
+    queryParser(queries.findFacultyBySpecialty, {
+      id: req.params.id,
+    })
+  );
+  if (queryResult.length) res.send(queryResult);
+  else res.sendStatus(404);
+});
+
+app.get('/api/findTeacherCathedraAndFaculty/:id', async (req, res) => {
+  const queryResult = await runQuery(
+    connection,
+    queryParser(queries.findTeacherCathedraAndFaculty, {
+      id: req.params.id,
+    })
+  );
+  if (queryResult.length) res.send(queryResult);
+  else res.sendStatus(404);
 });
 
 app.listen(port, () => {

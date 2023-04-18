@@ -32,5 +32,6 @@
   "insertStudentGroupLink": "INSERT INTO StudentGroupLink (StudentId, GroupId) VALUES ('{{student}}', '{{group}}');",
   "findSpecialty": "SELECT `Specialties`.Id, `Specialties`.Name, `Specialties`.Code, `Specialties`.CathedraId FROM `Specialties` JOIN `Groups` ON `Specialties`.Id = `Groups`.SpecialtyId JOIN `StudentGroupLink` ON `StudentGroupLink`.GroupId = `Groups`.Id WHERE `StudentGroupLink`.StudentId = '{{id}}'",
   "findFacultyBySpecialty": "SELECT `Faculties`.Id, `Faculties`.Name, `Faculties`.ShortName, `Faculties`.Contacts FROM `Faculties` JOIN `Cathedras` ON `Cathedras`.FacultyId = `Faculties`.Id JOIN `Specialties` ON `Specialties`.CathedraId = `Cathedras`.Id WHERE `Specialties`.Id = '{{id}}';",
-  "findStudentGroup": "SELECT * FROM `Groups` JOIN `StudentGroupLink` ON `StudentGroupLink`.GroupId = `Groups`.Id WHERE `StudentGroupLink`.StudentId = '{{id}}'"
+  "findStudentGroup": "SELECT * FROM `Groups` JOIN `StudentGroupLink` ON `StudentGroupLink`.GroupId = `Groups`.Id WHERE `StudentGroupLink`.StudentId = '{{id}}'",
+  "findTeacherCathedraAndFaculty": "SELECT `Faculties`.Id as faculty_id, `Faculties`.Name  as faculty_name, `Faculties`.ShortName  as faculty_shortName, `Faculties`.Contacts  as faculty_contacts, `Cathedras`.Id as cathedra_id, `Cathedras`.Name as cathedra_name, `Cathedras`.ShortName as cathedra_shortName, `Cathedras`.Contacts as cathedra_contacts FROM `Teachers` JOIN `Cathedras` ON `Teachers`.CathedraId = `Cathedras`.Id JOIN `Faculties` ON `Cathedras`.FacultyId = `Faculties`.Id WHERE `Teachers`.Id = '{{id}}'"
 }
