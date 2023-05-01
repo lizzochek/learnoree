@@ -39,11 +39,39 @@ app.get('/api/getSpecialty/:id', userDataHandler.getSpecialty);
 
 app.get('/api/getFaculty/:id', userDataHandler.getFaculty);
 
+// app.get('/api/getStudentSchedule/:id', userDataHandler.getStudentSchedule);
+
+// app.get('/api/getStudentMarks/:id', userDataHandler.getStudentMarks);
+
+// app.get('/api/getChoiceSubjects/:id', userDataHandler.getChoiseSubjects);
+
+// app.get('/api/getChosenSubjects/:id', userDataHandler.getChosenSubjects);
+
+// app.get('/api/getAllStudentMarks/:id', userDataHandler.getAllStudentMarks);
+
+// app.post('/api/chooseSubject/:id', userDataHandler.chooseSubject);
+
 // Teacher
 app.get(
   '/api/getTeacherCathFac/:id',
   userDataHandler.getTeacherCathedraAndFaculty
 );
+
+// app.get('/api/getGroupSchedule/:id', userDataHandler.getGroupSchedule);
+
+// app.get('/api/getGroupMarks/:id', userDataHandler.getGroupMarks);
+
+// app.post('/api/setStudentMark/:id', userDataHandler.setStudentMark);
+
+// Admin
+
+// app.get('/api/getUsersData/:id', userDataHandler.getUsersData);
+
+// app.post('/api/setUsersData/:id', userDataHandler.setUsersData);
+
+// app.post('/api/setSchedule/:id', userDataHandler.setSchedule);
+
+// app.post('/api/setChoiceSubject/:id', userDataHandler.setChoiceSubject);
 
 app.listen(port, () => {
   try {
