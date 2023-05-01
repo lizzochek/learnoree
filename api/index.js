@@ -19,29 +19,30 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/index.html'));
 });
 
-// User login/register
-app.get('/api/findByEmail/:email/:password', userHandler.findByEmail);
+// User login/register data
+app.get('/api/getByEmail/:email/:password', userHandler.getByEmail);
 
 app.get('/api/getUser/:table/:id', userHandler.getUser);
 
 app.post('/api/registerUser', userHandler.registerUser);
 
-app.get('/api/findByToken/:token', userHandler.findByToken);
+app.get('/api/getByToken/:token', userHandler.getByToken);
 
 app.post('/api/changePassword', userHandler.changePassword);
 
 app.post('/api/forgotPassword', userHandler.forgotPassword);
 
-// User data
-app.get('/api/findStudentGroup/:id', userDataHandler.findStudentGroup);
+// Student
+app.get('/api/getStudentGroup/:id', userDataHandler.getStudentGroup);
 
-app.get('/api/findSpecialty/:id', userDataHandler.findSpecialty);
+app.get('/api/getSpecialty/:id', userDataHandler.getSpecialty);
 
-app.get('/api/findFaculty/:id', userDataHandler.findFaculty);
+app.get('/api/getFaculty/:id', userDataHandler.getFaculty);
 
+// Teacher
 app.get(
-  '/api/findTeacherCathedraAndFaculty/:id',
-  userDataHandler.findTeacherCathedraAndFaculty
+  '/api/getTeacherCathFac/:id',
+  userDataHandler.getTeacherCathedraAndFaculty
 );
 
 app.listen(port, () => {

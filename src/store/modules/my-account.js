@@ -36,22 +36,22 @@ export default {
   },
   actions: {
     getSpecialty({ commit, rootState }, { id }) {
-      return fetch(`/api/findSpecialty/${id}`).then((response) => {
+      return fetch(`/api/getSpecialty/${id}`).then((response) => {
         commit('getSpecialty', { response, rootState });
       });
     },
     getStudentGroup({ commit, rootState }, { id }) {
-      return fetch(`/api/findStudentGroup/${id}`).then((response) => {
+      return fetch(`/api/getStudentGroup/${id}`).then((response) => {
         commit('getStudentGroup', { response, rootState });
       });
     },
     getFaculty({ commit, rootState }, { id }) {
-      return fetch(`/api/findFaculty/${id}`).then((response) => {
+      return fetch(`/api/getFaculty/${id}`).then((response) => {
         commit('getFaculty', { response, rootState });
       });
     },
     getTeacherCathedraAndFaculty({ commit, rootState }, { id }) {
-      return fetch(`/api/findTeacherCathedraAndFaculty/${id}`).then(
+      return fetch(`/api/getTeacherCathFac/${id}`).then(
         (response) => {
           commit('getTeacherCathedraAndFaculty', { response, rootState });
         }

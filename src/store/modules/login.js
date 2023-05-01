@@ -75,7 +75,7 @@ export default {
   },
   actions: {
     logIn({ commit }, { email, password }) {
-      return fetch(`/api/findByEmail/${email}/${password}`).then((response) => {
+      return fetch(`/api/getByEmail/${email}/${password}`).then((response) => {
         commit('logIn', { email, response });
       });
     },
@@ -92,12 +92,12 @@ export default {
       });
     },
     getUser({ commit }, { email }) {
-      return fetch(`/api/findByEmail/${email}`).then((response) => {
+      return fetch(`/api/getByEmail/${email}`).then((response) => {
         commit('getUser', response);
       });
     },
     checkRestorePassToken({ commit }, { token }) {
-      return fetch(`/api/findByToken/${token}`).then((response) => {
+      return fetch(`/api/getByToken/${token}`).then((response) => {
         commit('checkRestorePassToken', response);
       });
     },

@@ -6,7 +6,7 @@ const nodemailer = require('nodemailer');
 
 const { queryParser } = require('../helpers');
 module.exports = {
-  findByEmail: async (req, res) => {
+  getByEmail: async (req, res) => {
     const queryResult = await runQuery(
       connection,
       queryParser(queries.selectUsersByEmail, {
@@ -63,7 +63,7 @@ module.exports = {
         case 'teacher':
           const cathedraSearchRes = (queryRes = await runQuery(
             connection,
-            queryParser(queries.findCathedra, {
+            queryParser(queries.getCathedra, {
               faculty: req.body.faculty,
               cathedra: req.body.cathedra,
             })
@@ -83,7 +83,7 @@ module.exports = {
         case 'student':
           const groupSearchRes = (queryRes = await runQuery(
             connection,
-            queryParser(queries.findGroup, {
+            queryParser(queries.getGroup, {
               group: req.body.group,
             })
           ));
@@ -121,10 +121,10 @@ module.exports = {
     }
   },
 
-  findByToken: async (req, res) => {
+  getByToken: async (req, res) => {
     const queryResult = await runQuery(
       connection,
-      queryParser(queries.findUserByToken, {
+      queryParser(queries.getUserByToken, {
         token: `'${req.params.token}'`,
       })
     );

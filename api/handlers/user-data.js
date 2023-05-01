@@ -4,10 +4,10 @@ const queries = require('../../db/queries.json');
 const { queryParser } = require('../helpers');
 
 module.exports = {
-  findStudentGroup: async (req, res) => {
+  getStudentGroup: async (req, res) => {
     const queryResult = await runQuery(
       connection,
-      queryParser(queries.findStudentGroup, {
+      queryParser(queries.getStudentGroup, {
         id: req.params.id,
       })
     );
@@ -15,10 +15,10 @@ module.exports = {
     else res.sendStatus(404);
   },
 
-  findSpecialty: async (req, res) => {
+  getSpecialty: async (req, res) => {
     const queryResult = await runQuery(
       connection,
-      queryParser(queries.findSpecialty, {
+      queryParser(queries.getSpecialty, {
         id: req.params.id,
       })
     );
@@ -26,10 +26,10 @@ module.exports = {
     else res.sendStatus(404);
   },
 
-  findFaculty: async (req, res) => {
+  getFaculty: async (req, res) => {
     const queryResult = await runQuery(
       connection,
-      queryParser(queries.findFacultyBySpecialty, {
+      queryParser(queries.getFacultyBySpecialty, {
         id: req.params.id,
       })
     );
@@ -37,10 +37,10 @@ module.exports = {
     else res.sendStatus(404);
   },
 
-  findTeacherCathedraAndFaculty: async (req, res) => {
+  getTeacherCathedraAndFaculty: async (req, res) => {
     const queryResult = await runQuery(
       connection,
-      queryParser(queries.findTeacherCathedraAndFaculty, {
+      queryParser(queries.getTeacherCathedraAndFaculty, {
         id: req.params.id,
       })
     );
