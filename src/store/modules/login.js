@@ -6,6 +6,7 @@ export default {
     isLoggedIn: false,
     user: {},
     isAuthorized: true,
+    errors: {},
   },
   getters: {
     getLoggedIn(state) {

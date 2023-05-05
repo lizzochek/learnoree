@@ -1,10 +1,12 @@
 const { runQuery, connection } = require('../../db/index');
 const queries = require('../../db/queries.json');
+const bcryptjs = require('bcryptjs');
 
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 
 const { queryParser } = require('../helpers');
+
 module.exports = {
   getByEmail: async (req, res) => {
     const queryResult = await runQuery(
@@ -13,8 +15,14 @@ module.exports = {
         email: `'${req.params.email}'`,
       })
     );
+
     if (queryResult.length) {
-      if (queryResult[0].password == req.body.password) res.send(queryResult);
+      if (
+        bcryptjs.compare(queryResult[0].Password, req.params.password) ||
+        // for test accounts
+        queryResult[0].Password === req.params.password
+      )
+        res.send(queryResult);
     } else res.sendStatus(404);
   },
 
@@ -30,13 +38,16 @@ module.exports = {
   },
 
   registerUser: async (req, res) => {
+    // Creating salt for bcrypt
+    const numSaltRounds = 5;
+    const hash = bcryptjs.hash(req.body.password, numSaltRounds);
     await connection.beginTransaction();
     try {
       const userInsertResult = await runQuery(
         connection,
         queryParser(queries.addUserCredentials, {
           email: req.body.email,
-          password: req.body.password,
+          password: hash,
           role: req.body.role,
         })
       );

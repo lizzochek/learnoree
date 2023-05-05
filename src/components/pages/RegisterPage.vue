@@ -189,7 +189,7 @@ export default {
             this.$store.dispatch('removeError', 'userExists');
 
             if (this.currentStep == "credentials") {
-                await this.$store.dispatch('getUser', { email: this.email });
+                await this.$store.dispatch('login/getUser', { email: this.email });
 
                 if (!this.$store.getters.getErrors.userExists) {
                     this.currentStep = "data";
@@ -200,7 +200,7 @@ export default {
 
                 if (isFormValid) {
                     this.formatData();
-                    await this.$store.dispatch('registerUser', { email: this.email, password: this.password, enteredData: this.enteredData, role: this.currentRole });
+                    await this.$store.dispatch('login/registerUser', { email: this.email, password: this.password, enteredData: this.enteredData, role: this.currentRole });
                     if (!this.registerError) this.isModalOpen = true;
                 }
             }

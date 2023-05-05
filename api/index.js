@@ -67,11 +67,17 @@ app.get(
 
 // app.get('/api/getUsersData/:id', userDataHandler.getUsersData);
 
-// app.post('/api/setUsersData/:id', userDataHandler.setUsersData);
+// app.put('/api/setUsersData/:id', userDataHandler.setUsersData);
 
 // app.post('/api/setSchedule/:id', userDataHandler.setSchedule);
 
 // app.post('/api/setChoiceSubject/:id', userDataHandler.setChoiceSubject);
+
+// app.delete('/api/deleteUser/:id', userDataHandler.deleteUser);
+
+// app.delete('/api/deleteSchedule/:id', userDataHandler.deleteSchedule);
+
+// app.delete('/api/deleteSubject/:id', userDataHandler.deleteSubject);
 
 app.listen(port, () => {
   try {

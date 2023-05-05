@@ -24,11 +24,34 @@
 <script>
 export default {
     name: 'Menu',
-    props: {
-        menuLinks: {
-            type: Array,
-            default: '',
-            required: true,
+    computed: {
+        menuLinks() {
+            const { role, authorized } = this.$store.getters['login/getUser'];
+            const links = [{ text: 'News', address: '/news' }, { text: 'Schedule', address: '/schedule' }]
+            switch (role) {
+                case 'student':
+                    links.push(...[{ text: 'Current marks', address: '/marks' },
+                    { text: 'Exam results', address: '/exams' },
+                    { text: 'Questionnaire', address: '/questionnaire' },
+                    { text: 'Choose subjects', address: '/choose-subjects' },
+                    { text: 'Teacher contacts', address: '/teacher-contacts' },
+                    { text: 'Student report', address: '/report' },])
+                    break;
+                case 'teacher':
+                    links.push(...[{ text: 'Current marks', address: '/marks' },
+                    { text: 'Exam results', address: '/exams' },
+                    { text: 'Questionnaire', address: '/questionnaire' },
+                    { text: 'Teacher contacts', address: '/teacher-contacts' },])
+                case 'admin':
+                    links.push(...[{ text: 'Questionnaire', address: '/questionnaire' },
+                    { text: 'Choose subjects', address: '/choose-subjects' },
+                    { text: 'User managemet', address: '/user-management' },])
+            }
+            links.forEach(link => {
+                if (link.text !== 'News') link.active = authorized;
+                else link.active = true;
+            })
+            return links;
         }
     },
     methods: {
@@ -161,12 +184,14 @@ export default {
     &-nav {
         display: flex;
         flex-wrap: wrap;
+        flex-direction: column;
         margin: 0;
         padding: 0;
         text-align: center;
         list-style-type: none;
 
         &-item {
+            margin-bottom: 10%;
             flex: 1;
         }
 
