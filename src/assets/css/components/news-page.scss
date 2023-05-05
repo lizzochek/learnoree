@@ -1,0 +1,92 @@
+@import '../variables/global.scss';
+
+#news-page {
+  position: absolute;
+  width: 100%;
+  margin: 0;
+  background-color: var(--tertiary-color);
+  height: 100vh;
+  background-size: cover;
+  overflow: auto;
+
+  .card {
+    width: 60%;
+    height: 30%;
+  }
+
+  #heading {
+    margin: auto;
+  }
+
+  p {
+    position: static;
+  }
+
+  #explanation-text {
+    margin-top: 3%;
+    font-size: 10px;
+    color: var(--primary-color);
+    margin-bottom: 1%;
+  }
+
+  #card-text {
+    margin: auto;
+    margin-top: 5%;
+    color: var(--primary-color);
+  }
+
+  #save-changes {
+    margin: auto;
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    border-radius: 30%;
+  }
+
+  ul {
+    list-style-type: none;
+  }
+
+  .btn {
+    margin: auto;
+  }
+
+  .btn span {
+    -webkit-text-fill-color: unset;
+  }
+
+  #add-btn {
+    padding-left: 3%;
+  }
+
+  #add-btn span {
+    -webkit-text-fill-color: transparent;
+  }
+
+  .editable {
+    cursor: pointer;
+  }
+
+  #date {
+    color: var(--primary-color);
+    position: relative;
+    font-size: 12px;
+    width: 10%;
+    left: 90%;
+  }
+
+  #delete {
+    position: absolute;
+    height: 100px;
+  }
+
+  #delete-icon {
+    width: 8%;
+    position: relative;
+    left: 205%;
+    top: -180%;
+  }
+
+  svg path {
+    fill: var(--tertiary-color);
+  }
+}

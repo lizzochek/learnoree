@@ -14,5 +14,7 @@
     max-width: 40rem;
     height: 80%;
     margin-top: 5%;
+    display: flex;
+    flex-direction: column;
 }
 </style>

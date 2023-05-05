@@ -5,11 +5,26 @@ import myAccount from './modules/my-account';
 export default createStore({
   state: {
     errors: {},
+    newsData: [
+      {
+        heading: 'What an event!',
+        text: 'Something so exciting happened yesterday!',
+        date: '05/05/23',
+      },
+      {
+        heading: 'Another event',
+        text: 'Something so exciting happened yesterday!',
+        date: '05/05/23',
+      },
+    ],
   },
   modules: { login, myAccount },
   getters: {
     getErrors(state) {
       return state.errors;
+    },
+    getNews(state) {
+      return state.newsData;
     },
   },
   mutations: {
@@ -23,10 +38,16 @@ export default createStore({
     removeError(state, errName) {
       state.errors[errName] = false;
     },
+    updateNews(state, news) {
+      state.newsData = news;
+    },
   },
   actions: {
     removeError({ commit }, data) {
       commit('removeError', data);
+    },
+    updateNews({ commit }, data) {
+      commit('updateNews', data);
     },
   },
 });

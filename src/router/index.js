@@ -4,8 +4,7 @@ import LoginPage from '@/components/pages/LoginPage';
 import RegisterPage from '@/components/pages/RegisterPage.vue';
 import RestorePassPage from '@/components/pages/RestorePassPage.vue';
 import MyAccountPage from '@/components/pages/MyAccountPage.vue';
-
-import store from '../store/index.js';
+import NewsPage from '@/components/pages/NewsPage.vue';
 
 const routes = [
   {
@@ -31,6 +30,11 @@ const routes = [
     path: '/restore',
     name: 'RestorePassPage',
     component: RestorePassPage,
+  },
+  {
+    path: '/news',
+    name: 'NewsPage',
+    component: NewsPage,
   },
   {
     path: '/my-account',
