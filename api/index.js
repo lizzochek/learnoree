@@ -6,6 +6,7 @@ const app = express(),
 
 const userHandler = require('./handlers/user');
 const userDataHandler = require('./handlers/user-data');
+const scheduleHandler = require('./handlers/schedule');
 
 const { runQuery, connection } = require('../db/index');
 const queries = require('../db/queries.json');
@@ -39,7 +40,10 @@ app.get('/api/getSpecialty/:id', userDataHandler.getSpecialty);
 
 app.get('/api/getFaculty/:id', userDataHandler.getFaculty);
 
-// app.get('/api/getStudentSchedule/:id', userDataHandler.getStudentSchedule);
+app.get(
+  '/api/getStudentSchedule/:studentId',
+  scheduleHandler.getStudentSchedule
+);
 
 // app.get('/api/getStudentMarks/:id', userDataHandler.getStudentMarks);
 
@@ -57,7 +61,16 @@ app.get(
   userDataHandler.getTeacherCathedraAndFaculty
 );
 
-// app.get('/api/getGroupSchedule/:id', userDataHandler.getGroupSchedule);
+app.get('/api/getGroupSchedule/:groupName', scheduleHandler.getGroupSchedule);
+
+app.get('/api/getAllGroups', scheduleHandler.getAllGroups);
+
+app.get('/api/getAllTeachers', scheduleHandler.getAllTeachers);
+
+app.get(
+  '/api/getTeacherSchedule/:name/:surname/:secondName',
+  scheduleHandler.getTeacherSchedule
+);
 
 // app.get('/api/getGroupMarks/:id', userDataHandler.getGroupMarks);
 

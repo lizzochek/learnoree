@@ -1,8 +1,10 @@
 import { createStore } from 'vuex';
 import login from './modules/login';
 import myAccount from './modules/my-account';
+import schedule from './modules/schedule';
 
 export default createStore({
+  modules: { login, myAccount, schedule },
   state: {
     errors: {},
     newsData: [
@@ -18,7 +20,6 @@ export default createStore({
       },
     ],
   },
-  modules: { login, myAccount },
   getters: {
     getErrors(state) {
       return state.errors;

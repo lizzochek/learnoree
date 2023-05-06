@@ -5,6 +5,7 @@ import RegisterPage from '@/components/pages/RegisterPage.vue';
 import RestorePassPage from '@/components/pages/RestorePassPage.vue';
 import MyAccountPage from '@/components/pages/MyAccountPage.vue';
 import NewsPage from '@/components/pages/NewsPage.vue';
+import SchedulePage from '@/components/pages/SchedulePage.vue';
 
 const routes = [
   {
@@ -42,6 +43,12 @@ const routes = [
     component: MyAccountPage,
     meta: { requiresAuth: true },
   },
+  {
+    path: '/schedule',
+    name: 'SchedulePage',
+    component: SchedulePage,
+    meta: { requiresAuth: true },
+  },
 ];
 
 const router = createRouter({
@@ -53,6 +60,8 @@ router.beforeEach((to, from, next) => {
   const state = JSON.parse(localStorage.getItem('state'));
   if (to.meta.requiresAuth && !state.login.isLoggedIn) {
     next('/login');
+  } else if (to.path == '/main' && state.login.isLoggedIn) {
+    next('/my-account');
   } else if (
     to.meta.requiresAdmin &&
     state.login.isLoggedIn &&
