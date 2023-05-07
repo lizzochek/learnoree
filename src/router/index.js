@@ -58,18 +58,18 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const state = JSON.parse(localStorage.getItem('state'));
-  if (to.meta.requiresAuth && !state.login.isLoggedIn) {
+  if (to.meta.requiresAuth && !state?.login.isLoggedIn) {
     next('/login');
-  } else if (to.path == '/main' && state.login.isLoggedIn) {
+  } else if (to.path == '/main' && state?.login?.isLoggedIn) {
     next('/my-account');
   } else if (
     to.meta.requiresAdmin &&
-    state.login.isLoggedIn &&
-    !(state.login.user.role == 'admin')
+    state?.login?.isLoggedIn &&
+    !(state?.login?.user?.role == 'admin')
   ) {
     alert('Sorry, you do not have admin rights!');
     next('/news');
-  } else if (to.meta.requiresConfirm && !state.login.isAuthorized) {
+  } else if (to.meta.requiresConfirm && !state?.login?.isAuthorized) {
     alert('Sorry, you need to wait for the admin to confirm your profile!');
     next('/news');
   } else {

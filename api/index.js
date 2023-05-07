@@ -72,6 +72,9 @@ app.get(
   scheduleHandler.getTeacherSchedule
 );
 
+// app.post('/api/setSchedule/:id', userDataHandler.setSchedule);
+// app.delete('/api/deleteSchedule/:id', userDataHandler.deleteSchedule);
+
 // app.get('/api/getGroupMarks/:id', userDataHandler.getGroupMarks);
 
 // app.post('/api/setStudentMark/:id', userDataHandler.setStudentMark);
@@ -82,13 +85,9 @@ app.get(
 
 // app.put('/api/setUsersData/:id', userDataHandler.setUsersData);
 
-// app.post('/api/setSchedule/:id', userDataHandler.setSchedule);
-
 // app.post('/api/setChoiceSubject/:id', userDataHandler.setChoiceSubject);
 
 // app.delete('/api/deleteUser/:id', userDataHandler.deleteUser);
-
-// app.delete('/api/deleteSchedule/:id', userDataHandler.deleteSchedule);
 
 // app.delete('/api/deleteSubject/:id', userDataHandler.deleteSubject);
 
