@@ -8,6 +8,7 @@ export default {
     studentSchedule: [],
     teachers: [],
     groups: [],
+    errors: {},
   },
   getters: {
     getGroupSchedule(state) {
@@ -72,6 +73,11 @@ export default {
         state.groups = data;
       }
     },
+    setSchedule(state, response) {
+      if (response.status != '200') {
+        state.errors.setError = true;
+      }
+    },
   },
   actions: {
     getGroupSchedule({ commit }, { groupName }) {
@@ -101,6 +107,16 @@ export default {
     getAllGroups({ commit }) {
       return fetch('/api/getAllGroups').then((response) => {
         commit('getAllGroups', response);
+      });
+    },
+    setSchedule(
+      { commit },
+      { groupName, subjectName, time, place, semester, weekDay, week }
+    ) {
+      return fetch(
+        `/api/setSchedule/${groupName}/${subjectName}/${time}/${place}/${semester}/${weekDay}/${week}`
+      ).then((response) => {
+        commit('setSchedule', response);
       });
     },
   },

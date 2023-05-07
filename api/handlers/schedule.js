@@ -79,4 +79,59 @@ module.exports = {
     const groupResult = await runQuery(connection, queries.getAllGroups);
     res.send(groupResult);
   },
+  setSchedule: async (req, res) => {
+    await connection.beginTransaction();
+    try {
+      let groupRes;
+      if (req.params.groupName) {
+        groupRes = await runQuery(
+          connection,
+          queryParser(queries.getGroup, {
+            group: req.params.groupName,
+          })
+        );
+        if (!groupRes.length) throw new Error('Group not found');
+      }
+
+      const subjectRes = await runQuery(
+        connection,
+        queryParser(queries.getSubject, {
+          subject: req.params.subjectName,
+        })
+      );
+      if (!subjectRes.length) throw new Error('Group not found');
+
+      let persSubjRes;
+      if (!groupRes) {
+        persSubjRes = await runQuery(
+          connection,
+          queryParser(queries.getPersonalSubjectGroup, {
+            subject: subjectRes[0].Id,
+          })
+        );
+        if (!persSubjRes.length) throw new Error('Group not found');
+      }
+
+      const queryResult = await runQuery(
+        connection,
+        queryParser(queries.setSchedule, {
+          groupId: groupRes[0]?.Id ? groupRes[0]?.Id : null,
+          subjectId: subjectRes[0].Id,
+          personalSubjId: persSubjRes[0].Id ? persSubjRes[0].Id : null,
+          time: req.params.time,
+          place: req.params.place,
+          semester: req.params.semester,
+          weekDay: req.params.weekDay,
+          week: req.params.week,
+        })
+      );
+
+      if (!queryResult.length) throw new Error('Something went wrong!');
+    } catch (err) {
+      console.log(err);
+      connection.rollback();
+      res.sendStatus(500);
+    }
+  },
+  deleteSchedule: async (req, res) => {},
 };

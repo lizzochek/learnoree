@@ -29,6 +29,8 @@
   "insertStudent": "INSERT INTO Students (Name, Surname, SecondName, UserId, Phone, StartDate, EndDate) VALUES ('{{name}}', '{{surname}}', '{{secondName}}', {{id}}, '{{phone}}', STR_TO_DATE('{{startDate}}', '%d/%m/%Y'), STR_TO_DATE('{{endDate}}', '%d/%m/%Y'))",
   "getCathedra": "SELECT * FROM Cathedras LEFT JOIN Faculties ON Faculties.Id = Cathedras.FacultyId WHERE Faculties.ShortName = '{{faculty}}' and Cathedras.ShortName = '{{cathedra}}",
   "getGroup": "SELECT * FROM `Groups` WHERE `Groups`.Name = '{{group}}';",
+  "getPersonalSubjectGroup": "SELECT ps.`SubjectGroup` as `Id` FROM `Subject` s LEFT JOIN `PersonalSubjects` ps ON s.Id = ps.SubjectId WHERE s.Name='{{subject}}'",
+  "getSubject": "SELECT * FROM `Subjects` WHERE `Subjects`.Name = '{{subject}}';",
   "getTeacher": "SELECT * FROM `Teachers` WHERE `Teachers`.Name = '{{name}}' AND `Teachers`.Surname = '{{surname}}' AND `Teachers`.SecondName = '{{secondName}}';",
   "getAllGroups": "SELECT Name FROM `Groups`;",
   "getAllTeachers": "SELECT `Name`, `Surname`, `SecondName` FROM `Teachers`;",
@@ -40,5 +42,6 @@
   "getGroupSchedule": "SELECT sc.`Time`, sc.`Place`, sc.`WeekDay`, sc.`Week`, sc.`Semester`, su.`Name` as `SubjectName`, t.`Name` as `TeacherName`, t.`Surname` as `TeacherSurname`, t.`SecondName` as `TeacherSecondName` FROM `Schedule` sc LEFT JOIN `Subjects` su ON sc.`SubjectId` = su.`Id` LEFT JOIN `Teachers` t ON t.`Id` = su.`TeacherId` LEFT JOIN `Groups` g ON g.`Id` = sc.`GroupId` WHERE g.`Id` = {{id}};",
   "getStudentSchedule": "SELECT sc.`Time`, sc.`Place`, sc.`WeekDay`, sc.`Week`, sc.`Semester`, su.`Name` as `SubjectName`, t.`Name` as `TeacherName`, t.`Surname` as `TeacherSurname`, t.`SecondName` as `TeacherSecondName` FROM `Schedule` sc LEFT JOIN `PersonalSubjectGroups` psg ON sc.`PersonalSubjGroupId` = psg.`Id` LEFT JOIN `PersonalSubjects` ps ON ps.`SubjectGroup` = psg.`Id` LEFT JOIN `Subjects` su ON su.`Id` = ps.`SubjectId` LEFT JOIN `Teachers` t ON t.`Id` = su.`TeacherId` LEFT JOIN `Students` st ON psg.`StudentId` = st.`Id` WHERE st.`Id` = {{id}};",
   "getGroupIdByStudent": "SELECT g.`Id` FROM `Groups` g LEFT JOIN `StudentGroupLink` link ON g.`Id` =  link.`GroupId` LEFT JOIN `Students` s ON s.`Id` = link.`StudentId` WHERE s.`Id` = {{id}};",
-  "getTeacherSchedule": "SELECT sc.`Time`, sc.`Place`, sc.`WeekDay`, sc.`Week`, sc.`Semester`, su.`Name` as `SubjectName`, t.`Name` as `TeacherName`, t.`Surname` as `TeacherSurname`, t.`SecondName` as `TeacherSecondName` FROM `Schedule` sc  LEFT JOIN `Subjects` su ON su.`Id` = sc.`SubjectId` LEFT JOIN `Teachers` t ON t.`Id` = su.`TeacherId` WHERE t.`Id` = {{id}};"
+  "getTeacherSchedule": "SELECT sc.`Time`, sc.`Place`, sc.`WeekDay`, sc.`Week`, sc.`Semester`, su.`Name` as `SubjectName`, t.`Name` as `TeacherName`, t.`Surname` as `TeacherSurname`, t.`SecondName` as `TeacherSecondName` FROM `Schedule` sc  LEFT JOIN `Subjects` su ON su.`Id` = sc.`SubjectId` LEFT JOIN `Teachers` t ON t.`Id` = su.`TeacherId` WHERE t.`Id` = {{id}};",
+  "setSchedule": "INSERT INTO `Schedule` VALUES ({{subjectId}}, {{groupId}}, {{personalSubjId}}, '{{time}}',  '{{place}}', STR_TO_DATE('{{semester}}', '{{weekDay}}', {{week}})"
 }

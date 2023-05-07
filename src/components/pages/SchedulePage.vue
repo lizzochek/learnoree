@@ -1,8 +1,17 @@
 <template>
     <div id="schedule">
+        <div v-if="isOpen" id="modal">
+            <BaseHeading id="modal-heading" text="Add new lesson" />
+
+            <input autocomplete="off" spellcheck="false" class="control" type="text"
+                placeholder="Group (if general subject)" v-model="enteredData.groupName" />
+            <input autocomplete="off" spellcheck="false" class="control" type="text" placeholder="Subject"
+                v-model="enteredData.groupName" />
+        </div>
         <div id="container">
+            <button v-if="user.role == 'admin'" class="tab-btn add-btn" @click="toggleModal">Add lesson</button>
             <BaseHeading id="heading" :text="headingText" />
-            <div id="tabs">
+            <div id="tabs" :class="{ adminButtons: user.role === 'admin' }">
                 <div v-for="tab in tabs" :key="tab" class="tab" @click="setActiveTab(tab)">
                     <button class="tab-btn" :class="{ active: curTab === tab }">
                         {{ tab }}
@@ -82,12 +91,13 @@ export default {
     name: "SchedulePage",
     data() {
         return {
-            curTab: 'Personal',
-            tabs: ['Personal', 'Group', 'Teacher'],
+            curTab: '',
             activeWeek: 1,
             scheduleVisisble: true,
             teacherSchedule: {},
-            groupSchedule: {}
+            groupSchedule: {},
+            isOpen: false,
+            enteredData: {},
         }
     },
     computed: {
@@ -112,12 +122,23 @@ export default {
         groups() {
             return this.$store.getters["schedule/getGroups"];
         },
+        user() {
+            return this.$store.getters["login/getUser"];
+        },
+        tabs() {
+            return this.user.role == 'student' ? ['Personal', 'Group', 'Teacher'] : ['Group', 'Teacher']
+        }
     },
     mounted() {
         this.getAllGroups();
         this.getAllTeachers();
-        this.getStudentSchedule();
-        this.setSchedule();
+        if (this.user.role === 'student') {
+            this.curTab = 'Personal';
+            this.getStudentSchedule();
+            this.setSchedule();
+        } else {
+            this.curTab = 'Group'
+        }
     },
     methods: {
         async getAllTeachers() {
@@ -167,7 +188,7 @@ export default {
             if (this.teacherSchedule && this.curTab === 'Teacher') schedule = this.teacherSchedule;
             if (this.groupSchedule && this.curTab === 'Group') schedule = this.groupSchedule;
 
-            if (Object.keys(schedule).length) {
+            if (Object.keys(schedule)?.length) {
                 Object.entries(schedule[`week${this.activeWeek}`]).forEach((weekDay, weekIndex) => {
                     Object.entries(weekDay[1]).forEach((time, timeIndex) => {
                         const { subjectName, teacherName, teacherSecondName, teacherSurname, place } = time[1]
@@ -206,6 +227,9 @@ export default {
             this.teacherSchedule = this.formatSchedule(this.$store.getters["schedule/getTeacherSchedule"]);
             this.setSchedule();
         },
+        toggleModal() {
+            this.isOpen = !this.isOpen;
+        }
     },
     components: { BaseHeading }
 }

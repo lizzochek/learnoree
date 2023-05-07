@@ -72,7 +72,11 @@ app.get(
   scheduleHandler.getTeacherSchedule
 );
 
-// app.post('/api/setSchedule/:id', userDataHandler.setSchedule);
+app.post(
+  '/api/setSchedule/:groupName/:subjectName/:time/:place/:semester/:weekDay/:week',
+  scheduleHandler.setSchedule
+);
+
 // app.delete('/api/deleteSchedule/:id', userDataHandler.deleteSchedule);
 
 // app.get('/api/getGroupMarks/:id', userDataHandler.getGroupMarks);
