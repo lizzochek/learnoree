@@ -2,9 +2,10 @@ import { createStore } from 'vuex';
 import login from './modules/login';
 import myAccount from './modules/my-account';
 import schedule from './modules/schedule';
+import marks from './modules/marks';
 
 export default createStore({
-  modules: { login, myAccount, schedule },
+  modules: { login, myAccount, schedule, marks },
   state: {
     errors: {},
     newsData: [

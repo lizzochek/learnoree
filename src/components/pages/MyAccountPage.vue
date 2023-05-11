@@ -78,8 +78,9 @@ export default {
             this.isModalOpen = true;
         },
         async logOut() {
-            await this.$store.dispatch('login/logOut');
             this.$router.push({ path: '/main' })
+            await this.$store.dispatch('login/logOut');
+
         }
     },
 }

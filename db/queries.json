@@ -46,5 +46,6 @@
   "getTeacherSchedule": "SELECT sc.`Id`, sc.`Time`, sc.`Place`, sc.`WeekDay`, sc.`Week`, sc.`Semester`, su.`Name` as `SubjectName`, t.`Name` as `TeacherName`, t.`Surname` as `TeacherSurname`, t.`SecondName` as `TeacherSecondName` FROM `Schedule` sc  LEFT JOIN `Subjects` su ON su.`Id` = sc.`SubjectId` LEFT JOIN `Teachers` t ON t.`Id` = su.`TeacherId` WHERE t.`Id` = {{id}};",
   "setSchedule": "INSERT INTO `Schedule` (`SubjectId`, `GroupId`, `PersonalSubjGroupId`, `Time`, `Place`, `Semester`, `weekDay`, `Week`) VALUES ({{subjectId}}, {{groupId}}, {{personalSubjId}}, '{{time}}',  '{{place}}', STR_TO_DATE('{{semester}}', '%Y-%m-%d'), '{{weekDay}}', {{week}})",
   "setSubject": "INSERT INTO `Subjects` (`Name`, `CathedraId`, `TeacherId`) VALUES ('{{subjectName}}', {{cathedraId}}, {{teacherId}})",
-  "deleteLesson": "DELETE FROM `Subjects` WHERE `Id` = {{id}}"
+  "deleteLesson": "DELETE FROM `Subjects` WHERE `Id` = {{id}}",
+  "getStudentMarks": "SELECT cm.`Id`, cm.`Mark`, cm.`TaskType`, s.`Name` as `SubjectName` FROM `CurrentMarks` cm LEFT JOIN `Subjects` s ON cm.`SubjectId` = s.`Id` WHERE cm.`StudentId` = {{id}}"
 }

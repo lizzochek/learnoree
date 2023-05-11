@@ -6,6 +6,7 @@ import RestorePassPage from '@/components/pages/RestorePassPage.vue';
 import MyAccountPage from '@/components/pages/MyAccountPage.vue';
 import NewsPage from '@/components/pages/NewsPage.vue';
 import SchedulePage from '@/components/pages/SchedulePage.vue';
+import CurrentMarks from '@/components/pages/CurrentMarks.vue';
 
 const routes = [
   {
@@ -47,6 +48,12 @@ const routes = [
     path: '/schedule',
     name: 'SchedulePage',
     component: SchedulePage,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/marks',
+    name: 'CurrentMarks',
+    component: CurrentMarks,
     meta: { requiresAuth: true },
   },
 ];

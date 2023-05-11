@@ -1,0 +1,142 @@
+#current-marks {
+  position: absolute;
+  width: 100%;
+  background-size: cover;
+  background-color: var(--tertiary-color);
+  display: flex;
+  justify-content: center;
+
+  .container {
+    margin-top: 3%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 60%;
+  }
+
+  .subjectsList {
+    list-style: none;
+    counter-reset: index;
+    padding: 0;
+    max-width: 300px;
+    margin-top: 0;
+
+    li {
+      counter-increment: index;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      padding: 12px 0;
+      box-sizing: border-box;
+      color: var(--forth-color);
+    }
+
+    li::before {
+      content: counters(index, '.', decimal-leading-zero);
+      font-size: 1.5rem;
+      font-weight: bold;
+      min-width: 50px;
+      font-variant-numeric: tabular-nums;
+      align-self: flex-start;
+      background-image: linear-gradient(
+        to bottom,
+        var(--primary-color),
+        var(--forth-color)
+      );
+      background-attachment: fixed;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    li + li {
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+    }
+  }
+
+  .marksList {
+    width: 80%;
+    padding-left: 0;
+
+    li {
+      border-radius: 3px;
+      padding: 25px 30px;
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 2%;
+    }
+
+    .table-header {
+      background-color: var(--secondary-color);
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .table-row {
+      background-color: var(--forth-color);
+      text-align: left;
+    }
+
+    .col-1 {
+      flex-basis: 50%;
+    }
+    .col-2 {
+      flex-basis: 30%;
+    }
+    .col-3 {
+      flex-basis: 20%;
+    }
+
+    .table-row .col-2 {
+      padding-left: 7%;
+    }
+
+    @media (max-width: 767px) {
+      .table-header {
+        display: none;
+      }
+
+      li {
+        display: block;
+      }
+
+      .col {
+        flex-basis: 100%;
+        display: flex;
+        padding: 10px 0;
+
+        &:before {
+          color: var(--primary-color);
+          padding-right: 5%;
+          content: attr(data-label);
+          flex-basis: 50%;
+          text-align: left;
+        }
+      }
+
+      .col-2 {
+        padding-left: 0 !important;
+      }
+    }
+  }
+
+  svg path,
+  svg polygon {
+    fill: var(--forth-color);
+  }
+
+  #back-button {
+    width: 20px;
+    height: 20px;
+    position: relative;
+    left: -35%;
+    top: -3%;
+    cursor: pointer;
+  }
+}
+
+@media (min-width: 767px) {
+  #current-marks {
+    height: 100vh;
+  }
+}
