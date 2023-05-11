@@ -2,13 +2,43 @@
     <div id="schedule">
         <div v-if="isOpen" id="modal">
             <BaseHeading id="modal-heading" text="Add new lesson" />
-
             <input autocomplete="off" spellcheck="false" class="control" type="text"
                 placeholder="Group (if general subject)" v-model="enteredData.groupName" />
             <input autocomplete="off" spellcheck="false" class="control" type="text" placeholder="Subject"
-                v-model="enteredData.groupName" />
+                v-model="enteredData.subjectName" />
+            <input autocomplete="off" spellcheck="false" class="control" type="text" placeholder="Time"
+                v-model="enteredData.time" />
+            <input autocomplete="off" spellcheck="false" class="control" type="text" placeholder="Place"
+                v-model="enteredData.place" />
+            <input autocomplete="off" spellcheck="false" class="control" type="date"
+                placeholder="Semester (choose any day within semester)" v-model="enteredData.semester" />
+            <input autocomplete="off" spellcheck="false" class="control" type="text" placeholder="Week day"
+                v-model="enteredData.weekDay" />
+            <input autocomplete="off" spellcheck="false" class="control" type="text" placeholder="Week"
+                v-model="enteredData.week" />
+
+
+            <button class="action-btn" @click="addLesson">Save</button>
+            <button class="action-btn" @click="cancelAction('lesson')">Cancel</button>
+        </div>
+        <div v-if="isSubjectOpen" id="modal">
+            <BaseHeading id="modal-heading" text="Add new lesson" />
+            <input autocomplete="off" spellcheck="false" class="control" type="text" placeholder="Subject name"
+                v-model="enteredData.subjectName" />
+            <input autocomplete="off" spellcheck="false" class="control" type="text" placeholder="Teacher name"
+                v-model="enteredData.teacherName" />
+            <input autocomplete="off" spellcheck="false" class="control" type="text" placeholder="Teacher surname"
+                v-model="enteredData.teacherSurname" />
+            <input autocomplete="off" spellcheck="false" class="control" type="text" placeholder="Teacher second name"
+                v-model="enteredData.teacherSecondName" />
+            <input autocomplete="off" spellcheck="false" class="control" type="text" placeholder="Cathedra name"
+                v-model="enteredData.cathedraName" />
+
+            <button class="action-btn" @click="addSubject">Save</button>
+            <button class="action-btn" @click="cancelAction">Cancel</button>
         </div>
         <div id="container">
+            <button v-if="user.role == 'admin'" class="tab-btn add-btn" @click="toggleSubjectModal">Add subject</button>
             <button v-if="user.role == 'admin'" class="tab-btn add-btn" @click="toggleModal">Add lesson</button>
             <BaseHeading id="heading" :text="headingText" />
             <div id="tabs" :class="{ adminButtons: user.role === 'admin' }">
@@ -86,9 +116,11 @@
 
 <script>
 import BaseHeading from '../common/BaseHeading.vue';
+import BaseModal from '../common/BaseModal.vue';
 
 export default {
     name: "SchedulePage",
+    components: { BaseHeading, BaseModal },
     data() {
         return {
             curTab: '',
@@ -97,6 +129,7 @@ export default {
             teacherSchedule: {},
             groupSchedule: {},
             isOpen: false,
+            isSubjectOpen: false,
             enteredData: {},
         }
     },
@@ -180,6 +213,13 @@ export default {
             });
             return newSchedule;
         },
+        deleteLesson(id) {
+            this.$store.dispatch(`schedule/deleteLesson`, id);
+
+            if (errors) {
+                alert('Something went wrong. Please try again')
+            }
+        },
         setSchedule() {
             this.removeSchedule();
             let schedule;
@@ -191,9 +231,9 @@ export default {
             if (Object.keys(schedule)?.length) {
                 Object.entries(schedule[`week${this.activeWeek}`]).forEach((weekDay, weekIndex) => {
                     Object.entries(weekDay[1]).forEach((time, timeIndex) => {
-                        const { subjectName, teacherName, teacherSecondName, teacherSurname, place } = time[1]
+                        const { id, subjectName, teacherName, teacherSecondName, teacherSurname, place } = time[1]
                         this.$refs.table.rows[timeIndex + 1].cells[weekIndex + 1].innerHTML = `<div class="lesson-container">
-                        <p>${subjectName}</p>
+                        <p>${subjectName}</p>                       
                         <div class="teacher">
                             <svg class="icon-cap" xmlns="http://www.w3.org/2000/svg" fill="#000000" width="800px" height="800px" viewBox="-5 0 32 32" version="1.1">
                                 <title>graduation-cap</title>
@@ -207,7 +247,7 @@ export default {
                             </svg>
                             <p>${place}</p>
                         </div>
-                    </div>`
+                    </div>`;
                     })
                 })
             }
@@ -218,7 +258,6 @@ export default {
         },
         setGroupSchedule(name) {
             this.getGroupSchedule(name);
-            console.log(this.$store.getters["schedule/getGroupSchedule"])
             this.groupSchedule = this.formatSchedule(this.$store.getters["schedule/getGroupSchedule"]);
             this.setSchedule();
         },
@@ -229,9 +268,40 @@ export default {
         },
         toggleModal() {
             this.isOpen = !this.isOpen;
+        },
+        toggleSubjectModal() {
+            this.isSubjectOpen = !this.isSubjectOpen;
+        },
+        async addLesson() {
+            const { groupName, subjectName, time, place, semester, weekDay, week } = this.enteredData;
+            await this.$store.dispatch('schedule/setSchedule', { groupName, subjectName, time, place, semester, weekDay, week })
+            const errors = this.$store.getters['schedule/getErrors'];
+
+            if (errors) {
+                alert('Something went wrong. Please try again')
+            } else {
+                this.toggleModal();
+                Object.keys(this.enteredData).forEach(key => this.enteredData[key] = null)
+            }
+        },
+        async addSubject() {
+            const { subjectName, teacherName, teacherSurname, teacherSecondName, cathedraName } = this.enteredData;
+            await this.$store.dispatch('schedule/addSubject', { subjectName, teacherName, teacherSurname, teacherSecondName, cathedraName })
+            const errors = this.$store.getters['schedule/getErrors'];
+
+            if (errors) {
+                alert('Something went wrong. Please try again')
+            } else {
+                this.toggleSubjectModal();
+                Object.keys(this.enteredData).forEach(key => this.enteredData[key] = null)
+            }
+        },
+        cancelAction(type) {
+            type === 'lesson' ? this.toggleModal() : this.toggleSubjectModal();
+            Object.keys(this.enteredData).forEach(key => this.enteredData[key] = null)
         }
     },
-    components: { BaseHeading }
+    components: { BaseHeading, BaseModal }
 }
 </script>
 

@@ -26,6 +26,9 @@ export default {
     getGroups(state) {
       return state.groups;
     },
+    getErrors(state) {
+      return state.errors;
+    },
   },
   mutations: {
     async getGroupSchedule(state, response) {
@@ -74,8 +77,21 @@ export default {
       }
     },
     setSchedule(state, response) {
+      state.errors = false;
       if (response.status != '200') {
-        state.errors.setError = true;
+        state.errors = true;
+      }
+    },
+    addSubject(state, response) {
+      state.errors = false;
+      if (response.status != '200') {
+        state.errors = true;
+      }
+    },
+    deletelesson(state, response) {
+      state.errors = false;
+      if (response.status != '200') {
+        state.errors = true;
       }
     },
   },
@@ -113,10 +129,49 @@ export default {
       { commit },
       { groupName, subjectName, time, place, semester, weekDay, week }
     ) {
-      return fetch(
-        `/api/setSchedule/${groupName}/${subjectName}/${time}/${place}/${semester}/${weekDay}/${week}`
-      ).then((response) => {
+      return fetch(`/api/setSchedule`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          groupName,
+          subjectName,
+          time,
+          place,
+          semester,
+          weekDay,
+          week,
+        }),
+      }).then((response) => {
         commit('setSchedule', response);
+      });
+    },
+    addSubject(
+      { commit },
+      {
+        subjectName,
+        teacherName,
+        teacherSurname,
+        teacherSecondName,
+        cathedraName,
+      }
+    ) {
+      return fetch(`/api/addSubject`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          subjectName,
+          teacherName,
+          teacherSurname,
+          teacherSecondName,
+          cathedraName,
+        }),
+      }).then((response) => {
+        commit('addSubject', response);
+      });
+    },
+    deleteLesson({ commit }, { id }) {
+      return fetch(`/api/deleteSchedule/${id}`).then((response) => {
+        commit('deleteLesson', response);
       });
     },
   },

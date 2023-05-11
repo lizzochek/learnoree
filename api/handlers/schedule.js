@@ -83,11 +83,11 @@ module.exports = {
     await connection.beginTransaction();
     try {
       let groupRes;
-      if (req.params.groupName) {
+      if (req.body.groupName) {
         groupRes = await runQuery(
           connection,
           queryParser(queries.getGroup, {
-            group: req.params.groupName,
+            group: req.body.groupName,
           })
         );
         if (!groupRes.length) throw new Error('Group not found');
@@ -96,7 +96,7 @@ module.exports = {
       const subjectRes = await runQuery(
         connection,
         queryParser(queries.getSubject, {
-          subject: req.params.subjectName,
+          subject: req.body.subjectName,
         })
       );
       if (!subjectRes.length) throw new Error('Group not found');
@@ -112,26 +112,85 @@ module.exports = {
         if (!persSubjRes.length) throw new Error('Group not found');
       }
 
+      let persSubj = null;
+      let group = null;
+
+      if (persSubjRes) persSubj = persSubjRes[0].Id;
+      if (groupRes) group = groupRes[0].Id;
+
       const queryResult = await runQuery(
         connection,
         queryParser(queries.setSchedule, {
-          groupId: groupRes[0]?.Id ? groupRes[0]?.Id : null,
+          groupId: group,
           subjectId: subjectRes[0].Id,
-          personalSubjId: persSubjRes[0].Id ? persSubjRes[0].Id : null,
-          time: req.params.time,
-          place: req.params.place,
-          semester: req.params.semester,
-          weekDay: req.params.weekDay,
-          week: req.params.week,
+          personalSubjId: persSubj,
+          time: req.body.time,
+          place: req.body.place,
+          semester: req.body.semester,
+          weekDay: req.body.weekDay,
+          week: req.body.week,
         })
       );
 
-      if (!queryResult.length) throw new Error('Something went wrong!');
+      res.sendStatus(200);
     } catch (err) {
       console.log(err);
       connection.rollback();
       res.sendStatus(500);
     }
   },
-  deleteSchedule: async (req, res) => {},
+  addSubject: async (req, res) => {
+    await connection.beginTransaction();
+    try {
+      const teacherRes = await runQuery(
+        connection,
+        queryParser(queries.getTeacher, {
+          name: req.body.teacherName,
+          surname: req.body.teacherSurname,
+          secondName: req.body.teacherSecondName,
+        })
+      );
+      if (!teacherRes.length) throw new Error('Teacher not found');
+
+      const cathedraRes = await runQuery(
+        connection,
+        queryParser(queries.getCatherdaByName, {
+          name: req.body.cathedraName,
+        })
+      );
+      if (!cathedraRes.length) throw new Error('Cathedra not found');
+
+      const queryResult = await runQuery(
+        connection,
+        queryParser(queries.setSubject, {
+          subjectName: req.body.subjectName,
+          cathedraId: cathedraRes[0].Id,
+          teacherId: teacherRes[0].Id,
+        })
+      );
+
+      res.sendStatus(200);
+    } catch (err) {
+      console.log(err);
+      connection.rollback();
+      res.sendStatus(500);
+    }
+  },
+  deleteSchedule: async (req, res) => {
+    await connection.beginTransaction();
+    try {
+      const queryResult = await runQuery(
+        connection,
+        queryParser(queries.deleteLesson, {
+          id: req.params.id,
+        })
+      );
+
+      res.sendStatus(200);
+    } catch (err) {
+      console.log(err);
+      connection.rollback();
+      res.sendStatus(500);
+    }
+  },
 };
