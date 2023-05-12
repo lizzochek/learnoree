@@ -47,5 +47,11 @@
   "setSchedule": "INSERT INTO `Schedule` (`SubjectId`, `GroupId`, `PersonalSubjGroupId`, `Time`, `Place`, `Semester`, `weekDay`, `Week`) VALUES ({{subjectId}}, {{groupId}}, {{personalSubjId}}, '{{time}}',  '{{place}}', STR_TO_DATE('{{semester}}', '%Y-%m-%d'), '{{weekDay}}', {{week}})",
   "setSubject": "INSERT INTO `Subjects` (`Name`, `CathedraId`, `TeacherId`) VALUES ('{{subjectName}}', {{cathedraId}}, {{teacherId}})",
   "deleteLesson": "DELETE FROM `Subjects` WHERE `Id` = {{id}}",
-  "getStudentMarks": "SELECT cm.`Id`, cm.`Mark`, cm.`TaskType`, s.`Name` as `SubjectName` FROM `CurrentMarks` cm LEFT JOIN `Subjects` s ON cm.`SubjectId` = s.`Id` WHERE cm.`StudentId` = {{id}}"
+  "getStudentMarks": "SELECT cm.`Id`, cm.`Mark`, cm.`TaskType`, s.`Name` as `SubjectName` FROM `CurrentMarks` cm LEFT JOIN `Subjects` s ON cm.`SubjectId` = s.`Id` WHERE cm.`StudentId` = {{id}}",
+  "getTeacherSubjects": "SELECT s.`Id` as `SubjectId`, s.`Name` as `SubjectName` FROM `Teachers` t LEFT JOIN `Subjects` s ON t.`Id` = s.`TeacherId` WHERE `TeacherId` = {{id}}",
+  "getPersonalSubjectGroups": "SELECT s.`Id` as `SubjectId`, ps.`SubjectGroup` as `GroupId` FROM `Subjects` s LEFT JOIN `PersonalSubjects` ps ON s.`Id` = ps.`SubjectId` WHERE ps.`SubjectId` = {{id}} AND ps.`SubjectGroup` IS NOT NULL;",
+  "getPersonalSubjStudents": "SELECT st.`Id` as `StudentId`, st.`Name`, st.`Surname`, st.`SecondName`, psg.`GroupId` FROM `Students` st JOIN `PersonalSubjectGroups` psg ON psg.`StudentId` = st.`Id` WHERE psg.`GroupId` = {{id}}",
+  "getGeneralSubjectGroups": "SELECT g.`Id` as `GroupId`, g.`Name` as `GroupName`, s.`Id` as `SubjectId` FROM `Subjects` s LEFT JOIN `Schedule` sc ON s.`Id` = sc.`SubjectId` LEFT JOIN `Groups` g ON g.`Id` = sc.`GroupId` WHERE sc.`GroupId` IS NOT NULL AND s.`Id` = {{id}}",
+  "getGeneralSubjStudents": "SELECT st.`Id` as `StudentId`, st.`Name`, st.`Surname`, st.`SecondName`, g.`Id` as `GroupId` FROM `Groups` g LEFT JOIN `StudentGroupLink` sgl ON sgl.`GroupId` = g.`Id` LEFT JOIN `Students` st ON st.`Id` = sgl.`StudentId` WHERE g.`Id` = {{id}}",
+  "getStudentMarksbyId": "SELECT m.`Id` as `MarkId`, m.`Mark`, m.`TaskType` FROM `CurrentMarks` m LEFT JOIN `Students` s ON s.`Id` = m.`StudentId` WHERE s.`Id` = {{studentId}} AND m.`SubjectId` = {{subjectId}}"
 }

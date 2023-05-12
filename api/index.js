@@ -79,7 +79,7 @@ app.post('/api/addSubject', scheduleHandler.addSubject);
 
 app.delete('/api/deleteSchedule/:id', scheduleHandler.deleteSchedule);
 
-// app.get('/api/getGroupMarks/:id', userDataHandler.getGroupMarks);
+app.get('/api/getGroupMarks/:teacherId', marksHandler.getGroupMarks);
 
 // app.post('/api/setStudentMark/:id', userDataHandler.setStudentMark);
 

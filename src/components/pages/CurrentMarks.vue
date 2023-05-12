@@ -1,6 +1,6 @@
 <template>
     <div id="current-marks">
-        <div v-if="stage == 'subjects'" class="container">
+        <div v-if="stage == 'subjects' && user.role == 'student'" class="container">
             <BaseHeading text="Choose a subject" />
             <ul class="subjectsList">
                 <li v-for="(subject, index) in subjects" :key="index" @click="chooseSubject(subject)">
@@ -8,9 +8,9 @@
                 </li>
             </ul>
         </div>
-        <div v-else class="container">
+        <div v-if="stage == 'marks' && user.role == 'student'" class="container">
             <BaseHeading text="Your marks" />
-            <div id="back-button" @click="goBack">
+            <div id="back-button" @click="goBack('subjects')">
                 <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24">
                     <title>Left, Arrow, Back</title>
                     <path d="M12,0A12,12,0,1,0,24,12,12,12,0,0,0,12,0Zm0,22A10,10,0,1,1,22,12,10,10,0,0,1,12,22Z" />
@@ -29,7 +29,53 @@
                     <div class="col col-3" data-label="Mark">{{ mark.mark }}</div>
                 </li>
             </ul>
+        </div>
 
+        <div v-if="stage == 'subjects' && user.role == 'teacher'" class="container">
+            <BaseHeading text="Choose subject" />
+            <ul class="subjectsList">
+                <li v-for="(subject, index) in subjects" :key="index" @click="chooseSubject(subject)">
+                    <div>{{ subject.subjectName }}</div>
+                </li>
+            </ul>
+        </div>
+        <div v-if="stage == 'groups' && user.role == 'teacher'" class="container">
+            <div id="back-button" @click="goBack('subjects')">
+                <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24">
+                    <title>Left, Arrow, Back</title>
+                    <path d="M12,0A12,12,0,1,0,24,12,12,12,0,0,0,12,0Zm0,22A10,10,0,1,1,22,12,10,10,0,0,1,12,22Z" />
+                    <polygon points="14.11 5.67 7.77 12 14.11 18.33 15.52 16.92 10.6 12 15.52 7.08 14.11 5.67" />
+                </svg>
+            </div>
+            <BaseHeading text="Choose group" />
+            <ul class="subjectsList">
+                <li v-for="(group, index) in groups" :key="index" @click="chooseGroup(group)">
+                    <div>{{ group.name ? group.name : group.id }}</div>
+                </li>
+            </ul>
+        </div>
+        <div v-if="stage == 'marks' && user.role == 'teacher'" class="container">
+            <BaseHeading text="Your marks" />
+            <div id="back-button" @click="goBack('groups')">
+                <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24">
+                    <title>Left, Arrow, Back</title>
+                    <path d="M12,0A12,12,0,1,0,24,12,12,12,0,0,0,12,0Zm0,22A10,10,0,1,1,22,12,10,10,0,0,1,12,22Z" />
+                    <polygon points="14.11 5.67 7.77 12 14.11 18.33 15.52 16.92 10.6 12 15.52 7.08 14.11 5.67" />
+                </svg>
+            </div>
+            <ul class="marksList">
+                <li class="table-header">
+                    <div class="col col-1">Student</div>
+                    <div class="col col-2">Task type</div>
+                    <div class="col col-3">Mark</div>
+                </li>
+                <li v-for="(student, index) in marks" :key="index" class="table-row">
+                    <div class="col col-1" data-label="Subject">{{ student.name + ' ' + student.secondName + ' ' +
+                        student.surname }}</div>
+                    <div class="col col-2" data-label="Task type">{{ student.taskType }}</div>
+                    <div class="col col-3" data-label="Mark">{{ student.mark }}</div>
+                </li>
+            </ul>
         </div>
     </div>
 </template>
@@ -45,6 +91,7 @@ export default {
             marks: [],
             subjectMarks: [],
             subjects: [],
+            groups: [],
             stage: "subjects"
         };
     },
@@ -62,16 +109,43 @@ export default {
                     this.subjects.push(el.subjectName);
             });
         }
+        if (this.user.role === 'teacher') {
+            this.$store.dispatch("marks/getGroupMarks", { teacherId: this.user.id });
+            this.subjects = this.$store.getters["marks/getGroupMarks"];
+
+        }
     },
     methods: {
         chooseSubject(subject) {
-            this.subjectMarks = this.marks.filter(el => el.subjectName === subject);
+            if (this.user.role === 'student') {
+
+                this.subjectMarks = this.marks.filter(el => el.subjectName === subject);
+                this.stage = 'marks';
+            } else {
+                this.groups = subject.groups;
+                this.stage = 'groups';
+            }
+        },
+        chooseGroup(group) {
+            this.marks = []
+            group.students.forEach(el => {
+                el.marks.forEach(mark => {
+                    this.marks.push({
+                        name: el.name,
+                        surname: el.surname,
+                        secondName: el.secondName,
+                        markId: mark.markId,
+                        mark: mark.mark,
+                        taskType: mark.taskType
+                    })
+                })
+            });
+
             this.stage = 'marks';
         },
-        goBack() {
-            this.stage = 'subjects';
-            this.subjectMarks = []
-        }
+        goBack(stage) {
+            this.stage = stage;
+        },
     }
 }
 </script>
