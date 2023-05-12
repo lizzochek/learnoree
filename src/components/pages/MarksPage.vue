@@ -102,7 +102,7 @@ import BaseHeading from '../common/BaseHeading.vue';
 import LinkButton from '../common/LinkButton.vue';
 
 export default {
-    name: "CurrentMarks",
+    name: "MarksPage",
     components: { BaseHeading, LinkButton },
     data() {
         return {
