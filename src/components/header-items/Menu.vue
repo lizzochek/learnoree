@@ -27,26 +27,21 @@ export default {
     computed: {
         menuLinks() {
             const { role, authorized } = this.$store.getters['login/getUser'];
-            const links = [{ text: 'News', address: '/news' }, { text: 'Schedule', address: '/schedule' }]
-            switch (role) {
-                case 'student':
-                    links.push(...[{ text: 'Current marks', address: '/marks' },
-                    { text: 'Exam results', address: '/exams' },
-                    { text: 'Questionnaire', address: '/questionnaire' },
+            const links = [{ text: 'News', address: '/news' }, { text: 'Questionnaire', address: '/questionnaire' }, { text: 'Schedule', address: '/schedule' }]
+            if (role === 'student')
+                links.push(...[{ text: 'Current marks', address: '/marks' },
+                { text: 'Exam results', address: '/exams' },
+                { text: 'Choose subjects', address: '/choose-subjects' },
+                { text: 'Teacher contacts', address: '/teacher-contacts' },
+                { text: 'Student report', address: '/report' },])
+            if (role === 'teacher')
+                links.push(...[{ text: 'Current marks', address: '/marks' },
+                { text: 'Teacher contacts', address: '/teacher-contacts' },])
+            if (role === 'admin')
+                links.push(...[
                     { text: 'Choose subjects', address: '/choose-subjects' },
-                    { text: 'Teacher contacts', address: '/teacher-contacts' },
-                    { text: 'Student report', address: '/report' },])
-                    break;
-                case 'teacher':
-                    links.push(...[{ text: 'Current marks', address: '/marks' },
-                    { text: 'Exam results', address: '/exams' },
-                    { text: 'Questionnaire', address: '/questionnaire' },
-                    { text: 'Teacher contacts', address: '/teacher-contacts' },])
-                case 'admin':
-                    links.push(...[{ text: 'Questionnaire', address: '/questionnaire' },
-                    { text: 'Choose subjects', address: '/choose-subjects' },
-                    { text: 'User managemet', address: '/user-management' },])
-            }
+                    { text: 'User management', address: '/user-management' },])
+
             links.forEach(link => {
                 if (link.text !== 'News') link.active = authorized;
                 else link.active = true;
