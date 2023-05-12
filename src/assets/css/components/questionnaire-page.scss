@@ -101,3 +101,11 @@
     color: var(--primary-color);
   }
 }
+
+@media (max-width: 900px) {
+  #questionnaire {
+    .card {
+      width: 80%;
+    }
+  }
+}
