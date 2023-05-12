@@ -9,6 +9,7 @@ import SchedulePage from '@/components/pages/SchedulePage.vue';
 import MarksPage from '@/components/pages/MarksPage.vue';
 import ExamResPage from '@/components/pages/ExamResPage.vue';
 import QuestionnairePage from '@/components/pages/QuestionnairePage.vue';
+import StudentReportPage from '@/components/pages/StudentReportPage.vue';
 
 const routes = [
   {
@@ -68,6 +69,12 @@ const routes = [
     path: '/questionnaire',
     name: 'QuestionnairePage',
     component: QuestionnairePage,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/report',
+    name: 'StudentReportPage',
+    component: StudentReportPage,
     meta: { requiresAuth: true },
   },
 ];

@@ -1,6 +1,6 @@
 <template>
     <div id="exam-results" ref="exams">
-        <BaseHeading text="Exam results" id="heading" />
+        <BaseHeading text="Your marks" id="heading" />
         <ul class="marksList" ref="list">
             <li class="table-header">
                 <div class="col col-1">Subject</div>
@@ -11,15 +11,17 @@
                 <div class="col col-2" data-label="Mark">{{ subj.mark }}</div>
             </li>
         </ul>
+        <LinkButton id="link-btn" text="Export pdf" backgroundTheme="dark" @click="exportPdf" />
     </div>
 </template>
 
 <script>
 import BaseHeading from '../common/BaseHeading.vue';
 import LinkButton from '../common/LinkButton.vue';
+import html2pdf from 'html2pdf.js'
 
 export default {
-    name: 'ExamResPage',
+    name: 'StudentReportPage',
     components: { BaseHeading, LinkButton },
     data() {
         return {
@@ -49,6 +51,14 @@ export default {
             this.list = sortedMarks;
         }
     },
+    methods: {
+        exportPdf() {
+            html2pdf(this.$refs.list, {
+                margin: 1,
+                filename: "marks.pdf",
+            });
+        }
+    }
 }
 </script>
 
