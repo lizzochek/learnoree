@@ -5,6 +5,7 @@
   background-color: var(--tertiary-color);
   display: flex;
   justify-content: center;
+  min-height: 100vh;
 
   .container {
     margin-top: 3%;
@@ -133,10 +134,97 @@
     top: 0%;
     cursor: pointer;
   }
+
+  #modal {
+    position: absolute;
+    z-index: 50;
+    width: 30%;
+    height: 60%;
+    top: 15%;
+    background-color: var(--forth-color);
+    border-radius: 20px;
+    box-shadow: 3px 3px 6px 3px var(--primary-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .control {
+      position: static;
+      border: 0;
+      border-radius: 8px;
+      outline: none;
+      width: 40%;
+      height: 40px;
+      padding: 0 16px;
+      background: rgba(35, 22, 35, 0.415);
+      border-radius: 6px;
+      color: #f9f9f9;
+      margin: 15px auto;
+      font-family: inherit;
+      text-align: left;
+      font-size: 16px;
+      transition: 0.4s;
+      margin-top: 0;
+    }
+
+    .control::placeholder {
+      color: rgba(24, 7, 18, 0.931);
+    }
+
+    .action-btn {
+      background-color: var((--forth-color));
+      border-radius: 24px;
+      border-style: none;
+      box-shadow: rgba(222, 183, 183, 0.2) 0 3px 5px -1px,
+        rgba(229, 174, 174, 0.14) 0 6px 10px 0,
+        rgba(235, 216, 216, 0.12) 0 1px 18px 0;
+      box-sizing: border-box;
+      color: var(--primary-color);
+      cursor: pointer;
+      height: 2rem;
+      letter-spacing: 0.25px;
+      line-height: normal;
+      max-width: 100%;
+      padding: 2px 24px;
+      text-align: center;
+      text-transform: uppercase;
+      width: auto;
+    }
+
+    #student-select {
+      width: 45%;
+    }
+
+    .action-btn {
+      background-color: var(--primary-color);
+      color: var((--forth-color));
+      cursor: pointer;
+      margin-top: 5%;
+      width: 40%;
+    }
+
+    .action-btn:hover {
+      background-color: rgb(73, 56, 56);
+    }
+  }
+  #link-btn {
+    margin-bottom: 35%;
+  }
 }
 
 @media (min-width: 767px) {
   #current-marks {
     height: 100vh;
+  }
+}
+
+@media (max-width: 1150px) {
+  #modal {
+    width: 50% !important;
+  }
+}
+@media (max-width: 720px) {
+  #modal {
+    width: 65% !important;
   }
 }

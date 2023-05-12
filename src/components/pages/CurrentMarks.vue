@@ -31,6 +31,22 @@
             </ul>
         </div>
 
+        <div v-if="isOpen" id="modal">
+            <BaseHeading id="modal-heading" text="Edit mark" />
+            <select v-model="enteredData.student" name="students" class="control" id="student-select">
+                <option v-for="(student, index) in marks" :key="index">{{ student.name + ' ' +
+                    student.secondName + ' ' +
+                    student.surname }}</option>
+            </select>
+
+            <input autocomplete="off" spellcheck="false" class="control" type="text" placeholder="Mark"
+                v-model="enteredData.mark" />
+            <input autocomplete="off" spellcheck="false" class="control" type="text" placeholder="Task type"
+                v-model="enteredData.taskType" />
+
+            <button class="action-btn" @click="setMark">Add</button>
+            <button class="action-btn" @click="toggleModal">Cancel</button>
+        </div>
         <div v-if="stage == 'subjects' && user.role == 'teacher'" class="container">
             <BaseHeading text="Choose subject" />
             <ul class="subjectsList">
@@ -55,7 +71,7 @@
             </ul>
         </div>
         <div v-if="stage == 'marks' && user.role == 'teacher'" class="container">
-            <BaseHeading text="Your marks" />
+            <BaseHeading text="Group marks" />
             <div id="back-button" @click="goBack('groups')">
                 <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24">
                     <title>Left, Arrow, Back</title>
@@ -76,23 +92,27 @@
                     <div class="col col-3" data-label="Mark">{{ student.mark }}</div>
                 </li>
             </ul>
+            <LinkButton id="link-btn" text="Add mark" backgroundTheme="dark" @click="toggleModal()" />
         </div>
     </div>
 </template>
 
 <script>
 import BaseHeading from '../common/BaseHeading.vue';
+import LinkButton from '../common/LinkButton.vue';
 
 export default {
     name: "CurrentMarks",
-    components: { BaseHeading },
+    components: { BaseHeading, LinkButton },
     data() {
         return {
             marks: [],
             subjectMarks: [],
             subjects: [],
             groups: [],
-            stage: "subjects"
+            stage: "subjects",
+            isOpen: false,
+            enteredData: {}
         };
     },
     computed: {
@@ -123,6 +143,7 @@ export default {
                 this.stage = 'marks';
             } else {
                 this.groups = subject.groups;
+                this.enteredData.subjectId = subject.subjectId;
                 this.stage = 'groups';
             }
         },
@@ -131,6 +152,7 @@ export default {
             group.students.forEach(el => {
                 el.marks.forEach(mark => {
                     this.marks.push({
+                        studentId: el.studentId,
                         name: el.name,
                         surname: el.surname,
                         secondName: el.secondName,
@@ -145,6 +167,22 @@ export default {
         },
         goBack(stage) {
             this.stage = stage;
+        },
+        setMark() {
+            const { taskType, mark, subjectId } = this.enteredData;
+            const { studentId } = this.marks.find(el => el.name + ' ' + el.secondName + ' ' + el.surname == this.enteredData.student)
+
+            this.$store.dispatch('marks/setMark', {
+                studentId,
+                mark,
+                taskType,
+                subjectId
+            });
+            if (this.$store.getters['marks/getError']) alert('Sorry, something went wrong!')
+            else this.toggleModal()
+        },
+        toggleModal() {
+            this.isOpen = !this.isOpen
         },
     }
 }

@@ -143,4 +143,20 @@ module.exports = {
       res.send(result);
     }
   },
+  setMark: async (req, res) => {
+    try {
+      const queryResult = await runQuery(
+        connection,
+        queryParser(queries.setMark, {
+          studentId: req.body.studentId,
+          mark: req.body.mark,
+          taskType: req.body.taskType,
+          subjectId: req.body.subjectId,
+        })
+      );
+      res.sendStatus(200);
+    } catch (err) {
+      res.sendStatus(500);
+    }
+  },
 };

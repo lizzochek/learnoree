@@ -14,6 +14,9 @@ export default {
     getGroupMarks(state) {
       return state.groupMarks;
     },
+    getError(state) {
+      return state.error;
+    },
   },
   mutations: {
     async getStudentMarks(state, response) {
@@ -40,6 +43,10 @@ export default {
         state.error = true;
       }
     },
+    async setMark(state, response) {
+      state.error = false;
+      if (!response.status == '200') state.error = true;
+    },
   },
   actions: {
     getStudentMarks({ commit }, { id }) {
@@ -50,6 +57,20 @@ export default {
     getGroupMarks({ commit }, { teacherId }) {
       return fetch(`/api/getGroupMarks/${teacherId}`).then((response) => {
         commit('getGroupMarks', response);
+      });
+    },
+    setMark({ commit }, { studentId, mark, taskType, subjectId }) {
+      return fetch('/api/setMark', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          studentId,
+          mark,
+          taskType,
+          subjectId,
+        }),
+      }).then((response) => {
+        commit('setMark', response);
       });
     },
   },

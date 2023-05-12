@@ -81,7 +81,7 @@ app.delete('/api/deleteSchedule/:id', scheduleHandler.deleteSchedule);
 
 app.get('/api/getGroupMarks/:teacherId', marksHandler.getGroupMarks);
 
-// app.post('/api/setStudentMark/:id', userDataHandler.setStudentMark);
+app.post('/api/setMark', marksHandler.setMark);
 
 // Admin
 
