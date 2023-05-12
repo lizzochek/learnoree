@@ -20,6 +20,13 @@ export default createStore({
         date: '05/05/23',
       },
     ],
+    questionnaireData: [
+      {
+        heading: 'Education quality questionnaire',
+        text: 'You can fill in the questionnaire following this link:',
+        link: 'https://forms.gle/cb8Mrx57ePCQp6ZH8',
+      },
+    ],
   },
   getters: {
     getErrors(state) {
@@ -27,6 +34,9 @@ export default createStore({
     },
     getNews(state) {
       return state.newsData;
+    },
+    getQuestionnaire(state) {
+      return state.questionnaireData;
     },
   },
   mutations: {
@@ -43,6 +53,9 @@ export default createStore({
     updateNews(state, news) {
       state.newsData = news;
     },
+    updateQuestionnaire(state, news) {
+      state.questionnaireData = news;
+    },
   },
   actions: {
     removeError({ commit }, data) {
@@ -50,6 +63,9 @@ export default createStore({
     },
     updateNews({ commit }, data) {
       commit('updateNews', data);
+    },
+    updateQuestionnaire({ commit }, data) {
+      commit('updateQuestionnaire', data);
     },
   },
 });

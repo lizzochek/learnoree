@@ -8,6 +8,7 @@ import NewsPage from '@/components/pages/NewsPage.vue';
 import SchedulePage from '@/components/pages/SchedulePage.vue';
 import MarksPage from '@/components/pages/MarksPage.vue';
 import ExamResPage from '@/components/pages/ExamResPage.vue';
+import QuestionnairePage from '@/components/pages/QuestionnairePage.vue';
 
 const routes = [
   {
@@ -61,6 +62,12 @@ const routes = [
     path: '/exams',
     name: 'ExamsPage',
     component: ExamResPage,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/questionnaire',
+    name: 'QuestionnairePage',
+    component: QuestionnairePage,
     meta: { requiresAuth: true },
   },
 ];

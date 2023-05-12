@@ -1,19 +1,21 @@
 <template>
-    <div id="news-page">
-        <ul>
-            <li v-for="(item, index) in news" :key="index">
+    <div id="questionnaire">
+        <ul id="list">
+            <li v-for="(item, index) in list" :key="index">
                 <BaseCard>
                     <BaseHeading ref="heading" :class="isAdmin ? 'editable' : ''" id="heading" :text="item.heading"
                         :contentEditable="isAdmin" />
-                    <p ref="text" :class="isAdmin ? 'editable' : ''" id="card-text" :contentEditable="isAdmin">
+                    <span ref="text" :class="isAdmin ? 'editable' : ''" id="card-text" :contentEditable="isAdmin">
                         {{ item.text }}
-                    </p>
-                    <p id="explanation-text">To edit text and heading click on it and start typing!</p>
-                    <span id="date">{{ item.date }}</span>
+                    </span>
+                    <span ref="link" :class="isAdmin ? 'editable' : ''" :contentEditable="isAdmin"
+                        @click="openLink(item.link)">{{ item.link }}</span>
+                    <span id="explanation-text">To edit text and heading click on it and start typing!</span>
+
                     <div v-if="isAdmin">
                         <LinkButton class="btn" text="Save changes" backgroundTheme="light" @click="saveChanges(index)" />
                         <div id="delete">
-                            <svg id="delete-icon" @click="deleteNews(index)" xmlns="http://www.w3.org/2000/svg"
+                            <svg id="delete-icon" @click="deleteQuestionnaire(index)" xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 64 58.67">
                                 <defs></defs>
                                 <title>Asset 25</title>
@@ -33,50 +35,62 @@
                 </BaseCard>
             </li>
         </ul>
-        <LinkButton v-if="isAdmin" id="add-btn" class="btn" text="Add news" backgroundTheme="dark" @click="addNews" />
+        <LinkButton v-if="isAdmin" id="add-btn" class="btn" text="Add" backgroundTheme="dark" @click="addQuestionnaire" />
     </div>
 </template>
 
 <script>
-import BaseCard from '../common/BaseCard.vue';
 import BaseHeading from '../common/BaseHeading.vue';
 import LinkButton from '../common/LinkButton.vue';
+import BaseCard from '../common/BaseCard.vue';
 
 export default {
-    name: "NewsPage",
-    components: { BaseCard, BaseHeading, LinkButton },
+    name: 'QuestionnairePage',
+    components: { BaseHeading, LinkButton, BaseCard },
+    data() {
+        return {
+            list: [],
+        }
+    },
     computed: {
         isAdmin() {
-            return this.$store.getters['login/getUser']?.role == 'admin';
-        },
-        news() {
-            return this.$store.getters.getNews;
+            return this.$store.getters["login/getUser"].role == 'admin';
         },
     },
+    created() {
+        this.list = this.$store.getters.getQuestionnaire;
+    },
     methods: {
-        saveChanges(ind) {
-            const newNews = [...this.news];
-            newNews[ind] = {
-                heading: this.$refs.heading[ind].text,
-                text: this.$refs.text[ind].textContent,
-            };
-            this.$store.dispatch('updateNews', newNews);
-        },
-        addNews() {
-            const newNews = [...this.news, {
+        addQuestionnaire() {
+            const newQuestionnaire = [...this.list, {
                 heading: 'Edit heading',
                 text: 'Edit text',
+                link: 'Add link'
             }];
-            this.$store.dispatch('updateNews', newNews);
+            this.$store.dispatch('updateQuestionnaire', newQuestionnaire);
+            this.list = this.$store.getters.getQuestionnaire;
         },
-        deleteNews(ind) {
-            const newNews = this.news.filter((_, index) => ind !== index)
-            this.$store.dispatch('updateNews', newNews);
+        saveChanges(ind) {
+            const newQuestionnaire = [...this.list];
+            newQuestionnaire[ind] = {
+                heading: this.$refs.heading[ind].text,
+                text: this.$refs.text[ind].textContent,
+                link: this.$refs.link[ind].textContent
+            };
+            this.$store.dispatch('updateQuestionnaire', newQuestionnaire);
+        },
+        openLink(link) {
+            if (!this.isAdmin) window.open(link);
+        },
+        deleteQuestionnaire(ind) {
+            const newQuestionnaire = this.list.filter((_, index) => ind !== index);
+            this.$store.dispatch('updateQuestionnaire', newQuestionnaire);
+            this.list = this.$store.getters.getQuestionnaire;
         }
     }
 }
 </script>
 
 <style lang="scss">
-@import '../../assets/css/components/news-page.scss';
+@import '@/assets/css/components/questionnaire-page.scss'
 </style>
