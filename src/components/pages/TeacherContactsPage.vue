@@ -44,6 +44,6 @@ export default {
 }
 </script>
 
-<style lange="scss">
+<style lang="scss">
 @import '../../assets/css/components/teacher-contacts-page.scss'
 </style>

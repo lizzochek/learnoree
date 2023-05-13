@@ -54,5 +54,9 @@
   "getGeneralSubjectGroups": "SELECT g.`Id` as `GroupId`, g.`Name` as `GroupName`, s.`Id` as `SubjectId` FROM `Subjects` s LEFT JOIN `Schedule` sc ON s.`Id` = sc.`SubjectId` LEFT JOIN `Groups` g ON g.`Id` = sc.`GroupId` WHERE sc.`GroupId` IS NOT NULL AND s.`Id` = {{id}}",
   "getGeneralSubjStudents": "SELECT st.`Id` as `StudentId`, st.`Name`, st.`Surname`, st.`SecondName`, g.`Id` as `GroupId` FROM `Groups` g LEFT JOIN `StudentGroupLink` sgl ON sgl.`GroupId` = g.`Id` LEFT JOIN `Students` st ON st.`Id` = sgl.`StudentId` WHERE g.`Id` = {{id}}",
   "getStudentMarksbyId": "SELECT m.`Id` as `MarkId`, m.`Mark`, m.`TaskType` FROM `CurrentMarks` m LEFT JOIN `Students` s ON s.`Id` = m.`StudentId` WHERE s.`Id` = {{studentId}} AND m.`SubjectId` = {{subjectId}}",
-  "setMark": "INSERT INTO `CurrentMarks` (`StudentId`, `Mark`, `TaskType`, `SubjectId`) VALUES ({{studentId}}, {{mark}}, '{{taskType}}', {{subjectId}})"
+  "setMark": "INSERT INTO `CurrentMarks` (`StudentId`, `Mark`, `TaskType`, `SubjectId`) VALUES ({{studentId}}, {{mark}}, '{{taskType}}', {{subjectId}})",
+  "getChoiseSubjects": "SELECT ps.`Id` as `SubjectId`, s.`Name` as `SubjectName`, t.`Name` as `TeacherName`, t.`Surname` as `TeacherSurname`, t.`SecondName` as `TeacherSecondName`, c.`Name` as `Cathedra` FROM `Subjects` s LEFT JOIN `PersonalSubjects` ps ON ps.`SubjectId` = s.`Id` LEFT JOIN `Groups` g ON g.`Id` = ps.`GroupId` LEFT JOIN `Teachers` t ON t.`Id` = s.`TeacherId` LEFT JOIN `Cathedras` c ON c.`Id` = s.`CathedraId` WHERE g.`Id` = {{id}}",
+  "getChosenSubjects": "SELECT ps.`Id` FROM `PersonalSubjectGroups` psg LEFT JOIN `Students` st ON st.`Id` = psg.`StudentId` LEFT JOIN `PersonalSubjects` ps ON ps.`SubjectGroup` = psg.`GroupId` WHERE st.`Id` = {{id}};",
+  "getSubjectGroup": "SELECT `SubjectGroup` FROM `PersonalSubjects` WHERE `Id` = {{id}}",
+  "setChosenSubject": "INSERT INTO `PersonalSubjectGroups` (`StudentId`, `GroupId`) VALUES ({{studentId}}, {{groupId}})"
 }

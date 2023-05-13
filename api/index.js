@@ -8,6 +8,7 @@ const userHandler = require('./handlers/user');
 const userDataHandler = require('./handlers/user-data');
 const scheduleHandler = require('./handlers/schedule');
 const marksHandler = require('./handlers/marks');
+const subjectsHandler = require('./handlers/subjects');
 
 const { runQuery, connection } = require('../db/index');
 const queries = require('../db/queries.json');
@@ -48,13 +49,13 @@ app.get(
 
 app.get('/api/getStudentMarks/:id', marksHandler.getStudentMarks);
 
-// app.get('/api/getChoiceSubjects/:id', userDataHandler.getChoiseSubjects);
+app.get('/api/getChoiseSubjects/:id', subjectsHandler.getChoiseSubjects);
 
-// app.get('/api/getChosenSubjects/:id', userDataHandler.getChosenSubjects);
+app.get('/api/getChosenSubjects/:id', subjectsHandler.getChosenSubjects);
 
 // app.get('/api/getAllStudentMarks/:id', marksHandler.getAllStudentMarks);
 
-// app.post('/api/chooseSubject/:id', userDataHandler.chooseSubject);
+app.post('/api/setChosenSubject', subjectsHandler.setChosenSubject);
 
 // Teacher
 app.get(

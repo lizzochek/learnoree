@@ -11,6 +11,7 @@ import ExamResPage from '@/components/pages/ExamResPage.vue';
 import QuestionnairePage from '@/components/pages/QuestionnairePage.vue';
 import StudentReportPage from '@/components/pages/StudentReportPage.vue';
 import TeacherContactsPage from '@/components/pages/TeacherContactsPage.vue';
+import ChoiseSubjPage from '@/components/pages/ChoiseSubjPage.vue';
 
 const routes = [
   {
@@ -82,6 +83,12 @@ const routes = [
     path: '/teacher-contacts',
     name: 'TeacherContactsPage',
     component: TeacherContactsPage,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/choose-subjects',
+    name: 'ChoiseSubjPage',
+    component: ChoiseSubjPage,
     meta: { requiresAuth: true },
   },
 ];
