@@ -53,11 +53,13 @@ export default {
         if (this.user?.role == 'student') {
             if (!this.user.specialty)
                 await this.$store.dispatch('myAccount/getSpecialty', { id: this.user.id });
-            if (!this.user.faculty)
-                await this.$store.dispatch('myAccount/getFaculty', { id: this.user.specialty.id });
 
             if (!this.user.group)
                 await this.$store.dispatch('myAccount/getStudentGroup', { id: this.user.id });
+
+            if (!this.user.faculty)
+                await this.$store.dispatch('myAccount/getFaculty', { id: this.user.specialty.id });
+
             this.calculateEducationYear();
         }
 
@@ -78,9 +80,8 @@ export default {
             this.isModalOpen = true;
         },
         async logOut() {
-            this.$router.push({ path: '/main' })
             await this.$store.dispatch('login/logOut');
-
+            this.$router.push('login');
         }
     },
 }
