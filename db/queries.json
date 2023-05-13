@@ -34,7 +34,7 @@
   "getSubject": "SELECT * FROM `Subjects` WHERE `Subjects`.Name = '{{subject}}';",
   "getTeacher": "SELECT * FROM `Teachers` WHERE `Teachers`.Name = '{{name}}' AND `Teachers`.Surname = '{{surname}}' AND `Teachers`.SecondName = '{{secondName}}';",
   "getAllGroups": "SELECT Name FROM `Groups`;",
-  "getAllTeachers": "SELECT `Name`, `Surname`, `SecondName` FROM `Teachers`;",
+  "getAllTeachers": "SELECT t.`Name`, t.`Surname`, t.`SecondName`, t.`Phone`, c.`Name` as `Cathedra`, f.`Name` as `Faculty` FROM `Teachers` t LEFT JOIN `Cathedras` c ON c.`Id` = t.CathedraId LEFT JOIN `Faculties` f ON f.`Id` = c.`FacultyId`;",
   "insertStudentGroupLink": "INSERT INTO StudentGroupLink (StudentId, GroupId) VALUES ('{{student}}', '{{group}}');",
   "getSpecialty": "SELECT `Specialties`.Id, `Specialties`.Name, `Specialties`.Code, `Specialties`.CathedraId FROM `Specialties` JOIN `Groups` ON `Specialties`.Id = `Groups`.SpecialtyId JOIN `StudentGroupLink` ON `StudentGroupLink`.GroupId = `Groups`.Id WHERE `StudentGroupLink`.StudentId = '{{id}}'",
   "getFacultyBySpecialty": "SELECT `Faculties`.Id, `Faculties`.Name, `Faculties`.ShortName, `Faculties`.Contacts FROM `Faculties` JOIN `Cathedras` ON `Cathedras`.FacultyId = `Faculties`.Id JOIN `Specialties` ON `Specialties`.CathedraId = `Cathedras`.Id WHERE `Specialties`.Id = '{{id}}';",

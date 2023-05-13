@@ -10,6 +10,7 @@ import MarksPage from '@/components/pages/MarksPage.vue';
 import ExamResPage from '@/components/pages/ExamResPage.vue';
 import QuestionnairePage from '@/components/pages/QuestionnairePage.vue';
 import StudentReportPage from '@/components/pages/StudentReportPage.vue';
+import TeacherContactsPage from '@/components/pages/TeacherContactsPage.vue';
 
 const routes = [
   {
@@ -75,6 +76,12 @@ const routes = [
     path: '/report',
     name: 'StudentReportPage',
     component: StudentReportPage,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/teacher-contacts',
+    name: 'TeacherContactsPage',
+    component: TeacherContactsPage,
     meta: { requiresAuth: true },
   },
 ];
