@@ -120,9 +120,9 @@ export default {
             return this.$store.getters["login/getUser"];
         }
     },
-    created() {
+    async created() {
         if (this.user.role == "student") {
-            this.$store.dispatch("marks/getStudentMarks", { id: this.user.id });
+            await this.$store.dispatch("marks/getStudentMarks", { id: this.user.id });
             this.marks = this.$store.getters["marks/getMarks"];
             this.marks.forEach(el => {
                 if (!this.subjects.includes(el.subjectName))
@@ -130,7 +130,7 @@ export default {
             });
         }
         if (this.user.role === 'teacher') {
-            this.$store.dispatch("marks/getGroupMarks", { teacherId: this.user.id });
+            await this.$store.dispatch("marks/getGroupMarks", { teacherId: this.user.id });
             this.subjects = this.$store.getters["marks/getGroupMarks"];
 
         }
@@ -168,11 +168,11 @@ export default {
         goBack(stage) {
             this.stage = stage;
         },
-        setMark() {
+        async setMark() {
             const { taskType, mark, subjectId } = this.enteredData;
             const { studentId } = this.marks.find(el => el.name + ' ' + el.secondName + ' ' + el.surname == this.enteredData.student)
 
-            this.$store.dispatch('marks/setMark', {
+            await this.$store.dispatch('marks/setMark', {
                 studentId,
                 mark,
                 taskType,

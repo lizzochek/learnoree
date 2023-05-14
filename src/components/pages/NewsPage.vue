@@ -54,24 +54,24 @@ export default {
         },
     },
     methods: {
-        saveChanges(ind) {
+        async saveChanges(ind) {
             const newNews = [...this.news];
             newNews[ind] = {
                 heading: this.$refs.heading[ind].text,
                 text: this.$refs.text[ind].textContent,
             };
-            this.$store.dispatch('updateNews', newNews);
+            await this.$store.dispatch('updateNews', newNews);
         },
-        addNews() {
+        async addNews() {
             const newNews = [...this.news, {
                 heading: 'Edit heading',
                 text: 'Edit text',
             }];
-            this.$store.dispatch('updateNews', newNews);
+            await this.$store.dispatch('updateNews', newNews);
         },
-        deleteNews(ind) {
+        async deleteNews(ind) {
             const newNews = this.news.filter((_, index) => ind !== index)
-            this.$store.dispatch('updateNews', newNews);
+            await this.$store.dispatch('updateNews', newNews);
         }
     }
 }

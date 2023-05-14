@@ -61,30 +61,30 @@ export default {
         this.list = this.$store.getters.getQuestionnaire;
     },
     methods: {
-        addQuestionnaire() {
+        async addQuestionnaire() {
             const newQuestionnaire = [...this.list, {
                 heading: 'Edit heading',
                 text: 'Edit text',
                 link: 'Add link'
             }];
-            this.$store.dispatch('updateQuestionnaire', newQuestionnaire);
+            await this.$store.dispatch('updateQuestionnaire', newQuestionnaire);
             this.list = this.$store.getters.getQuestionnaire;
         },
-        saveChanges(ind) {
+        async saveChanges(ind) {
             const newQuestionnaire = [...this.list];
             newQuestionnaire[ind] = {
                 heading: this.$refs.heading[ind].text,
                 text: this.$refs.text[ind].textContent,
                 link: this.$refs.link[ind].textContent
             };
-            this.$store.dispatch('updateQuestionnaire', newQuestionnaire);
+            await this.$store.dispatch('updateQuestionnaire', newQuestionnaire);
         },
         openLink(link) {
             if (!this.isAdmin) window.open(link);
         },
-        deleteQuestionnaire(ind) {
+        async deleteQuestionnaire(ind) {
             const newQuestionnaire = this.list.filter((_, index) => ind !== index);
-            this.$store.dispatch('updateQuestionnaire', newQuestionnaire);
+            await this.$store.dispatch('updateQuestionnaire', newQuestionnaire);
             this.list = this.$store.getters.getQuestionnaire;
         }
     }

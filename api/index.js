@@ -53,9 +53,9 @@ app.get('/api/getChoiseSubjects/:id', subjectsHandler.getChoiseSubjects);
 
 app.get('/api/getChosenSubjects/:id', subjectsHandler.getChosenSubjects);
 
-// app.get('/api/getAllStudentMarks/:id', marksHandler.getAllStudentMarks);
-
 app.post('/api/setChosenSubject', subjectsHandler.setChosenSubject);
+
+app.post('/api/setUnchooseSubject', subjectsHandler.setUnchooseSubject);
 
 // Teacher
 app.get(
@@ -90,11 +90,11 @@ app.post('/api/setMark', marksHandler.setMark);
 
 // app.put('/api/setUsersData/:id', userDataHandler.setUsersData);
 
-// app.post('/api/setChoiceSubject/:id', userDataHandler.setChoiceSubject);
+app.post('/api/setChoiseSubject', subjectsHandler.addSubject);
+
+app.delete('/api/deleteSubject/:id', subjectsHandler.deleteSubject);
 
 // app.delete('/api/deleteUser/:id', userDataHandler.deleteUser);
-
-// app.delete('/api/deleteSubject/:id', userDataHandler.deleteSubject);
 
 app.listen(port, () => {
   try {

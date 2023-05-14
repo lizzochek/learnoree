@@ -29,8 +29,8 @@ export default {
             search: ''
         };
     },
-    created() {
-        this.$store.dispatch('schedule/getAllTeachers')
+    async created() {
+        await this.$store.dispatch('schedule/getAllTeachers')
         this.teachers = this.$store.getters["schedule/getTeachers"];
         this.selectedTeachers = this.teachers;
     },

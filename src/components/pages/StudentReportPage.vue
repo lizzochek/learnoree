@@ -33,9 +33,9 @@ export default {
             return this.$store.getters["login/getUser"];
         }
     },
-    created() {
+    async created() {
         if (this.user.role == "student") {
-            this.$store.dispatch("marks/getStudentMarks", { id: this.user.id });
+            await this.$store.dispatch("marks/getStudentMarks", { id: this.user.id });
             const sortedMarks = [];
             const marks = this.$store.getters["marks/getMarks"];
 

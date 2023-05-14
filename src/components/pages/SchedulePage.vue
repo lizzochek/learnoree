@@ -213,8 +213,8 @@ export default {
             });
             return newSchedule;
         },
-        deleteLesson(id) {
-            this.$store.dispatch(`schedule/deleteLesson`, id);
+        async deleteLesson(id) {
+            await this.$store.dispatch(`schedule/deleteLesson`, id);
 
             if (errors) {
                 alert('Something went wrong. Please try again')

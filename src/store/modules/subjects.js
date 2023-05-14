@@ -3,6 +3,7 @@ import helpers from '../helpers';
 export default {
   namespaced: true,
   state: {
+    choiseAllowed: true,
     choiseSubjects: [],
     chosenSubjects: [],
     error: false,
@@ -16,6 +17,9 @@ export default {
     },
     getError(state) {
       return state.error;
+    },
+    getChoiseAllowed(state) {
+      return state.choiseAllowed;
     },
   },
   mutations: {
@@ -37,11 +41,32 @@ export default {
         state.chosenSubjects = data;
       }
     },
-    async setChosenSubject(state, response) {
+    setChosenSubject(state, response) {
       state.error = false;
       if (!response.status == '200') {
         state.error = true;
       }
+    },
+    setUnchooseSubject(state, response) {
+      state.error = false;
+      if (!response.status == '200') {
+        state.error = true;
+      }
+    },
+    deleteSubject(state, response) {
+      state.error = false;
+      if (!response.status == '200') {
+        state.error = true;
+      }
+    },
+    addSubject(state, response) {
+      state.error = false;
+      if (!response.status == '200') {
+        state.error = true;
+      }
+    },
+    setChoiseAllowed(state, allowed) {
+      state.choiseAllowed = allowed;
     },
   },
   actions: {
@@ -66,6 +91,42 @@ export default {
       }).then((response) => {
         commit('setChosenSubject', response);
       });
+    },
+    setUnchooseSubject({ commit }, { subjectId, studentId }) {
+      return fetch('/api/setUnchooseSubject', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          subjectId,
+          studentId,
+        }),
+      }).then((response) => {
+        commit('setUnchooseSubject', response);
+      });
+    },
+    setChoiseAllowed({ commit }, { allowed }) {
+      commit('setChoiseAllowed', allowed);
+    },
+    addSubject({ commit }, { subject, teacher, group, semester }) {
+      return fetch('/api/setChoiseSubject', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          subject,
+          teacher,
+          group,
+          semester,
+        }),
+      }).then((response) => {
+        commit('addSubject', response);
+      });
+    },
+    deleteSubject({ commit }, { id }) {
+      return fetch(`/api/deleteSubject/${id}`, { method: 'DELETE' }).then(
+        (response) => {
+          commit('deleteSubject', response);
+        }
+      );
     },
   },
 };
