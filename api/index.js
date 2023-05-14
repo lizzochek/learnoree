@@ -9,6 +9,7 @@ const userDataHandler = require('./handlers/user-data');
 const scheduleHandler = require('./handlers/schedule');
 const marksHandler = require('./handlers/marks');
 const subjectsHandler = require('./handlers/subjects');
+const userManagementHandler = require('./handlers/user-management');
 
 const { runQuery, connection } = require('../db/index');
 const queries = require('../db/queries.json');
@@ -86,15 +87,15 @@ app.post('/api/setMark', marksHandler.setMark);
 
 // Admin
 
-// app.get('/api/getUsersData/:id', userDataHandler.getUsersData);
+app.get('/api/getUsersData', userManagementHandler.getUsersData);
 
-// app.put('/api/setUsersData/:id', userDataHandler.setUsersData);
+app.put('/api/setUsersData', userManagementHandler.setUsersData);
 
 app.post('/api/setChoiseSubject', subjectsHandler.addSubject);
 
 app.delete('/api/deleteSubject/:id', subjectsHandler.deleteSubject);
 
-// app.delete('/api/deleteUser/:id', userDataHandler.deleteUser);
+app.delete('/api/deleteUser', userManagementHandler.deleteUser);
 
 app.listen(port, () => {
   try {

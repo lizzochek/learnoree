@@ -28,16 +28,16 @@ export default {
         menuLinks() {
             const { role, authorized } = this.$store.getters['login/getUser'];
             const links = [{ text: 'News', address: '/news' }, { text: 'Questionnaire', address: '/questionnaire' }, { text: 'Schedule', address: '/schedule' }]
-            if (role === 'student')
+            if (role === 'student' && authorized)
                 links.push(...[{ text: 'Current marks', address: '/marks' },
                 { text: 'Exam results', address: '/exams' },
                 { text: 'Choose subjects', address: '/choose-subjects' },
                 { text: 'Teacher contacts', address: '/teacher-contacts' },
                 { text: 'Student report', address: '/report' },])
-            if (role === 'teacher')
+            if (role === 'teacher' && authorized)
                 links.push(...[{ text: 'Current marks', address: '/marks' },
                 { text: 'Teacher contacts', address: '/teacher-contacts' },])
-            if (role === 'admin')
+            if (role === 'admin' && authorized)
                 links.push(...[
                     { text: 'Choose subjects', address: '/choose-subjects' },
                     { text: 'User management', address: '/user-management' },])

@@ -29,6 +29,7 @@
   "insertStudent": "INSERT INTO Students (Name, Surname, SecondName, UserId, Phone, StartDate, EndDate) VALUES ('{{name}}', '{{surname}}', '{{secondName}}', {{id}}, '{{phone}}', STR_TO_DATE('{{startDate}}', '%d/%m/%Y'), STR_TO_DATE('{{endDate}}', '%d/%m/%Y'))",
   "getCathedra": "SELECT * FROM Cathedras LEFT JOIN Faculties ON Faculties.Id = Cathedras.FacultyId WHERE Faculties.ShortName = '{{faculty}}' and Cathedras.ShortName = '{{cathedra}}",
   "getCatherdaByName": "SELECT * FROM `Cathedras` WHERE `Cathedras`.Name = '{{name}}'",
+  "getCathedraById": "SELECT * FROM `Cathedras` WHERE `Id` = {{id}}",
   "getGroup": "SELECT * FROM `Groups` WHERE `Groups`.Name = '{{group}}';",
   "getPersonalSubjectGroup": "SELECT ps.`SubjectGroup` as `Id` FROM `Subject` s LEFT JOIN `PersonalSubjects` ps ON s.Id = ps.SubjectId WHERE s.Name='{{subject}}'",
   "getSubject": "SELECT * FROM `Subjects` WHERE `Subjects`.Name = '{{subject}}';",
@@ -64,5 +65,11 @@
   "deleteChosenSubject": "DELETE FROM `PersonalSubjectGroups` WHERE `StudentId` = {{studentId}} AND `GroupId` = {{groupId}}",
   "deleteSubject": "DELETE FROM `PersonalSubjects` WHERE `Id` = {{id}}",
   "getLastGroupId": "SELECT MAX(`SubjectGroup`) as `max` FROM `PersonalSubjects`;",
-  "setChoiseSubject": "INSERT INTO `PersonalSubjects` (`GroupId`, `SubjectId`, `Semester`, `SubjectGroup`) VALUES ({{group}}, {{subject}}, STR_TO_DATE('{{semester}}', '%Y-%m-%d'), {{subjGroup}});"
+  "setChoiseSubject": "INSERT INTO `PersonalSubjects` (`GroupId`, `SubjectId`, `Semester`, `SubjectGroup`) VALUES ({{group}}, {{subject}}, STR_TO_DATE('{{semester}}', '%Y-%m-%d'), {{subjGroup}});",
+  "getAllUsers": "SELECT `Id`, `Email`, `Role`, `Authorized` FROM `Users`;",
+  "getGroupCathedra": "SELECT c.`Name` FROM `Groups` g LEFT JOIN `Specialties` s ON s.`Id` = g.`SpecialtyId` LEFT JOIN `Cathedras` c ON c.`Id` = s.`CathedraId` WHERE g.`Id`= {{id}}",
+  "setUserAuthorization": "UPDATE `Users` SET `Authorized` = {{authorized}} WHERE `Id` = {{id}}",
+  "deleteUserFromTable": "DELETE FROM `{{table}}` WHERE `UserId` = {{id}}",
+  "deleteUser": "DELETE FROM `Users` WHERE `Id` = {{id}}",
+  "setForeignKeyCheck": "SET foreign_key_checks = {{num}};"
 }

@@ -4,9 +4,10 @@ import myAccount from './modules/my-account';
 import schedule from './modules/schedule';
 import marks from './modules/marks';
 import subjects from './modules/subjects';
+import userManagement from './modules/user-management';
 
 export default createStore({
-  modules: { login, myAccount, schedule, marks, subjects },
+  modules: { login, myAccount, schedule, marks, subjects, userManagement },
   state: {
     errors: {},
     newsData: [
