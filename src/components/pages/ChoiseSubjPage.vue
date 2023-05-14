@@ -23,7 +23,7 @@
             <ul class="subjectsList">
                 <li :class="user.role == 'admin' ? 'admin table-header' : 'table-header'">
                     <div class="col col-1">Subject</div>
-                    <div class="col col-2">Teac her</div>
+                    <div class="col col-2">Teacher</div>
                     <div class="col col-3">Cathedra</div>
                     <div class="col col-4" v-if="user.role !== 'admin'">Choise</div>
                     <div class="col col-4" v-else>Group</div>
@@ -109,6 +109,7 @@ export default {
             if (this.user.role != 'admin') {
                 await this.$store.dispatch('subjects/getChoiseSubjects', { id: this.user.id });
                 this.choiseSubjects = this.$store.getters['subjects/getChoiseSubjects'];
+                console.log(this.choiseSubjects)
                 await this.$store.dispatch('subjects/getChosenSubjects', { id: this.user.id });
                 this.chosenSubjects = this.$store.getters['subjects/getChosenSubjects']; this.choiseSubjects.forEach(el => {
                     if (this.chosenSubjects.find(element => element.id === el.subjectId)) el.chosen = true;

@@ -91,11 +91,13 @@
                 }}</div>
                 <div class="col col-2" data-label="Email">{{ admin.email }}</div>
                 <div class="col col-3" data-label="Phone">{{ admin.phone }}</div>
-                <div class="col col-4" data-label="Authorized"> <button
+                <div class="col col-4" data-label="Authorized"> <button v-if="user.userId !== admin.id"
                         @click="setAuthorization(admin.id, admin.authorized ? 0 : 1)">{{ admin.authorized ?
                             'Unauthorize' : 'Authorize'
-                        }}</button></div>
-                <div id="delete">
+                        }}</button>
+                    <div v-else>Authorized</div>
+                </div>
+                <div v-if="user.userId !== admin.id" id="delete">
                     <svg id="delete-icon" @click="deleteUser(admin.id, 'admin')" xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 64 58.67">
                         <defs></defs>
@@ -123,13 +125,7 @@ import BaseHeading from '../common/BaseHeading.vue';
 export default {
     name: "UserManagementPage",
     components: { BaseHeading },
-    data() {
-        return {
-            // teachers: [],
-            students: [],
-            admins: [],
-        };
-    },
+
     async created() {
         await this.$store.dispatch('userManagement/getUserData');
     },
@@ -142,6 +138,9 @@ export default {
         },
         admins() {
             return [...this.$store.getters['userManagement/getUsers']['admins']];
+        },
+        user() {
+            return this.$store.getters['login/getUser'];
         }
     },
     methods: {

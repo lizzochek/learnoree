@@ -143,5 +143,72 @@
     button {
       font-size: 8px;
     }
+
+    #delete {
+      left: 2%;
+    }
+  }
+}
+
+@media (max-width: 1030px) {
+  #user-management {
+    .teachersList,
+    .studentsList,
+    .adminsList {
+      width: 50%;
+
+      .table-header {
+        display: none;
+      }
+
+      .table-row {
+        flex-direction: column;
+
+        .col {
+          margin-bottom: 2%;
+        }
+
+        button {
+          margin-left: 0;
+          margin-top: 2%;
+          font-size: 0.7rem;
+        }
+      }
+    }
+
+    .adminsList {
+      margin-bottom: 15%;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  #user-management {
+    .teachersList,
+    .studentsList,
+    .adminsList {
+      width: 70%;
+
+      .table-header {
+        display: none;
+      }
+
+      .table-row {
+        flex-direction: column;
+
+        .col {
+          margin-bottom: 2%;
+        }
+
+        button {
+          margin-left: 0;
+          margin-top: 2%;
+          font-size: 0.7rem;
+        }
+      }
+    }
+    .adminsList {
+      margin-bottom: 15%;
+    }
   }
 }

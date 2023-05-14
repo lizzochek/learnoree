@@ -56,3 +56,19 @@
   margin-bottom: 35%;
   z-index: 0;
 }
+
+@media (max-width: 800px) {
+  #exam-results {
+    .marksList {
+      width: 80%;
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  #exam-results {
+    .marksList {
+      width: 90%;
+    }
+  }
+}

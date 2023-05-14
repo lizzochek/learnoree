@@ -73,13 +73,13 @@
             <table ref="table" id="schedule-table" :class="{ hidden: !scheduleVisisble }">
                 <thead>
                     <tr class="table-row">
-                        <th>Time</th>
-                        <th>Monday</th>
-                        <th>Tuesday</th>
-                        <th>Wednesday</th>
-                        <th>Thursday</th>
-                        <th>Friday</th>
-                        <th>Saturday</th>
+                        <th id="col-0">Time</th>
+                        <th id="col-1">Monday</th>
+                        <th id="col-2">Tuesday</th>
+                        <th id="col-3">Wednesday</th>
+                        <th id="col-4">Thursday</th>
+                        <th id="col-5">Friday</th>
+                        <th id="col-6">Saturday</th>
                     </tr>
                 </thead>
                 <tbody>

@@ -45,3 +45,52 @@
     transition: 0.4s;
   }
 }
+
+@media (max-width: 1500px) {
+  #teacher-contacts {
+    .control {
+      width: 35%;
+    }
+
+    .card {
+      width: 40%;
+      text-align: center;
+      .teacher-data {
+        padding-bottom: 2%;
+      }
+    }
+  }
+}
+
+@media (max-width: 820px) {
+  #teacher-contacts {
+    .control {
+      width: 50%;
+    }
+    .card {
+      width: 60%;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  #teacher-contacts {
+    .control {
+      width: 55%;
+    }
+    .card {
+      width: 75%;
+    }
+  }
+}
+
+@media (max-width: 450px) {
+  #teacher-contacts {
+    .control {
+      width: 60%;
+    }
+    .card {
+      width: 85%;
+    }
+  }
+}
