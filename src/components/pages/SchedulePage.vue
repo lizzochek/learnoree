@@ -41,14 +41,14 @@
             <button v-if="user.role == 'admin'" class="tab-btn add-btn" @click="toggleSubjectModal">Add subject</button>
             <button v-if="user.role == 'admin'" class="tab-btn add-btn" @click="toggleModal">Add lesson</button>
             <BaseHeading id="heading" :text="headingText" />
-            <div id="tabs" :class="{ adminButtons: user.role === 'admin' || user.role === 'teacher' }">
+            <div id="tabs" :class="{ adminButtons: user.role === 'admin' || user.role === 'teacher', mobileBut: isMobile }">
                 <div v-for="tab in tabs" :key="tab" class="tab" @click="setActiveTab(tab)">
                     <button class="tab-btn" :class="{ active: curTab === tab }">
                         {{ tab }}
                     </button>
                 </div>
             </div>
-            <div v-if="curTab === 'Group' || curTab === 'Teacher'" class="dropdown">
+            <div v-if="curTab === 'Group' || curTab === 'Teacher'" class="dropdown" :class="{ mobileDrop: isMobile }">
                 <label for="touch"><span>Choose {{ curTab }}</span></label>
                 <input type="checkbox" id="touch">
 
@@ -62,7 +62,7 @@
                             group.name }}</li>
                 </ul>
             </div>
-            <div id="weeks">
+            <div id="weeks" :class="{ adminButtons: user.role === 'admin' || user.role === 'teacher', mobileBut: isMobile }">
                 <button class="week-btn" :class="{ active: activeWeek === 1 }" @click="setActiveWeek(1)">
                     Week 1
                 </button>
@@ -167,7 +167,7 @@ export default {
             isOpen: false,
             isSubjectOpen: false,
             enteredData: {},
-            windowWidth: null,
+            windowWidth: window.innerWidth,
             days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
         }
     },
