@@ -233,24 +233,25 @@ p {
   }
 }
 
-@media (max-width: 800px) {
+@media (max-width: 820px) {
   #spot-1 {
     width: 65%;
     top: 50%;
   }
 
   #welcome-text {
-    top: 240%;
+    top: 260%;
     font-size: 14px;
   }
 
   #main-page #img-1 {
     width: 38rem;
     height: 38rem;
+    top: 5%;
   }
 
   #buttons {
-    top: 270%;
+    top: 300%;
   }
 
   #login-btn {
