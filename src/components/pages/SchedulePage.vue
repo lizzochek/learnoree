@@ -41,7 +41,7 @@
             <button v-if="user.role == 'admin'" class="tab-btn add-btn" @click="toggleSubjectModal">Add subject</button>
             <button v-if="user.role == 'admin'" class="tab-btn add-btn" @click="toggleModal">Add lesson</button>
             <BaseHeading id="heading" :text="headingText" />
-            <div id="tabs" :class="{ adminButtons: user.role === 'admin' }">
+            <div id="tabs" :class="{ adminButtons: user.role === 'admin' || user.role === 'teacher' }">
                 <div v-for="tab in tabs" :key="tab" class="tab" @click="setActiveTab(tab)">
                     <button class="tab-btn" :class="{ active: curTab === tab }">
                         {{ tab }}
@@ -70,7 +70,7 @@
                     Week 2
                 </button>
             </div>
-            <table ref="table" id="schedule-table" :class="{ hidden: !scheduleVisisble }">
+            <table v-if="!isMobile" ref="table" id="schedule-table" :class="{ hidden: !scheduleVisisble }">
                 <thead>
                     <tr class="table-row">
                         <th id="col-0">Time</th>
@@ -80,6 +80,42 @@
                         <th id="col-4">Thursday</th>
                         <th id="col-5">Friday</th>
                         <th id="col-6">Saturday</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="table-row">
+                        <td>8:30</td>
+                        <td></td>
+                    </tr>
+                    <tr class="table-row">
+                        <td>10:25</td>
+                        <td></td>
+                    </tr>
+                    <tr class="table-row">
+                        <td>12:20</td>
+                        <td></td>
+                    </tr>
+                    <tr class="table-row">
+                        <td>14:15</td>
+                        <td></td>
+                    </tr>
+                    <tr class="table-row">
+                        <td>16:10</td>
+                        <td></td>
+                    </tr>
+                    <tr class="table-row">
+                        <td>18:30</td>
+                        <td></td>
+                    </tr>
+                </tbody>
+
+            </table>
+            <table v-else v-for="(day, index) of days" :key="index" :ref="'table' + index" id="schedule-table"
+                :class="{ hidden: !scheduleVisisble, mobile: isMobile }">
+                <thead>
+                    <tr class="table-row">
+                        <th id="col-0">Time</th>
+                        <th id="col-1">{{ day }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -131,6 +167,8 @@ export default {
             isOpen: false,
             isSubjectOpen: false,
             enteredData: {},
+            windowWidth: null,
+            days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
         }
     },
     computed: {
@@ -160,9 +198,14 @@ export default {
         },
         tabs() {
             return this.user.role == 'student' ? ['Personal', 'Group', 'Teacher'] : ['Group', 'Teacher']
+        },
+        isMobile() {
+            return this.windowWidth <= 820
         }
     },
     mounted() {
+        window.addEventListener('resize', () => this.windowWidth = window.innerWidth)
+
         this.getAllGroups();
         this.getAllTeachers();
         if (this.user.role === 'student') {
@@ -232,7 +275,7 @@ export default {
                 Object.entries(schedule[`week${this.activeWeek}`]).forEach((weekDay, weekIndex) => {
                     Object.entries(weekDay[1]).forEach((time, timeIndex) => {
                         const { id, subjectName, teacherName, teacherSecondName, teacherSurname, place } = time[1]
-                        this.$refs.table.rows[timeIndex + 1].cells[weekIndex + 1].innerHTML = `<div class="lesson-container">
+                        const html = `<div class="lesson-container">
                         <p>${subjectName}</p>                       
                         <div class="teacher">
                             <svg class="icon-cap" xmlns="http://www.w3.org/2000/svg" fill="#000000" width="800px" height="800px" viewBox="-5 0 32 32" version="1.1">
@@ -248,6 +291,13 @@ export default {
                             <p>${place}</p>
                         </div>
                     </div>`;
+
+                        if (!this.isMobile && this.$refs.table.rows[timeIndex + 1].cells[weekIndex + 1]) {
+                            this.$refs.table.rows[timeIndex + 1].cells[weekIndex + 1].innerHTML = html;
+                        } else {
+                            this.$refs[`table${weekIndex}`][0].rows[timeIndex + 1].cells[1].innerHTML = html
+                        }
+
                     })
                 })
             }
