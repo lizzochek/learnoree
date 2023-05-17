@@ -57,7 +57,7 @@
                     </div>
                 </li>
             </ul>
-            <LinkButton id="add-btn" text="Add subject" backgroundTheme="dark" @click="toggleModal" />
+            <LinkButton v-if="user.role == 'admin'" id="add-btn" text="Add subject" backgroundTheme="dark" @click="toggleModal" />
         </div>
         <div v-if="user.role !== 'admin' && !choiseAllowed">
             <p>Choise is not allowed at the moment</p>
