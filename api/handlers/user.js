@@ -1,11 +1,11 @@
-const { runQuery, connection } = require('../../db/index');
+const { runQuery, connection } = require('../../db/index.js');
 const queries = require('../../db/queries.json');
 const bcryptjs = require('bcryptjs');
 
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 
-const { queryParser } = require('../helpers');
+const { queryParser } = require('../helpers.js');
 
 module.exports = {
   getByEmail: async (req, res) => {

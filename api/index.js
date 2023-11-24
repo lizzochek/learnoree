@@ -4,14 +4,14 @@ const app = express(),
   bodyParser = require('body-parser'),
   port = 3080;
 
-const userHandler = require('./handlers/user');
-const userDataHandler = require('./handlers/user-data');
-const scheduleHandler = require('./handlers/schedule');
-const marksHandler = require('./handlers/marks');
-const subjectsHandler = require('./handlers/subjects');
-const userManagementHandler = require('./handlers/user-management');
+const userHandler = require('./handlers/user.js');
+const userDataHandler = require('./handlers/user-data.js');
+const scheduleHandler = require('./handlers/schedule.js');
+const marksHandler = require('./handlers/marks.js');
+const subjectsHandler = require('./handlers/subjects.js');
+const userManagementHandler = require('./handlers/user-management.js');
 
-const { runQuery, connection } = require('../db/index');
+const { runQuery, connection } = require('../db/index.js');
 const queries = require('../db/queries.json');
 
 require('dotenv').config({ path: __dirname + '/.env' });

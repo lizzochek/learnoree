@@ -19,26 +19,14 @@ export default {
     },
   },
   mutations: {
-    async getStudentMarks(state, response) {
+    async setState(state, { response, prop }) {
       state.error = false;
       if (response.status == '200') {
         const data = await response.json();
         data.forEach((element, index) => {
           data[index] = helpers.lowerCaseData(element);
         });
-        state.marks = data;
-      } else {
-        state.error = true;
-      }
-    },
-    async getGroupMarks(state, response) {
-      state.error = false;
-      if (response.status == '200') {
-        const data = await response.json();
-        data.forEach((element, index) => {
-          data[index] = helpers.lowerCaseData(element);
-        });
-        state.groupMarks = data;
+        state[prop] = data;
       } else {
         state.error = true;
       }
@@ -51,12 +39,12 @@ export default {
   actions: {
     getStudentMarks({ commit }, { id }) {
       return fetch(`/api/getStudentMarks/${id}`).then((response) => {
-        commit('getStudentMarks', response);
+        commit('setState', { response, prop: 'marks' });
       });
     },
     getGroupMarks({ commit }, { teacherId }) {
       return fetch(`/api/getGroupMarks/${teacherId}`).then((response) => {
-        commit('getGroupMarks', response);
+        commit('setState', { response, prop: 'groupMarks' });
       });
     },
     setMark({ commit }, { studentId, mark, taskType, subjectId }) {

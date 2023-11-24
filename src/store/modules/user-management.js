@@ -26,16 +26,10 @@ export default {
         state.users = data;
       }
     },
-    setAuthorization(state, response) {
-      state.error = false;
-      if (!response.status == '200') {
-        state.error = true;
-      }
-    },
-    deleteUser(state, response) {
-      state.error = false;
-      if (!response.status == '200') {
-        state.error = true;
+    checkResponseStatus() {
+      state.errors = false;
+      if (response.status != '200') {
+        state.errors = true;
       }
     },
   },
@@ -54,7 +48,7 @@ export default {
           authorizationValue,
         }),
       }).then((response) => {
-        commit('setAuthorization', response);
+        commit('checkResponseStatus', response);
       });
     },
     deleteUser({ commit }, { id, type }) {
@@ -66,7 +60,7 @@ export default {
           type,
         }),
       }).then((response) => {
-        commit('deleteUser', response);
+        commit('checkResponseStatus', response);
       });
     },
   },

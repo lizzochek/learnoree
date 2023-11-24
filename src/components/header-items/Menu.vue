@@ -26,6 +26,7 @@ export default {
     name: 'Menu',
     computed: {
         menuLinks() {
+            // Will be moved to Auth0
             const { role, authorized } = this.$store.getters['login/getUser'];
             const links = [{ text: 'News', address: '/news' }, { text: 'Questionnaire', address: '/questionnaire' }, { text: 'Schedule', address: '/schedule' }]
             if (role === 'student' && authorized)

@@ -1,7 +1,7 @@
-const { runQuery, connection } = require('../../db/index');
+const { runQuery, connection } = require('../../db/index.js');
 const queries = require('../../db/queries.json');
 
-const { queryParser, lowerCaseData } = require('../helpers');
+const { queryParser, lowerCaseData } = require('../helpers.js');
 
 module.exports = {
   getStudentMarks: async (req, res) => {

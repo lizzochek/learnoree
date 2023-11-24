@@ -31,64 +31,16 @@ export default {
     },
   },
   mutations: {
-    async getGroupSchedule(state, response) {
+    async setState(state, { response, prop }) {
       if (response.status == '200') {
         const data = await response.json();
         data.forEach((element, index) => {
           data[index] = helpers.lowerCaseData(element);
         });
-        state.groupSchedule = data;
+        state[prop] = data;
       }
     },
-    async getStudentSchedule(state, response) {
-      if (response.status == '200') {
-        const data = await response.json();
-        data.forEach((element, index) => {
-          data[index] = helpers.lowerCaseData(element);
-        });
-        state.studentSchedule = data;
-      }
-    },
-    async getTeacherSchedule(state, response) {
-      if (response.status == '200') {
-        const data = await response.json();
-        data.forEach((element, index) => {
-          data[index] = helpers.lowerCaseData(element);
-        });
-        state.teacherSchedule = data;
-      }
-    },
-    async getAllTeachers(state, response) {
-      if (response.status == '200') {
-        const data = await response.json();
-        data.forEach((element, index) => {
-          data[index] = helpers.lowerCaseData(element);
-        });
-        state.teachers = data;
-      }
-    },
-    async getAllGroups(state, response) {
-      if (response.status == '200') {
-        const data = await response.json();
-        data.forEach((element, index) => {
-          data[index] = helpers.lowerCaseData(element);
-        });
-        state.groups = data;
-      }
-    },
-    setSchedule(state, response) {
-      state.errors = false;
-      if (response.status != '200') {
-        state.errors = true;
-      }
-    },
-    addSubject(state, response) {
-      state.errors = false;
-      if (response.status != '200') {
-        state.errors = true;
-      }
-    },
-    deletelesson(state, response) {
+    checkResponseStatus() {
       state.errors = false;
       if (response.status != '200') {
         state.errors = true;
@@ -98,31 +50,31 @@ export default {
   actions: {
     getGroupSchedule({ commit }, { groupName }) {
       return fetch(`/api/getGroupSchedule/${groupName}`).then((response) => {
-        commit('getGroupSchedule', response);
+        commit('setState', { response, prop: 'groupSchedule' });
       });
     },
     getStudentSchedule(context) {
       return fetch(
         `/api/getStudentSchedule/${context.rootState.login.user.id}`
       ).then((response) => {
-        context.commit('getStudentSchedule', response);
+        context.commit('setState', { response, prop: 'studentSchedule' });
       });
     },
     getTeacherSchedule({ commit }, { name, surname, secondName }) {
       return fetch(
         `/api/getTeacherSchedule/${name}/${surname}/${secondName}`
       ).then((response) => {
-        commit('getTeacherSchedule', response);
+        commit('setState', { response, prop: 'teacherSchedule' });
       });
     },
     getAllTeachers({ commit }) {
       return fetch('/api/getAllTeachers').then((response) => {
-        commit('getAllTeachers', response);
+        commit('setState', { response, prop: 'teachers' });
       });
     },
     getAllGroups({ commit }) {
       return fetch('/api/getAllGroups').then((response) => {
-        commit('getAllGroups', response);
+        commit('setState', { response, prop: 'groups' });
       });
     },
     setSchedule(
@@ -142,7 +94,7 @@ export default {
           week,
         }),
       }).then((response) => {
-        commit('setSchedule', response);
+        commit('checkResponseStatus', response);
       });
     },
     addSubject(
@@ -166,12 +118,12 @@ export default {
           cathedraName,
         }),
       }).then((response) => {
-        commit('addSubject', response);
+        commit('checkResponseStatus', response);
       });
     },
     deleteLesson({ commit }, { id }) {
       return fetch(`/api/deleteSchedule/${id}`).then((response) => {
-        commit('deleteLesson', response);
+        commit('checkResponseStatus', response);
       });
     },
   },

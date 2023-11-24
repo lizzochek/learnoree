@@ -1,7 +1,7 @@
-const { runQuery, connection } = require('../../db/index');
+const { runQuery, connection } = require('../../db/index.js');
 const queries = require('../../db/queries.json');
 
-const { queryParser } = require('../helpers');
+const { queryParser } = require('../helpers.js');
 
 module.exports = {
   getUsersData: async (req, res) => {

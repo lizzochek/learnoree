@@ -1,6 +1,7 @@
 const queryParser = (expression, valueObj) => {
+  // To parse queires with params ({{param}}) we need to remove {{}}
   const templateMatcher = /{{\s?([^{}\s]*)\s?}}/g;
-  let text = expression.replace(templateMatcher, (substring, value, index) => {
+  const text = expression.replace(templateMatcher, (substring, value, index) => {
     value = valueObj[value];
     return value;
   });

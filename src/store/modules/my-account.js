@@ -5,25 +5,11 @@ export default {
   state: {},
   getters: {},
   mutations: {
-    async getSpecialty(_, { response, rootState }) {
+    async setState(_, { response, rootState, prop }) {
       if (response.status == '200') {
         const data = await response.json();
         data[0] = helpers.lowerCaseData(data[0]);
-        rootState.login.user.specialty = { ...data[0] };
-      }
-    },
-    async getFaculty(_, { response, rootState }) {
-      if (response.status == '200') {
-        const data = await response.json();
-        data[0] = helpers.lowerCaseData(data[0]);
-        rootState.login.user.faculty = { ...data[0] };
-      }
-    },
-    async getStudentGroup(_, { response, rootState }) {
-      if (response.status == '200') {
-        const data = await response.json();
-        data[0] = helpers.lowerCaseData(data[0]);
-        rootState.login.user.group = { ...data[0] };
+        rootState.login.user[prop] = { ...data[0] };
       }
     },
     async getTeacherCathedraAndFaculty(_, { response, rootState }) {
@@ -37,25 +23,23 @@ export default {
   actions: {
     getSpecialty({ commit, rootState }, { id }) {
       return fetch(`/api/getSpecialty/${id}`).then((response) => {
-        commit('getSpecialty', { response, rootState });
+        commit('setState', { response, rootState, prop: 'specialty' });
       });
     },
     getStudentGroup({ commit, rootState }, { id }) {
       return fetch(`/api/getStudentGroup/${id}`).then((response) => {
-        commit('getStudentGroup', { response, rootState });
+        commit('setState', { response, rootState, prop: 'group' });
       });
     },
     getFaculty({ commit, rootState }, { id }) {
       return fetch(`/api/getFaculty/${id}`).then((response) => {
-        commit('getFaculty', { response, rootState });
+        commit('setState', { response, rootState, prop: 'faculty' });
       });
     },
     getTeacherCathedraAndFaculty({ commit, rootState }, { id }) {
-      return fetch(`/api/getTeacherCathFac/${id}`).then(
-        (response) => {
-          commit('getTeacherCathedraAndFaculty', { response, rootState });
-        }
-      );
+      return fetch(`/api/getTeacherCathFac/${id}`).then((response) => {
+        commit('getTeacherCathedraAndFaculty', { response, rootState });
+      });
     },
   },
 };

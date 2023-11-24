@@ -23,46 +23,19 @@ export default {
     },
   },
   mutations: {
-    async getChoiseSubjects(state, response) {
+    async setState(state, { response, prop }) {
       if (response.status == '200') {
         const data = await response.json();
         data.forEach((element, index) => {
           data[index] = helpers.lowerCaseData(element);
         });
-        state.choiseSubjects = data;
+        state[prop] = data;
       }
     },
-    async getChosenSubjects(state, response) {
-      if (response.status == '200') {
-        const data = await response.json();
-        data.forEach((element, index) => {
-          data[index] = helpers.lowerCaseData(element);
-        });
-        state.chosenSubjects = data;
-      }
-    },
-    setChosenSubject(state, response) {
-      state.error = false;
-      if (!response.status == '200') {
-        state.error = true;
-      }
-    },
-    setUnchooseSubject(state, response) {
-      state.error = false;
-      if (!response.status == '200') {
-        state.error = true;
-      }
-    },
-    deleteSubject(state, response) {
-      state.error = false;
-      if (!response.status == '200') {
-        state.error = true;
-      }
-    },
-    addSubject(state, response) {
-      state.error = false;
-      if (!response.status == '200') {
-        state.error = true;
+    checkResponseStatus() {
+      state.errors = false;
+      if (response.status != '200') {
+        state.errors = true;
       }
     },
     setChoiseAllowed(state, allowed) {
@@ -72,12 +45,12 @@ export default {
   actions: {
     getChoiseSubjects({ commit }, { id }) {
       return fetch(`/api/getChoiseSubjects/${id}`).then((response) => {
-        commit('getChoiseSubjects', response);
+        commit('setState', { response, prop: 'choiseSubjects' });
       });
     },
     getChosenSubjects({ commit }, { id }) {
       return fetch(`/api/getChosenSubjects/${id}`).then((response) => {
-        commit('getChosenSubjects', response);
+        commit('setState', { response, prop: 'chosenSubjects' });
       });
     },
     setChosenSubject({ commit }, { subjectId, studentId }) {
@@ -89,7 +62,7 @@ export default {
           studentId,
         }),
       }).then((response) => {
-        commit('setChosenSubject', response);
+        commit('checkResponseStatus', response);
       });
     },
     setUnchooseSubject({ commit }, { subjectId, studentId }) {
@@ -101,7 +74,7 @@ export default {
           studentId,
         }),
       }).then((response) => {
-        commit('setUnchooseSubject', response);
+        commit('checkResponseStatus', response);
       });
     },
     setChoiseAllowed({ commit }, { allowed }) {
@@ -118,13 +91,13 @@ export default {
           semester,
         }),
       }).then((response) => {
-        commit('addSubject', response);
+        commit('checkResponseStatus', response);
       });
     },
     deleteSubject({ commit }, { id }) {
       return fetch(`/api/deleteSubject/${id}`, { method: 'DELETE' }).then(
         (response) => {
-          commit('deleteSubject', response);
+          commit('checkResponseStatus', response);
         }
       );
     },
